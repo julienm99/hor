@@ -1,12 +1,10 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
 
-Things you may want to cover:
+PRINCIPALES INSTRUCTIONS:
 
-* Ruby version
-2.3.1 dans le system ruby
+* Ruby version:
+    2.3.1 dans le system ruby
 
 * System dependencies
 
