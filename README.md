@@ -23,3 +23,5 @@ rails 5
 Les métaclasses devraient être obtenues à partir de Heroku des tâches de JDLM 
 
 * Il faudra aussi créer des  tables pour les professeurs, les locaux, les classes.
+
+* TEST POUR LE README ET LES CLÉS SSH... AVEC SSH AGENT
