@@ -22,4 +22,4 @@ rails 5
 * Deployment instructions
 Les métaclasses devraient être obtenues à partir de Heroku des tâches de JDLM 
 
-* ...
+* Il faudra aussi créer des  tables pour les professeurs, les locaux, les classes.
