@@ -6,10 +6,12 @@ application up and running.
 Things you may want to cover:
 
 * Ruby version
+2.3.1 dans le system ruby
 
 * System dependencies
 
 * Configuration
+rails 5
 
 * Database creation
 
@@ -20,5 +22,6 @@ Things you may want to cover:
 * Services (job queues, cache servers, search engines, etc.)
 
 * Deployment instructions
+Les métaclasses devraient être obtenues à partir de Heroku des tâches de JDLM 
 
 * ...
