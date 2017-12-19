@@ -3,5 +3,7 @@ Rails.application.routes.draw do
   
   root 'hor#index'
   
+  get 'valider', to: 'hor#valider'
+  
   
 end

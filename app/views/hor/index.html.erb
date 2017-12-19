@@ -1,9 +1,10 @@
-<div class="jumbotron">
+<div class="center jumbotron">
 
- <h1>HORAIRE à la page: INDEX</h1>
+  <h1>HORAIRE à la page: INDEX </br></br></br>
+  METACLASSES:</h1>
  
-  <% string="EPS1A,EPS1B,EPS2A,EPS2B,EPS1C_29,EPS3B,EPS4C_39,EPS4B_5B,EPS5C_45,EPS5C_46" %>
-  <%= system "./valider.sh #{string}"  %>
+  <p> EPS1A,EPS1B,EPS2A,EPS2B,EPS1C_29,EPS3B,EPS4C_39,EPS4B_5B,EPS5C_45,EPS5C_46 </p>
   
+  <p> <%= link_to 'VALIDER', valider_path, class:"btn btn-primary btn-lg" %> </p>
 
 </div>

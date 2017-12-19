@@ -7,13 +7,17 @@ $navbar-default-bg: lightskyblue;
 #logo {
   float: left;
   font-size: 1.7em;
-  color: white;
+  color: red;
   text-transform: uppercase;
   letter-spacing: -1px;
   font-weight: bold;
   }
   
 #logo:hover, active {
-  color: red;
+  color: green;
   text-decoration: underline;
+  }
+
+.center {
+  text-align: center;
   }
