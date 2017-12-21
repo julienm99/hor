@@ -1,10 +1,32 @@
-<div class="center jumbotron">
+<div class="center">
 
-  <h1>HORAIRE à la page: INDEX </br></br></br>
-  METACLASSES:</h1>
- 
-  <p> EPS1A,EPS1B,EPS2A,EPS2B,EPS1C_29,EPS3B,EPS4C_39,EPS4B_5B,EPS5C_45,EPS5C_46 </p>
+  <h1>METACLASSES</h1> 
+  
+</div>
+
+<% lire(mc = metaClasses = []) %>  
+
+<div>
+  <table border:1px solid black;style="width:100%">
+    <% x = rang = col = 1 # col:colonne rang:rangée%>
+    <% nb_col = 3 %>
+    <tr>
+      <% while col % nb_col != 0 %>
+      <td> 
+	<% x = (col-1) + (rang-1) * nb_col %>
+	<label class="container"><%= mc[x] %>
+	  <input type="checkbox">
+	  <span class="checkmark"></span>
+	</label>
+      </td>
+      <% col += 1 %>
+      <% end %>
+      <% col = 1 ; rang += 1 %>
+    </tr>
+  </table>
+</div>
+
   
   <p> <%= link_to 'VALIDER', valider_path, class:"btn btn-primary btn-lg" %> </p>
 
-</div>
+
