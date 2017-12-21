@@ -5,26 +5,19 @@
 </div>
 
 <% lire(mc = metaClasses = []) %>  
+<%#= niv == "" ? "pas niveau choisi" : "le niveau est #{niv}" %>  
 
-<div>
-  <table border:1px solid black;style="width:100%">
-    <% x = rang = col = 1 # col:colonne rang:rangée%>
-    <% nb_col = 3 %>
-    <tr>
-      <% while col % nb_col != 0 %>
-      <td> 
-	<% x = (col-1) + (rang-1) * nb_col %>
-	<label class="container"><%= mc[x] %>
-	  <input type="checkbox">
-	  <span class="checkmark"></span>
-	</label>
-      </td>
-      <% col += 1 %>
-      <% end %>
-      <% col = 1 ; rang += 1 %>
-    </tr>
-  </table>
-</div>
+  <div class="container">
+    <div class="row">    
+      <% x = y = 0 %>
+      <% until x > mc.size do %>
+	<% until y == 5 do %>
+	  <div class="col-lg-2"><input type="checkbox"><font size="4" "bold">
+	    <%= mc[x] %><% x += 1; y += 1 %></div> 
+	<% end ; y = 0 %> 	
+      <% end %> 
+    </div>
+  </div>
 
   
   <p> <%= link_to 'VALIDER', valider_path, class:"btn btn-primary btn-lg" %> </p>
