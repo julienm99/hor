@@ -22,3 +22,16 @@ $navbar-default-bg: lightskyblue;
   text-align: center;
   }
   
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: red;
+}
+
+body { 
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+

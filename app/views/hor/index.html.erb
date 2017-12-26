@@ -1,8 +1,4 @@
-<div class="center">
-
-  <h1>METACLASSES</h1> 
-  
-</div>
+<body>
 
 <% lire(mc = metaClasses = []) %>  
 <%#= niv == "" ? "pas niveau choisi" : "le niveau est #{niv}" %>  
@@ -12,8 +8,9 @@
       <% x = y = 0 %>
       <% until x > mc.size do %>
 	<% until y == 5 do %>
-	  <div class="col-lg-2"><input type="checkbox"><font size="4" "bold">
-	    <%= mc[x] %><% x += 1; y += 1 %></div> 
+	  <div class="col-lg-2"><input type="checkbox" value=<%= mc[x] %>><font size="4" "bold">
+	    <%= mc[x] %><% x += 1; y += 1 %>
+	  </div> 
 	<% end ; y = 0 %> 	
       <% end %> 
     </div>
@@ -23,3 +20,4 @@
   <p> <%= link_to 'VALIDER', valider_path, class:"btn btn-primary btn-lg" %> </p>
 
 
+</body>
