@@ -1,85 +1,123 @@
 <nav class="navbar navbar-default navbar-fixed-top">
-  <div class="container-fluid">
+  <div class="container-fluid btn-group">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
         <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
       </button>
       <%= link_to 'HORAIRE-JDLM', root_path, class:"navbar-brand", id:"logo" %>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <li><a href="#">Link <span class="sr-only">(current)</span></a></li>
-        <li><a href="#">Link</a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">METACLASSES<span class="caret"></span></a>
-          <ul class="dropdown-menu">
-	    <li class="dropdown-submenu">
-	      <a class="test" href="#">Niveau --></a>
-	      <ul class="dropdown-menu">
-		<li><a tabindex="1" href="#">Backbone</a></li>
-		<li><a tabindex="2" href="#">S5</a></li>
-		<li role="separator" class="divider"></li>
-		<li><a tabindex="3" href="#">S4</a></li>
-		<li><a tabindex="4" href="#">S3</a></li>
-		<li role="separator" class="divider"></li>
-		<li><a tabindex="5" href="#">S2</a></li>
-		<li><a tabindex="6" href="#">S1</a></li>
-	      </ul>
-	    </li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">Professeurs</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">Foyers</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">Locaux</a></li>
-          </ul>
-        </li>
-        <li class="dropdown"><% niv = "" %>
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">NIVEAUX<span class="caret"></span></a>
-          <ol class="dropdown-menu">
-            <li><a href="#">S1</a><% niv = "S1" %></li>
-            <li><a href="#">S2</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">S3</a></li>
-            <li><a href="#">S4</a></li>
-            <li><a href="#">S5</a></li>
-          </ol>
-        </li>
-      </ul>
-      <form class="navbar-form navbar-left">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search">
-        </div>
-        <button type="submit" class="btn btn-default">Submit</button>
-      </form>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="#">Link</a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">Separated link</a></li>
-          </ul>
-        </li>
-      </ul>
-    </div><!-- /.navbar-collapse -->
+    <div role="main" class="container theme-showcase">
+    <div class="btn-group btn-group-primary">
+      <a id="dLabel" role="button" data-toggle="dropdown" class="btn btn-primary" data-target="#" href="#">
+	  METACLASSES <span class="caret"></span>
+      </a>
+      <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
+	<li class="dropdown-submenu">
+	  <a tabindex="-1" href="#">NIVEAU </a>
+	  <ul class="dropdown-menu">
+	    <li><%= link_to 'Backbone', fixerHoraire_path %></li>
+	    <li class="divider"></li>
+	    <li><%= link_to 'S5', fixerHoraire_path %></li>
+	    <li><%= link_to 'S4', fixerHoraire_path %></li>
+	    <li><%= link_to 'S3', fixerHoraire_path %></li>
+	    <li class="divider"></li>
+	    <li><%= link_to 'S2', fixerHoraire_path %></li>
+	    <li><%= link_to 'S1', fixerHoraire_path %></li>
+	  </ul>
+	</li>
+	<li><%= link_to 'Professeurs', fixerHoraire_path %></li>
+	<li><%= link_to 'Foyers', fixerHoraire_path %></li>
+	<li><%= link_to 'Locaux', fixerHoraire_path %></li>
+	<li class="dropdown-submenu">
+	  <a tabindex="-1" href="#">Matière </a>
+	  <ul class="dropdown-menu">
+	    <li><%= link_to 'ANG', fixerHoraire_path %></li>
+	    <li class="divider"></li>
+	    <li><%= link_to 'EPS', fixerHoraire_path %></li>
+	    <li><%= link_to 'ART', fixerHoraire_path %></li>
+	    <li><%= link_to 'FRA', fixerHoraire_path %></li>
+	    <li class="divider"></li>
+	    <li><%= link_to 'MAT', fixerHoraire_path %></li>
+	    <li><%= link_to 'ESP', fixerHoraire_path %></li>
+	    <li><%= link_to 'HIS', fixerHoraire_path %></li>
+	    <li><%= link_to 'GEO', fixerHoraire_path %></li>
+	  </ul>
+	</ul>
+      </div>
+    
+      <!-- Split button -->
+      <div class="btn-group btn-group-primary">
+	<button type="button" class="btn btn-primary">Niveau </button>
+	<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	  <span class="caret"></span>
+	  <span class="sr-only">Toggle Dropdown</span>
+	</button>
+	<ul class="dropdown-menu">
+	  <% ["S5","S4","S3","S2"].each do |niv| %>
+	  <li class="dropdown-submenu">
+	    <a tabindex="-1" href="#"><%= niv %></a>
+	    <ul class="dropdown-menu">
+	      <li><%= link_to 'Tous les groupes', fixerHoraire_path%><% niveau = niv %></li>
+	      <% i = 1 ; until i > 9 do ; gr = "Gr#{niv[1,1]+i.to_s}"%>
+	      <li><%= link_to gr, fixerHoraire_path %><% groupe = gr %></li>
+	      <% i +=1 ; end %>  
+	    </ul>
+	  <% end %>  
+	</ul>
+      </div> <!-- Split button -->
+    
+      <div class="btn-group">
+	<button class="btn btn-default" type="button">Default</button>
+	<button data-toggle="dropdown" class="btn btn-default dropdown-toggle" type="button"><span class="caret"></span>
+	</button>
+	<ul class="dropdown-menu">
+	  <li><a href="#">Action</a></li>
+	  <li><a href="#">Another action</a></li>
+	  <li><a href="#">Something else here</a></li>
+	  <li class="divider"></li>
+	  <li><a href="#">Separated link</a></li>
+	</ul>
+      </div>
+
+      <div class="btn-group btn-group-primary">
+	<button class="btn btn-primary" type="button">Primary</button>
+	<button data-toggle="dropdown" class="btn btn-primary dropdown-toggle" type="button"><span class="caret"></span>
+	</button>
+	<ul class="dropdown-menu">
+	  <li><a href="#">Action</a></li>
+	  <li><a href="#">Another action</a></li>
+	  <li><a href="#">Something else here</a></li>
+	  <li class="divider"></li>
+	  <li><a href="#">Separated link</a></li>
+	</ul>
+      </div>
+
+      <div class="btn-group btn-group-success ">
+	<button class="btn btn-success" type="button">Success</button>
+	<button data-toggle="dropdown" class="btn btn-success dropdown-toggle" type="button"><span class="caret"></span>
+	</button>
+	<ul class="dropdown-menu">
+	  <li><a href="#">Action</a></li>
+	  <li><a href="#">Another action</a></li>
+	  <li><a href="#">Something else here</a></li>
+	  <li class="divider"></li>
+	  <li><a href="#">Separated link</a></li>
+	</ul>
+      </div>
+    </div>
   </div><!-- /.container-fluid -->
 </nav>
 
 
+
+<!-- --BOTTOM ----------------------->
 <nav class="navbar navbar-default navbar-fixed-bottom">
-  <div class="container-fluid center">
+  <div class="container-fluid center" >
     <%= link_to 'REPARTIR', root_path, class:"btn btn-primary" %>
-    <%= link_to 'VALIDER', valider_path, class:"btn btn-primary color:green" %>
+    <%= link_to 'VALIDER', valider_path, class:"btn btn-danger" %>
     <%= link_to 'ORDONNER', root_path, class:"btn btn-primary" %>
     <%= link_to 'FILTRER', root_path, class:"btn btn-primary" %>
     <%= link_to 'FIXER-REP', root_path, class:"btn btn-primary" %>
@@ -87,6 +125,6 @@
     <%= link_to 'VIABILISER', root_path, class:"btn btn-primary" %>
     <%= link_to 'COMPACTER', root_path, class:"btn btn-primary" %>
     <%= link_to 'DIAGONALISER', root_path, class:"btn btn-primary" %>
-    <%= link_to 'FIXER-HOR', root_path, class:"btn btn-primary" %>
+    <%= link_to 'FIXER-HOR', fixerHoraire_path, class:"btn btn-success" %>
   </div>
 </nav>

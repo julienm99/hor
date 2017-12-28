@@ -3,7 +3,8 @@ Rails.application.routes.draw do
   
   root 'hor#index'
   
-  get 'valider', to: 'hor#valider'
+  get 'valider',      to: 'hor#valider'
+  get 'fixerHoraire', to: 'hor#fixerHoraire'
   
   
 end
