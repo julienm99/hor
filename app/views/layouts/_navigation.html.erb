@@ -48,26 +48,38 @@
 	</ul>
       </div>
     
-      <!-- Split button -->
-      <div class="btn-group btn-group-primary">
-	<button type="button" class="btn btn-primary">Niveau </button>
-	<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <!-- NAV-BAR-TOP btn:[info-HORAIRE] -->
+      <div class="btn-group btn-group-info">
+	<button type="button" class="btn btn-info">info_HORAIRE </button>
+	<button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 	  <span class="caret"></span>
 	  <span class="sr-only">Toggle Dropdown</span>
 	</button>
-	<ul class="dropdown-menu">
-	  <% ["S5","S4","S3","S2"].each do |niv| %>
+	<ul class="dropdown-menu multi-level">
+	  <li><%= link_to 'Professeurs', fixerHoraire_path %></li>
 	  <li class="dropdown-submenu">
-	    <a tabindex="-1" href="#"><%= niv %></a>
+	    <a tabindex="-1" href="#">Groupes</a>
 	    <ul class="dropdown-menu">
-	      <li><%= link_to 'Tous les groupes', fixerHoraire_path%><% niveau = niv %></li>
-	      <% i = 1 ; until i > 9 do ; gr = "Gr#{niv[1,1]+i.to_s}"%>
-	      <li><%= link_to gr, fixerHoraire_path %><% groupe = gr %></li>
-	      <% i +=1 ; end %>  
+	      <li class="dropdown-submenu">
+		<% ["S5","S4","S3","S2","S1"].each do |niv| %>
+		<a tabindex="-1" href="#"><%= niv %></a>
+		<ul class="dropdown-menu">
+		  <li><%= link_to "Tous les Gr de #{niveau = niv}", fixerHoraire_path%></li>
+		  <li class="divider"></li>
+		    <% niv == "S1" ? nbGroupes = 11 : nbGroupes = 9 %>
+		    <% i = 1 ; until i > nbGroupes do gr = group_string(niv,i) %>
+		  <li><%= link_to "#{groupe = gr}", fixerHoraire_path %></li>
+		    <% i +=1 %>  
+		    <% end %>  
+		</ul>
+		<% end %>  
+	      </li>
 	    </ul>
-	  <% end %>  
+	  </li>
+	  <li><%= link_to 'Foyers', fixerHoraire_path %></li>
+	  <li><%= link_to 'Locaux', fixerHoraire_path %></li>
 	</ul>
-      </div> <!-- Split button -->
+      </div> <!-- FIN : info-HORAIRE -->
     
       <div class="btn-group">
 	<button class="btn btn-default" type="button">Default</button>

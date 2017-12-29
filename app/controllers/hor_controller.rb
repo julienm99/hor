@@ -1,18 +1,15 @@
 class HorController < ApplicationController
   
   
-  def index
-        
+  def index        
   end
 
 
   def valider
-    
   end
 
 
-  def fixerHoraire
-    
+  def fixerHoraire    
   end
 
 

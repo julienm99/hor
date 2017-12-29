@@ -8,8 +8,9 @@ def lire(metaClasses)
 end
 
 
-def afficher(metaClasses)
-    metaClasses
+def group_string(niv,i)
+     i  > 9 ? ajout = "" : ajout = "0" 
+     niv == "S1" ? gr ="Gr#{niv[1,1] + ajout + i.to_s}" : gr ="Gr#{niv[1,1] + i.to_s}"
 end
 
 
