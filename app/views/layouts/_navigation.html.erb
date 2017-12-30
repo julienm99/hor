@@ -48,38 +48,56 @@
 	</ul>
       </div>
     
-      <!-- NAV-BAR-TOP btn:[info-HORAIRE] -->
-      <div class="btn-group btn-group-info">
-	<button type="button" class="btn btn-info">info_HORAIRE </button>
-	<button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <!-- NAV-BAR-TOP btn:[METACLASSES] -->
+      <div class="btn-group btn-group-primary">
+	<button type="button" class="btn btn-primary">METACLASSES </button>
+	<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 	  <span class="caret"></span>
 	  <span class="sr-only">Toggle Dropdown</span>
 	</button>
 	<ul class="dropdown-menu multi-level">
-	  <li><%= link_to 'Professeurs', fixerHoraire_path %></li>
+	  <li><%= link_to 'Backbone', fixerHoraire_path %></li>
 	  <li class="dropdown-submenu">
 	    <a tabindex="-1" href="#">Groupes</a>
 	    <ul class="dropdown-menu">
+	      <% ["S5","S4","S3","S2","S1"].each do |niv| %>
 	      <li class="dropdown-submenu">
-		<% ["S5","S4","S3","S2","S1"].each do |niv| %>
 		<a tabindex="-1" href="#"><%= niv %></a>
 		<ul class="dropdown-menu">
 		  <li><%= link_to "Tous les Gr de #{niveau = niv}", fixerHoraire_path%></li>
 		  <li class="divider"></li>
-		    <% niv == "S1" ? nbGroupes = 11 : nbGroupes = 9 %>
-		    <% i = 1 ; until i > nbGroupes do gr = group_string(niv,i) %>
+		    <% niv == "S1" ? nbGroupes = 11 : nbGroupes = 9 ; i = 1%>
+		    <% until i > nbGroupes do gr = group_string(niv,i) %>
 		  <li><%= link_to "#{groupe = gr}", fixerHoraire_path %></li>
 		    <% i +=1 %>  
-		    <% end %>  
+		    <% end %>
 		</ul>
-		<% end %>  
 	      </li>
+	      <% end %>  
 	    </ul>
 	  </li>
-	  <li><%= link_to 'Foyers', fixerHoraire_path %></li>
-	  <li><%= link_to 'Locaux', fixerHoraire_path %></li>
+	  <li class="dropdown-submenu">
+	    <a tabindex="-1" href="#">Cours </a>
+	    <ul class="dropdown-menu">
+	      <li><% @matiere = "ANG" %><%= link_to 'ANGlais', choixMatiere_path %></li>
+	      <li><%= link_to 'FRAnçais', fixerHoraire_path %></li>
+	      <li><%= link_to 'ESPagnol', fixerHoraire_path %></li>
+	      <li class="divider"></li>
+	      <li><%= link_to 'MAThématique', fixerHoraire_path %></li>
+	      <li><%= link_to 'SCiences Technologie', fixerHoraire_path %></li>
+	      <li><%= link_to 'CHImie', fixerHoraire_path %></li>
+	      <li><%= link_to 'PHYsique', fixerHoraire_path %></li>
+	      <li><%= link_to 'Technique Méthode Scientifique', fixerHoraire_path %></li>
+	      <li class="divider"></li>
+	      <li><%= link_to 'ARTs', fixerHoraire_path %></li>
+	      <li><%= link_to 'Education PhySique', fixerHoraire_path %></li>
+	      <li><%= link_to 'HIStoire', fixerHoraire_path %></li>
+	      <li><%= link_to 'GEOgraphie', fixerHoraire_path %></li>
+	    </ul>
+	  <li>
+	  <li><%= link_to 'Salles', fixerHoraire_path %></li>
 	</ul>
-      </div> <!-- FIN : info-HORAIRE -->
+      </div> <!-- FIN : btn:[METACLASSES] -->
     
       <div class="btn-group">
 	<button class="btn btn-default" type="button">Default</button>
@@ -128,7 +146,7 @@
 <!-- --BOTTOM ----------------------->
 <nav class="navbar navbar-default navbar-fixed-bottom">
   <div class="container-fluid center" >
-    <%= link_to 'REPARTIR', root_path, class:"btn btn-primary" %>
+    <%= link_to 'RÉPARTIR', root_path, class:"btn btn-primary" %>
     <%= link_to 'VALIDER', valider_path, class:"btn btn-danger" %>
     <%= link_to 'ORDONNER', root_path, class:"btn btn-primary" %>
     <%= link_to 'FILTRER', root_path, class:"btn btn-primary" %>
@@ -138,5 +156,9 @@
     <%= link_to 'COMPACTER', root_path, class:"btn btn-primary" %>
     <%= link_to 'DIAGONALISER', root_path, class:"btn btn-primary" %>
     <%= link_to 'FIXER-HOR', fixerHoraire_path, class:"btn btn-success" %>
+    <%= link_to 'STOP', fixerHoraire_path, class:"btn btn-warning" %>
+  </div>
+  <div class="metaclassesChoisies">
+    ANG21
   </div>
 </nav>
