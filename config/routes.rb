@@ -7,5 +7,7 @@ Rails.application.routes.draw do
   get 'fixerHoraire', to: 'hor#fixerHoraire'
   get 'choixMatiere', to: 'hor#choixMatiere'
   
+  resources :metaclasses
+  
   
 end

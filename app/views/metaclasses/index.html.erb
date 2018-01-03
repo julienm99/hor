@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Metaclasses</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nom</th>
+      <th>Horfix</th>
+      <th>Checked</th>
+      <th>Listclasses</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @metaclasses.each do |metaclass| %>
+      <tr>
+        <td><%= metaclass.nom %></td>
+        <td><%= metaclass.horFix %></td>
+        <td><%= metaclass.checked %></td>
+        <td><%= metaclass.listClasses %></td>
+        <td><%= link_to 'Show', metaclass %></td>
+        <td><%= link_to 'Edit', edit_metaclass_path(metaclass) %></td>
+        <td><%= link_to 'Destroy', metaclass, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Metaclass', new_metaclass_path %>

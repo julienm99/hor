@@ -19,5 +19,11 @@ module ApplicationHelper
   end
 
 
+  def matieresDesMetaclasses(metaclasses, matieres)
+      metaclasses.each{|mc| matieres << mc[0,3] }
+      matieres.uniq!
+  end
+
+
 
 end

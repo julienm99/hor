@@ -1,0 +1,37 @@
+<%= form_with(model: metaclass, local: true) do |form| %>
+  <% if metaclass.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(metaclass.errors.count, "error") %> prohibited this metaclass from being saved:</h2>
+
+      <ul>
+      <% metaclass.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :nom %>
+    <%= form.text_field :nom, id: :metaclass_nom %>
+  </div>
+
+  <div class="field">
+    <%= form.label :horFix %>
+    <%= form.check_box :horFix, id: :metaclass_horFix %>
+  </div>
+
+  <div class="field">
+    <%= form.label :checked %>
+    <%= form.check_box :checked, id: :metaclass_checked %>
+  </div>
+
+  <div class="field">
+    <%= form.label :listClasses %>
+    <%= form.text_field :listClasses, id: :metaclass_listClasses %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

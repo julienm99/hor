@@ -1,6 +1,6 @@
 <body>
 <h2> je suis au choix de metaclasses par matiere </h2>
-<%= @matiere=="" ? "pas de matiere choisie !" : "la matiere choisie est #{@matiere}" %>  
+<%= @matiere == "" ? "pas de matiere choisie !" : "la matiere choisie est #{@matiere}" %>  
 <% lire(mc = metaclasses = [])  %> 
 <% mc = filtrerMatiereChoisie(metaclasses, metaclassesChoisies = [], @matiere) %> 
 
