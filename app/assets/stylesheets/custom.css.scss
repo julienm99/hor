@@ -38,7 +38,24 @@ body {
 .metaclassesChoisies {
     background-color: black;
     color: white;
-    padding: 5px;
+    padding-bottom: 7px;
     text-align: center;
     font-weight: bold;
 } 
+
+.ligneHaute {
+    line-height: 150%;
+}
+
+
+.btn {
+    color: yellow;
+    font-weight: bold;
+    border-radius: 15px;
+}
+
+.container-fluid {
+    padding-top: 10px;
+    padding-bottom: 7px;
+}
+

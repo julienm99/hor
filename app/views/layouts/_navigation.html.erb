@@ -36,6 +36,7 @@
 	      <% end %>  
 	    </ul>
 	  </li>
+	  
 	  <li class="dropdown-submenu">
 	    <a tabindex="-1" href="#">Catégories (Matières/Cours) </a>
 	    <ul class="dropdown-menu">
@@ -76,10 +77,8 @@
 	</ul>
       </div>
       
-    <%= link_to 'DE-SÉLECTIONNER', fixerHoraire_path, class:"btn btn-danger" %>
-    <%= link_to 'INFO', fixerHoraire_path, class:"btn btn-info right" %>
-      
-      
+    <%= link_to 'DÉ-SÉLECTIONNER', fixerHoraire_path, class:"btn btn-danger" %>
+    <%= link_to 'INFO', fixerHoraire_path, class:"btn btn-info" %>      
     </div>
   </div><!-- /.container-fluid -->
 </nav>
@@ -88,12 +87,12 @@
 
 <!-- --BOTTOM ----------------------->
 <nav class="navbar navbar-default navbar-fixed-bottom">
-
-  <div class="metaclassesChoisies">
-    METACLASSES EN JEU: <% %>
-  </div>
-  
-  <div class="container-fluid" >
+  <div class="container-fluid center" >
+    <div class="metaclassesChoisies">
+      METACLASSES EN JEU: <br>
+      <%= %>
+    </div>
+    <br>
     <%= link_to 'RÉPARTIR', root_path, class:"btn btn-primary" %>
     <%= link_to 'VALIDER', valider_path, class:"btn btn-warning" %>
     <%= link_to 'ORDONNER', root_path, class:"btn btn-primary" %>
