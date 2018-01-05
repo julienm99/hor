@@ -6,8 +6,10 @@ Rails.application.routes.draw do
   get 'valider',      to: 'hor#valider'
   get 'fixerHoraire', to: 'hor#fixerHoraire'
   get 'choixMatiere', to: 'hor#choixMatiere'
+  get 'miseAjour',    to: 'hor#miseAjour'
   
   resources :metaclasses
+  resources :activites
   
   
 end

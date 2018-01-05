@@ -1,0 +1,62 @@
+<%= form_with(model: activite, local: true) do |form| %>
+  <% if activite.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(activite.errors.count, "error") %> prohibited this activite from being saved:</h2>
+
+      <ul>
+      <% activite.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :nom %>
+    <%= form.text_field :nom, id: :activite_nom %>
+  </div>
+
+  <div class="field">
+    <%= form.label :metaclass %>
+    <%= form.text_field :metaclass, id: :activite_metaclass %>
+  </div>
+
+  <div class="field">
+    <%= form.label :cours %>
+    <%= form.text_field :cours, id: :activite_cours %>
+  </div>
+
+  <div class="field">
+    <%= form.label :groupe %>
+    <%= form.text_field :groupe, id: :activite_groupe %>
+  </div>
+
+  <div class="field">
+    <%= form.label :periodHor %>
+    <%= form.text_field :periodHor, id: :activite_periodHor %>
+  </div>
+
+  <div class="field">
+    <%= form.label :periodTache %>
+    <%= form.text_field :periodTache, id: :activite_periodTache %>
+  </div>
+
+  <div class="field">
+    <%= form.label :prof %>
+    <%= form.text_field :prof, id: :activite_prof %>
+  </div>
+
+  <div class="field">
+    <%= form.label :salle %>
+    <%= form.text_field :salle, id: :activite_salle %>
+  </div>
+
+  <div class="field">
+    <%= form.label :listeFoyers %>
+    <%= form.text_field :listeFoyers, id: :activite_listeFoyers %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

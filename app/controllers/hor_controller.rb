@@ -1,5 +1,5 @@
 class HorController < ApplicationController
-  attr_accessor :niv, :cours, :matiere, :metaclasses
+  attr_accessor :niv, :cours, :matiere, :metaclasses, :activites
   
   def index        
   end
@@ -11,6 +11,9 @@ class HorController < ApplicationController
   end
 
   def choixMatiere    
+  end
+
+  def miseAjour   
   end
 
 

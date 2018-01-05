@@ -3,11 +3,13 @@
 one:
   nom: MyString
   horFix: false
+  FixCedulables: false
   checked: false
   listClasses: MyString
 
 two:
   nom: MyString
   horFix: false
+  FixCedulables: false
   checked: false
   listClasses: MyString
