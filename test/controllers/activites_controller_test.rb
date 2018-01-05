@@ -17,7 +17,7 @@ class ActivitesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create activite" do
     assert_difference('Activite.count') do
-      post activites_url, params: { activite: { cours: @activite.cours, groupe: @activite.groupe, listeFoyers: @activite.listeFoyers, metaclass: @activite.metaclass, nom: @activite.nom, periodHor: @activite.periodHor, periodTache: @activite.periodTache, prof: @activite.prof, salle: @activite.salle } }
+      post activites_url, params: { activite: { groupe: @activite.groupe, listeFoyers: @activite.listeFoyers, matiere: @activite.matiere, metaclass_id: @activite.metaclass_id, nom: @activite.nom, periodHor: @activite.periodHor, periodTache: @activite.periodTache, prof: @activite.prof, salle: @activite.salle } }
     end
 
     assert_redirected_to activite_url(Activite.last)
@@ -34,7 +34,7 @@ class ActivitesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update activite" do
-    patch activite_url(@activite), params: { activite: { cours: @activite.cours, groupe: @activite.groupe, listeFoyers: @activite.listeFoyers, metaclass: @activite.metaclass, nom: @activite.nom, periodHor: @activite.periodHor, periodTache: @activite.periodTache, prof: @activite.prof, salle: @activite.salle } }
+    patch activite_url(@activite), params: { activite: { groupe: @activite.groupe, listeFoyers: @activite.listeFoyers, matiere: @activite.matiere, metaclass_id: @activite.metaclass_id, nom: @activite.nom, periodHor: @activite.periodHor, periodTache: @activite.periodTache, prof: @activite.prof, salle: @activite.salle } }
     assert_redirected_to activite_url(@activite)
   end
 

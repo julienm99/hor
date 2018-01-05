@@ -2,22 +2,22 @@
 
 one:
   nom: MyString
-  metaclass: MyString
-  cours: MyString
+  matiere: MyString
   groupe: MyString
   periodHor: 1.5
   periodTache: 1.5
   prof: MyString
   salle: MyString
   listeFoyers: MyString
+  metaclass: one
 
 two:
   nom: MyString
-  metaclass: MyString
-  cours: MyString
+  matiere: MyString
   groupe: MyString
   periodHor: 1.5
   periodTache: 1.5
   prof: MyString
   salle: MyString
   listeFoyers: MyString
+  metaclass: two
