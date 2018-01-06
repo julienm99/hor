@@ -1,51 +1,132 @@
 module ApplicationHelper
 
-  def lire(metaclasses)
-      File.open("public/metaclasses.txt").each do |line|  
-	    id, reste = line.split("\t")  
-	    metaclasses << id[12,id.size] if id[0,12] == "MetaClasse::" 
-	    metaclasses.sort!
-      end  
+  def lireMetaclasses(mc)
+    fname = "public/metaclasses.txt"
+    file = File.open(fname, "r:iso8859-1")
+      while (line = file.gets)
+	type, reste = line.split("::")
+	
+	case type.strip
+	when "MetaClasse" 
+	  nom, reste = reste.split("\t")
+	 listeClasses = reste.split(";")
+	 listeClasses.shift         # Supprimer premier element du array (CycleX)
+	 listeClasses = listeClasses.collect{|x| x.strip} #Remove trailing CR
+	  #~ puts"[meta_classe/debug01]listeClasses[0].strip = #{liste_classes[0].strip}"
+	  mc = Metaclasse.new({ :nom 	       => nom, 
+				:fixHoraire    => false,
+				:fixCedulables => false,
+				:checked       => false,
+				:listeClasses  => listeClasses   
+			      })
+		#~ puts "debug 02 metaclasse: #{mc.nom} liste classes =#{mc.listeClasses}"
+	when "Classe" 
+	  nom, reste = reste.split("\t")
+	  cours, groupe, periodes, periodesTache, semestre, prof, salle, listeFoyers = reste.split(";")
+	  params = {
+		:nom => nom, :cours => cours, :groupe => groupe, :periodes => periodes, 
+		:periodesTache => periodesTache, :semestre => semestre, :prof => prof, 
+		:salle => salle, :listeFoyers => listeFoyers
+		}
+	  listeClasses.each do |classe_str| 
+	      classe = Classe.new(params)
+	      #~ puts "debug 04 classe: mc : #{mc.nom} prof #{classe.prof} liste des foyers #{classe.listeFoyers}"
+	  end
+	else
+	    
+	end
+	  
+      end 
+    file.close		
+    mc = Metaclasse.toutes
   end
 
-  def lire_metaclasses_txt
-      fname = "public/metaclasses.txt"
-      file = File.open(fname, "r:iso8859-1")
-	while (line = file.gets)
-	  type, reste = line.split("::") 
-	  nom, reste = reste.split("\t") if reste.class != NilClass
-	  case type.strip 
-	  when "MetaClasse" 
-	    puts "Metaclasse : #{nom}"
-	    #~ Metaclass.find(metaclasses.nom == nom) 
-	    #~ liste_activites = reste.split(";")
-	    #~ if liste_classes[0].strip == "Cycle1" 
-		#~ then cycle = 1 
-		#~ else cycle = 2 
-	    #~ end
-	    #~ liste_classes.shift #Supprimer premier element du array
-	  when "Classe"
-	    puts "    classe : #{nom}  #{reste}"
-	    #~ liste_classes = liste_classes.collect{|x| x.strip} #Remove trailing CR
-	    # puts"[script/meta_classes.rb/debug01] liste_classes[0].strip = #{liste_classes[0].strip}"
-	    #~ tmp = Classe.trouver(liste_classes[0].strip).periodes.to_i
-	    #~ mc_new = Metaclass.new({	:nom => identifiant, 
-					#~ :cycle => cycle, 
-					#~ :periodes => tmp })
-	    #puts mc_new
-		#~ liste_classes.each do |cla_str| 
-			#~ cla = Classe.trouver(cla_str.strip)
-			#~ mc_new.ajouter_classe( cla ) 
-	    #puts cla
-		    #~ end	
-		  #~ end	
-		#~ end
-	  else
-	  end
-	end
-      file.close
+
+  class Metaclasse
+    
+    attr_accessor :nom, :fixHoraire, :fixCedulables, :checked, :listeClasses,
+		  :identifiant, :cycle, :niveau
+
+    @@tous = []
+    
+    def initialize(params)
+      @identifiant   = @nom = params[:nom]
+      @fixHoraire    = false
+      @fixCedulables = false
+      @checked       = false
+      @listeClasses  = params[:listeClasses]
       
+      @@tous << self
+    end		
+
+   
+    def show
+	    puts "-"*25
+	    puts "#{nom}"
+	    @liste_classes.each do |classe|
+		    puts classe
+	    end	
+    end
+    
+#-------Class methods
+
+    def self.afficher
+	    @@tous.sort{|a,b| a.identifiant <=> b.identifiant}.each{|x| x.show}
+    end
+    
+    def self.trouver(identifiant)
+	    @@tous.find{|x| x.identifiant == identifiant}
+    end
+
+    def self.toutes
+	    @@tous
+    end
+	    
+    def self.obtenir_MetaclasseNommee(nom)
+	    @@tous.find {|metaclasse| metaclasse.nom == nom}
+    end
+    
+    def self.obtenir_metaclasse_avec_classe(classe)
+	    @@tous.find {|metaclasse| metaclasse.liste_classes.include?(classe)}
+    end
+    
+    def self.obtenir_metaclassesEPS
+	    @@tous.find_all {|metaclasse| /Eps/.match(metaclasse.nom) }
+    end
+    		    
+  private	
+    def determiner_niveau
+	    @niveau = @listeClasses[0].niveau
+    end
+	
   end
+
+
+
+  class Classe
+  
+    attr_accessor :identifiant, :nom, :cours, :groupe, :periodes, :periodesTache, :semestre,
+		  :prof, :salle, :listeFoyers, :niveau
+		  
+    @@tous =[]				
+
+    def initialize(params)
+      @identifiant = @nom = params[:nom]
+      @cours         = params[:cours]
+      @groupe        = params[:groupe]
+      @periodes      = params[:periodes]
+      @periodesTache = params[:periodesTache]
+      @semestre      = params[:semestre]
+      @prof          = params[:prof]
+      @salle         = params[:salle]
+      @listeFoyers   = params[:listeFoyers]
+      
+      @@tous << self
+    end
+    
+  end
+
+
 
 
   def group_string(niv,i)
@@ -60,10 +141,9 @@ module ApplicationHelper
 
 
   def matieresDesMetaclasses(metaclasses, matieres)
-      metaclasses.each{|mc| matieres << mc[0,3] }
+      metaclasses.each{|mc| matieres << mc.nom[0,3] }
       matieres.uniq!
   end
-
 
 
 end

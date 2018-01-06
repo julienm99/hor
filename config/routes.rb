@@ -8,8 +8,6 @@ Rails.application.routes.draw do
   get 'choixMatiere', to: 'hor#choixMatiere'
   get 'miseAjour',    to: 'hor#miseAjour'
   
-  resources :metaclasses
-  resources :activites
   
   
 end
