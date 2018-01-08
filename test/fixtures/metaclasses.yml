@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  nom: MyString
+  fixHor: false
+  fixCedulables: false
+  checked: false
+
+two:
+  nom: MyString
+  fixHor: false
+  fixCedulables: false
+  checked: false

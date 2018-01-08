@@ -10,6 +10,31 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 20180107220155) do
+
+  create_table "activites", force: :cascade do |t|
+    t.string "nom"
+    t.string "matiere"
+    t.string "groupe"
+    t.float "periodes"
+    t.float "periodesTache"
+    t.integer "semestre"
+    t.string "prof"
+    t.string "salle"
+    t.string "listeFoyers"
+    t.integer "metaclass_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["metaclass_id"], name: "index_activites_on_metaclass_id"
+  end
+
+  create_table "metaclasses", force: :cascade do |t|
+    t.string "nom"
+    t.boolean "fixHor"
+    t.boolean "fixCedulables"
+    t.boolean "checked"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
 end

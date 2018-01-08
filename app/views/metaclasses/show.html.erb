@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nom:</strong>
+  <%= @metaclass.nom %>
+</p>
+
+<p>
+  <strong>Fixhor:</strong>
+  <%= @metaclass.fixHor %>
+</p>
+
+<p>
+  <strong>Fixcedulables:</strong>
+  <%= @metaclass.fixCedulables %>
+</p>
+
+<p>
+  <strong>Checked:</strong>
+  <%= @metaclass.checked %>
+</p>
+
+<%= link_to 'Edit', edit_metaclass_path(@metaclass) %> |
+<%= link_to 'Back', metaclasses_path %>

@@ -1,7 +1,6 @@
 class HorController < ApplicationController
-  attr_accessor :niv, :cours, :matiere, :metaclasses, :activites
   
-  def index        
+  def index 
   end
 
   def valider

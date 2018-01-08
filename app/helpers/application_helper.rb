@@ -1,6 +1,6 @@
 module ApplicationHelper
 
-  def lireMetaclasses(mc)
+  def lireMetaclasses
     fname = "public/metaclasses.txt"
     file = File.open(fname, "r:iso8859-1")
       while (line = file.gets)
@@ -9,9 +9,9 @@ module ApplicationHelper
 	case type.strip
 	when "MetaClasse" 
 	  nom, reste = reste.split("\t")
-	 listeClasses = reste.split(";")
-	 listeClasses.shift         # Supprimer premier element du array (CycleX)
-	 listeClasses = listeClasses.collect{|x| x.strip} #Remove trailing CR
+	  listeClasses = reste.split(";")
+	  listeClasses.shift         # Supprimer premier element du array (CycleX)
+	  listeClasses = listeClasses.collect{|x| x.strip} #Remove trailing CR
 	  #~ puts"[meta_classe/debug01]listeClasses[0].strip = #{liste_classes[0].strip}"
 	  mc = Metaclasse.new({ :nom 	       => nom, 
 				:fixHoraire    => false,
@@ -37,12 +37,44 @@ module ApplicationHelper
 	end
 	  
       end 
-    file.close		
-    mc = Metaclasse.toutes
+    file.close	
+    
+    Metaclasse.tous
+    
+  end
+
+  def miseAjourMetaclasses
+    fname = "public/metaclasses.txt"
+    file = File.open(fname, "r:iso8859-1")
+    
+      while (line = file.gets)
+	type, reste = line.split("::")
+	
+	case type.strip
+	when "MetaClasse" 
+	  nom, reste = reste.split("\t")
+	  mc = Metaclass.create(nom: nom, fixHor: false, fixCedulables: false, checked: false)
+	  
+	when "Classe" 
+	  nom, reste = reste.split("\t")
+	  matiere, groupe, periodes, periodesTache, semestre, prof, salle, listeFoyers = reste.split(";")
+	  activite = Activite.create(nom: nom, matiere: matiere, groupe: groupe, 
+				  periodes: periodes, periodesTache: periodesTache, 
+				  semestre: semestre, prof: prof, 
+				  salle: salle, listeFoyers: listeFoyers,
+				  metaclass: mc.nom
+				  )
+	else
+	    
+	end
+	  
+      end 
+    file.close	
+        
   end
 
 
-  class Metaclasse
+  class MetaclasseBack
     
     attr_accessor :nom, :fixHoraire, :fixCedulables, :checked, :listeClasses,
 		  :identifiant, :cycle, :niveau
@@ -71,27 +103,27 @@ module ApplicationHelper
 #-------Class methods
 
     def self.afficher
-	    @@tous.sort{|a,b| a.identifiant <=> b.identifiant}.each{|x| x.show}
+	@@tous.sort{|a,b| a.identifiant <=> b.identifiant}.each{|x| x.show}
     end
     
     def self.trouver(identifiant)
-	    @@tous.find{|x| x.identifiant == identifiant}
+	@@tous.find{|x| x.identifiant == identifiant}
     end
 
-    def self.toutes
-	    @@tous
+    def self.tous
+	@@tous.uniq.sort{|a,b| a.nom <=> b.nom}
     end
 	    
     def self.obtenir_MetaclasseNommee(nom)
-	    @@tous.find {|metaclasse| metaclasse.nom == nom}
+	@@tous.find {|metaclasse| metaclasse.nom == nom}
     end
     
     def self.obtenir_metaclasse_avec_classe(classe)
-	    @@tous.find {|metaclasse| metaclasse.liste_classes.include?(classe)}
+	@@tous.find {|metaclasse| metaclasse.liste_classes.include?(classe)}
     end
     
     def self.obtenir_metaclassesEPS
-	    @@tous.find_all {|metaclasse| /Eps/.match(metaclasse.nom) }
+	@@tous.find_all {|metaclasse| /Eps/.match(metaclasse.nom) }
     end
     		    
   private	

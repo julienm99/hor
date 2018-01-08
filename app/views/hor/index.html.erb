@@ -1,16 +1,20 @@
 <body>
 
-<% mc = lireMetaclasses(mc = [])%>  
-<% mc = lireMetaclasses(mc = [])%>  
+<% mc = Metaclass.all  %>  
+<% puts mc.size %>  
+<% puts mc.class %>  
+<% puts "-"*79 %>  
 
   <div class="container">
     <div class="row">    
-      <% x = y = 0 ; color = ""%>
+      <% x = y = 0 ; color = "blue"%>
       <% until x > mc.size do %>
-	<% until y == 5 do %>
+	<% until y == 5  do %>
 	  <div class="col-lg-2 ligneHaute">
-	    <input type="checkbox" checked="true" name=<%= mc[x] %>></input>
-	    <font size=4.5 color=<%= color%>><%= mc[x] %><% x += 1; y += 1 %>
+	    <% if mc[x] %>
+	      <input type="checkbox" name=<%= mc[x].nom %> <%= mc[x].checked ? "checked" : "" %>></input>
+	      <font size=4.5 color=<%= color%>><%= mc[x].nom %>
+	    <% end ; x += 1; y += 1 %>
 	  </div> 
 	<% end ; y = 0 %> 	
       <% end %> 
