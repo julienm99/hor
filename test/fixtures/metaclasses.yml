@@ -5,9 +5,13 @@ one:
   fixHor: false
   fixCedulables: false
   checked: false
+  niveau: MyString
+  listActivites: MyString
 
 two:
   nom: MyString
   fixHor: false
   fixCedulables: false
   checked: false
+  niveau: MyString
+  listActivites: MyString

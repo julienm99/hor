@@ -17,7 +17,7 @@ class MetaclassesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create metaclass" do
     assert_difference('Metaclass.count') do
-      post metaclasses_url, params: { metaclass: { checked: @metaclass.checked, fixCedulables: @metaclass.fixCedulables, fixHor: @metaclass.fixHor, nom: @metaclass.nom } }
+      post metaclasses_url, params: { metaclass: { checked: @metaclass.checked, fixCedulables: @metaclass.fixCedulables, fixHor: @metaclass.fixHor, listActivites: @metaclass.listActivites, niveau: @metaclass.niveau, nom: @metaclass.nom } }
     end
 
     assert_redirected_to metaclass_url(Metaclass.last)
@@ -34,7 +34,7 @@ class MetaclassesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update metaclass" do
-    patch metaclass_url(@metaclass), params: { metaclass: { checked: @metaclass.checked, fixCedulables: @metaclass.fixCedulables, fixHor: @metaclass.fixHor, nom: @metaclass.nom } }
+    patch metaclass_url(@metaclass), params: { metaclass: { checked: @metaclass.checked, fixCedulables: @metaclass.fixCedulables, fixHor: @metaclass.fixHor, listActivites: @metaclass.listActivites, niveau: @metaclass.niveau, nom: @metaclass.nom } }
     assert_redirected_to metaclass_url(@metaclass)
   end
 

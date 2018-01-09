@@ -20,5 +20,15 @@
   <%= @metaclass.checked %>
 </p>
 
+<p>
+  <strong>Niveau:</strong>
+  <%= @metaclass.niveau %>
+</p>
+
+<p>
+  <strong>Listactivites:</strong>
+  <%= @metaclass.listActivites %>
+</p>
+
 <%= link_to 'Edit', edit_metaclass_path(@metaclass) %> |
 <%= link_to 'Back', metaclasses_path %>

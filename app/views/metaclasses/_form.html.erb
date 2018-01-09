@@ -31,6 +31,16 @@
     <%= form.check_box :checked, id: :metaclass_checked %>
   </div>
 
+  <div class="field">
+    <%= form.label :niveau %>
+    <%= form.text_field :niveau, id: :metaclass_niveau %>
+  </div>
+
+  <div class="field">
+    <%= form.label :listActivites %>
+    <%= form.text_field :listActivites, id: :metaclass_listActivites %>
+  </div>
+
   <div class="actions">
     <%= form.submit %>
   </div>

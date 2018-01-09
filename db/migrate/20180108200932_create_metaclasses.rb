@@ -5,6 +5,8 @@ class CreateMetaclasses < ActiveRecord::Migration[5.1]
       t.boolean :fixHor
       t.boolean :fixCedulables
       t.boolean :checked
+      t.string :niveau
+      t.string :listActivites
 
       t.timestamps
     end

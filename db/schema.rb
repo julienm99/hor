@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180107220155) do
+ActiveRecord::Schema.define(version: 20180108201210) do
 
   create_table "activites", force: :cascade do |t|
     t.string "nom"
@@ -33,6 +33,8 @@ ActiveRecord::Schema.define(version: 20180107220155) do
     t.boolean "fixHor"
     t.boolean "fixCedulables"
     t.boolean "checked"
+    t.string "niveau"
+    t.string "listActivites"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

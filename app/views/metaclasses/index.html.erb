@@ -9,6 +9,8 @@
       <th>Fixhor</th>
       <th>Fixcedulables</th>
       <th>Checked</th>
+      <th>Niveau</th>
+      <th>Listactivites</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -20,6 +22,8 @@
         <td><%= metaclass.fixHor %></td>
         <td><%= metaclass.fixCedulables %></td>
         <td><%= metaclass.checked %></td>
+        <td><%= metaclass.niveau %></td>
+        <td><%= metaclass.listActivites %></td>
         <td><%= link_to 'Show', metaclass %></td>
         <td><%= link_to 'Edit', edit_metaclass_path(metaclass) %></td>
         <td><%= link_to 'Destroy', metaclass, method: :delete, data: { confirm: 'Are you sure?' } %></td>
