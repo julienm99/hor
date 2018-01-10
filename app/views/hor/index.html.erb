@@ -1,20 +1,19 @@
 <body>
 
-<% mc = Metaclass.all  %>  
+<% mc = Metaclass.all.order(:nom)  %>  
+<% puts Metaclass.count  %>  
 
   <div class="container">
     <div class="row">    
-      <% x = y = 0 %>
+      <% x = 0 ; y = 0 %>
       <% until x > mc.size do %>
 	<% until y == 5  do %>
-	  <% color = satutColor(mc[x]) %>
+	  <% style, status = statusMetaclasse(mc[x]) if mc[x] %>
 	  <div class="col-lg-2 ligneHaute">
 	    <% if mc[x] %>
-	      <input type="checkbox" name=<%= mc[x].nom %> 
-		<%= mc[x].checked ? " checked" : "" %>
-		<%= mc[x].fixHor || mc[x].fixCedulables  ? " disabled" : "" %>>
-	      </input>
-	      <font size=4.5 color=<%= color %>><%= mc[x].nom %>
+	      <input type="checkbox" value=<%= mc[x].nom %> name=<%= mc[x].nom %> 
+	      <%= status %> ></input>
+	      <font size=4.5 <%= style %> ><%= mc[x].nom %>
 	    <% end ; x += 1; y += 1 %>
 	  </div> 
 	<% end ; y = 0 %> 	

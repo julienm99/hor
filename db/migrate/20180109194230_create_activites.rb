@@ -2,7 +2,8 @@ class CreateActivites < ActiveRecord::Migration[5.1]
   def change
     create_table :activites do |t|
       t.string :nom
-      t.string :matiere
+      t.string :identifiantmc
+      t.string :cours
       t.string :groupe
       t.float :periodes
       t.float :periodesTache

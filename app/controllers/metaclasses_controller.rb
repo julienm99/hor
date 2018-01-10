@@ -69,6 +69,6 @@ class MetaclassesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def metaclass_params
-      params.require(:metaclass).permit(:nom, :fixHor, :fixCedulables, :checked, :niveau, :listActivites)
+      params.require(:metaclass).permit(:nom, :status, :niveau, :listeActivites)
     end
 end

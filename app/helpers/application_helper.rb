@@ -1,11 +1,29 @@
 module ApplicationHelper
 
-  def satutColor(mc)
-    #~ "gray"  # default
-    #~ "blue"  if mc.Fixhor?
-    #~ "green" if mc.fixCedulables
-    #~ "red"   if mc.checked  
-puts "mc.fixHor = #{mc.nom}"    
+  def statusMetaclasse(mc)
+    case mc.status
+    when "horaire_fixe"
+      color = "blue"; bold="bold"; italic="italic;"
+      status = " checked disabled"
+      
+    when "cedulables_fixe"
+      color = "green"
+      status = " checked disabled"
+      
+    when "en_traitement"
+      color = "red"
+      status = " checked"
+      
+    when "inactif"
+      color = "gray"
+      status = ""
+      
+    else
+    end
+    style = "color = #{color} font-weight = #{bold} font-style = #{italic}"
+    #~ style = "style = #{style}"
+    return style, status
+    
   end
       
   
@@ -20,24 +38,23 @@ puts "mc.fixHor = #{mc.nom}"
 	when "MetaClasse" 
 	  nom, listeActivites = reste.split("\t")
 	  listeActivites = listeActivites[7,listeActivites.length].strip
-	  niveau = ""
+	  niveau = "" ; status ="inactif"
 	  
 	  mc = Metaclass.create(
 		    nom: nom, 
-		    fixHor: false, 
-		    fixCedulables: false, 
-		    checked: false,
+		    status: status, 
 		    niveau: niveau, 
 		    listeActivites: listeActivites
 		    )
 		    
 	when "Classe" 
 	  nom, reste = reste.split("\t")
-	  cours, groupe, periodes, periodesTache, semestre, prof, salle, listeFoyers.strip = reste.split(";")
+	  cours, groupe, periodes, periodesTache, semestre, prof, salle, list = reste.split(";")
+	  listeFoyers = list.strip
 	  
 	  activite = Activite.create(
 		    nom: nom, 
-		    nomMc: mc.nom, 
+		    identifiantmc: mc.nom, 
 		    cours: cours, 
 		    groupe: groupe, 
 		    periodes: periodes, 
@@ -48,9 +65,8 @@ puts "mc.fixHor = #{mc.nom}"
 		    listeFoyers: listeFoyers,
 		    metaclass: mc
 		    )
-		    s
-	  niv = listeFoyers[2,1]
-	  mc.niveau = "S" + niv
+		    
+	  mc.niveau = "S" + listeFoyers[2,1]
 	  mc.save
 	else
 	    

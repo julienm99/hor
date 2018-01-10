@@ -17,18 +17,8 @@
   </div>
 
   <div class="field">
-    <%= form.label :fixHor %>
-    <%= form.check_box :fixHor, id: :metaclass_fixHor %>
-  </div>
-
-  <div class="field">
-    <%= form.label :fixCedulables %>
-    <%= form.check_box :fixCedulables, id: :metaclass_fixCedulables %>
-  </div>
-
-  <div class="field">
-    <%= form.label :checked %>
-    <%= form.check_box :checked, id: :metaclass_checked %>
+    <%= form.label :status %>
+    <%= form.text_field :status, id: :metaclass_status %>
   </div>
 
   <div class="field">
@@ -37,8 +27,8 @@
   </div>
 
   <div class="field">
-    <%= form.label :listActivites %>
-    <%= form.text_field :listActivites, id: :metaclass_listActivites %>
+    <%= form.label :listeActivites %>
+    <%= form.text_field :listeActivites, id: :metaclass_listeActivites %>
   </div>
 
   <div class="actions">

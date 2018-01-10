@@ -6,7 +6,8 @@
   <thead>
     <tr>
       <th>Nom</th>
-      <th>Matiere</th>
+      <th>Identifiantmc</th>
+      <th>Cours</th>
       <th>Groupe</th>
       <th>Periodes</th>
       <th>Periodestache</th>
@@ -23,7 +24,8 @@
     <% @activites.each do |activite| %>
       <tr>
         <td><%= activite.nom %></td>
-        <td><%= activite.matiere %></td>
+        <td><%= activite.identifiantmc %></td>
+        <td><%= activite.cours %></td>
         <td><%= activite.groupe %></td>
         <td><%= activite.periodes %></td>
         <td><%= activite.periodesTache %></td>

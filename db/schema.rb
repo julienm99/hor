@@ -10,11 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180108201210) do
+ActiveRecord::Schema.define(version: 20180109194230) do
 
   create_table "activites", force: :cascade do |t|
     t.string "nom"
-    t.string "matiere"
+    t.string "identifiantmc"
+    t.string "cours"
     t.string "groupe"
     t.float "periodes"
     t.float "periodesTache"
@@ -30,11 +31,9 @@ ActiveRecord::Schema.define(version: 20180108201210) do
 
   create_table "metaclasses", force: :cascade do |t|
     t.string "nom"
-    t.boolean "fixHor"
-    t.boolean "fixCedulables"
-    t.boolean "checked"
+    t.string "status"
     t.string "niveau"
-    t.string "listActivites"
+    t.string "listeActivites"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

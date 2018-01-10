@@ -2,16 +2,12 @@
 
 one:
   nom: MyString
-  fixHor: false
-  fixCedulables: false
-  checked: false
+  status: MyString
   niveau: MyString
-  listActivites: MyString
+  listeActivites: MyString
 
 two:
   nom: MyString
-  fixHor: false
-  fixCedulables: false
-  checked: false
+  status: MyString
   niveau: MyString
-  listActivites: MyString
+  listeActivites: MyString
