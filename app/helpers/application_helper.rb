@@ -1,27 +1,32 @@
 module ApplicationHelper
 
+  def obtenirMetaclasses
+    Metaclass.all.order(:nom)
+  end
+
   def statusMetaclasse(mc)
     case mc.status
     when "horaire_fixe"
-      color = "blue"; bold="bold"; italic="italic;"
+      color = "blue"; bold="bold"; italic="italic"; back = "yellow"
       status = " checked disabled"
       
     when "cedulables_fixe"
-      color = "green"
+      color = "white"; bold="bold"; italic="italic"; back = "green"
       status = " checked disabled"
       
     when "en_traitement"
-      color = "red"
+      color = "white"; bold="bold"; italic="italic"; back = "red"
       status = " checked"
       
     when "inactif"
-      color = "gray"
+      color = "gray"; bold="normal"; italic="normal"; back = "white"
       status = ""
       
     else
     end
-    style = "color = #{color} font-weight = #{bold} font-style = #{italic}"
-    #~ style = "style = #{style}"
+    
+    style = "background-color:#{back};color:#{color};font-weight:#{bold};font-style:#{italic};"
+    
     return style, status
     
   end

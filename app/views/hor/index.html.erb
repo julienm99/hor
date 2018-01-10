@@ -1,9 +1,8 @@
 <body>
 
-<% mc = Metaclass.all.order(:nom)  %>  
-<% puts Metaclass.count  %>  
+<% mc = obtenirMetaclasses %>  
 
-  <div class="container">
+  <div class="container" id="affiche">
     <div class="row">    
       <% x = 0 ; y = 0 %>
       <% until x > mc.size do %>
@@ -12,8 +11,8 @@
 	  <div class="col-lg-2 ligneHaute">
 	    <% if mc[x] %>
 	      <input type="checkbox" value=<%= mc[x].nom %> name=<%= mc[x].nom %> 
-	      <%= status %> ></input>
-	      <font size=4.5 <%= style %> ><%= mc[x].nom %>
+		<%= status %> ></input>
+		<font size=4.5 style=<%= style %> ><%= mc[x].nom %>
 	    <% end ; x += 1; y += 1 %>
 	  </div> 
 	<% end ; y = 0 %> 	
