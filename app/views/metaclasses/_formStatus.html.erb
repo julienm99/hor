@@ -1,0 +1,11 @@
+<%= form_with(model: metaclass, local: true) do |form| %>
+
+  <div class="field">
+    <%= "4-en-traitement" :status %>
+    <%= form.text_field :status, id: :metaclass_status %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

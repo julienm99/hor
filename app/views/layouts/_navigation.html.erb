@@ -1,4 +1,5 @@
 <nav class="navbar navbar-default navbar-fixed-top">
+  <form id="menuHaut">
   <div class="container-fluid btn-group center ">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -80,29 +81,41 @@
     <%= link_to 'DÉ-SÉLECTIONNER', fixerHoraire_path, class:"btn btn-danger" %>
     <%= link_to 'INFO', fixerHoraire_path, class:"btn btn-info" %>      
     </div>
+
   </div><!-- /.container-fluid -->
+  
+  </form>
 </nav>
 
 
 
 <!-- --BOTTOM ----------------------->
 <nav class="navbar navbar-default navbar-fixed-bottom">
-  <div class="container-fluid center" >
-    <div class="metaclassesChoisies">
-      METACLASSES EN JEU: <br>
-      <%= %>
+
+  <form id="menuBas">
+  
+    <div class="container-fluid center" >
+
+      <div class="metaclassesChoisies" >
+	<input type="button" onclick="metaclassesChoisies()" value="METACLASSES-CHOISIES: ">
+	<text id="choixMetaclasses" color="white"> Michel </text>
+      </div>
+      
+      <br>
+      <%= link_to 'RÉPARTIR', root_path, class:"btn btn-primary" %>
+      <%= link_to 'VALIDER', valider_path, class:"btn btn-warning" %>
+      <%= link_to 'ORDONNER', root_path, class:"btn btn-primary" %>
+      <%= link_to 'FILTRER', root_path, class:"btn btn-primary" %>
+      <%= link_to 'FIXER-REP', root_path, class:"btn btn-primary" %>
+      <%= link_to 'CEDULER', root_path, class:"btn btn-primary" %>
+      <%= link_to 'VIABILISER', root_path, class:"btn btn-primary" %>
+      <%= link_to 'COMPACTER', root_path, class:"btn btn-primary" %>
+      <%= link_to 'DIAGONALISER', root_path, class:"btn btn-primary" %>
+      <%= link_to 'FIXER-HOR', fixerHoraire_path, class:"btn btn-success" %>
+      <%= link_to 'STOP', fixerHoraire_path, class:"btn btn-danger left" %>
     </div>
-    <br>
-    <%= link_to 'RÉPARTIR', root_path, class:"btn btn-primary" %>
-    <%= link_to 'VALIDER', valider_path, class:"btn btn-warning" %>
-    <%= link_to 'ORDONNER', root_path, class:"btn btn-primary" %>
-    <%= link_to 'FILTRER', root_path, class:"btn btn-primary" %>
-    <%= link_to 'FIXER-REP', root_path, class:"btn btn-primary" %>
-    <%= link_to 'CEDULER', root_path, class:"btn btn-primary" %>
-    <%= link_to 'VIABILISER', root_path, class:"btn btn-primary" %>
-    <%= link_to 'COMPACTER', root_path, class:"btn btn-primary" %>
-    <%= link_to 'DIAGONALISER', root_path, class:"btn btn-primary" %>
-    <%= link_to 'FIXER-HOR', fixerHoraire_path, class:"btn btn-success" %>
-    <%= link_to 'STOP', fixerHoraire_path, class:"btn btn-danger left" %>
-  </div>
+    
+  </form>
 </nav>
+
+

@@ -1,20 +1,24 @@
 module ApplicationHelper
 
   def obtenirMetaclasses
-    Metaclass.all.order(:nom)
+    Metaclass.all.order(:status, :nom)
   end
 
   def statusMetaclasse(mc)
     case mc.status
-    when "horaire_fixe"
+    when "1-horaire_fixe"
       color = "blue"; bold="bold"; italic="italic"; back = "yellow"
       status = " checked disabled"
       
-    when "cedulables_fixe"
-      color = "white"; bold="bold"; italic="italic"; back = "green"
+    when "2-cedulables_fixe"
+      color = "white"; bold="bold"; italic="italic"; back = "Green"
       status = " checked disabled"
       
-    when "en_traitement"
+    when "3-cedulables"
+      color = "white"; bold="bold"; italic="italic"; back = "MediumSeaGreen"
+      status = " checked disabled"
+      
+    when "4-en_traitement"
       color = "white"; bold="bold"; italic="italic"; back = "red"
       status = " checked"
       
@@ -25,13 +29,23 @@ module ApplicationHelper
     else
     end
     
-    style = "background-color:#{back};color:#{color};font-weight:#{bold};font-style:#{italic};"
+    style = "line-height:25px;background-color:#{back};color:#{color};font-weight:#{bold};font-style:#{italic};"
     
-    return style, status
+    return style, status, color = "blue"
     
   end
-      
-  
+
+
+  def changerStatus(txt)
+    #~ mc = obtenirMetaclasses
+    puts txt
+    #~ puts mc.nom
+    #~ if mc.status = "4-en_traitement"
+    #~ mc.status = "inactif"
+    #~ mc.save
+  end
+
+
   def miseAjourMetaclasses
     fname = "public/metaclasses.txt"
     file = File.open(fname, "r:iso8859-1")

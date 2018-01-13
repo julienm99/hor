@@ -1,26 +1,27 @@
 <body>
-
-<% mc = obtenirMetaclasses %>  
-
-  <div class="container" id="affiche">
-    <div class="row">    
-      <% x = 0 ; y = 0 %>
-      <% until x > mc.size do %>
-	<% until y == 5  do %>
-	  <% style, status = statusMetaclasse(mc[x]) if mc[x] %>
-	  <div class="col-lg-2 ligneHaute">
-	    <% if mc[x] %>
-	      <input type="checkbox" value=<%= mc[x].nom %> name=<%= mc[x].nom %> 
-		<%= status %> ></input>
-		<font size=4.5 style=<%= style %> ><%= mc[x].nom %>
-	    <% end ; x += 1; y += 1 %>
-	  </div> 
-	<% end ; y = 0 %> 	
-      <% end %> 
-    </div>
-  </div>
-
   
-
+    <% mc = obtenirMetaclasses %> 
+ 
+    <div class="container" id="affiche">
+      <div class="row">    
+	<% x = 0 ; y = 0 %>
+	<% until x > mc.size do %>
+	  <% until y == 5  do %>
+	    <% style, status, color = statusMetaclasse(mc[x]) if mc[x] %>
+	    <div class="col-lg-2 ligneHaute">
+	      <% if mc[x] %>
+	      
+		<%= form_with(model: @metaclass, local: true, action: "mc[x].save", method: "GET") do |form| %>
+		  <% mc[x].status = "4-en_traitement" %>		  
+		 <%= form.submit mc[x].nom, style: style %> 
+		  <% end %>
+		
+	      <% end ; x += 1; y += 1 %>
+	    </div> 
+	  <% end ; y = 0 %> 	
+	<% end %> 
+      </div>
+      
+    </div>
 
 </body>

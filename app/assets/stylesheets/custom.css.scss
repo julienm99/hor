@@ -31,8 +31,8 @@ $navbar-default-bg: lightskyblue;
 }
 
 body { 
-    padding-top: 50px;
-    padding-bottom: 60px;
+    padding-top: 40px;
+    padding-bottom: 65px;
 }
 
 .metaclassesChoisies {
@@ -41,10 +41,11 @@ body {
     padding-bottom: 7px;
     text-align: center;
     font-weight: bold;
+	font-size: 5;
 } 
 
 .ligneHaute {
-    line-height: 150%;
+    line-height: 300%;
 }
 
 
@@ -59,11 +60,9 @@ body {
     padding-bottom: 7px;
 }
 
-input[type=checkbox]:focus {
-    background-color: lightblue;
-}
 
-input[type=checkbox]:hover {
-    background-color: lightgreen;
-    border: 2px solid #555;
+.textMetaclasse:hover {
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 15px;
 }
