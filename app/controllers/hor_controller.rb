@@ -15,6 +15,10 @@ class HorController < ApplicationController
   def miseAjour   
   end
 
+  def statusEnTraitement
+    
+  end
+
 
 
 end

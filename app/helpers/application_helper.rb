@@ -36,13 +36,9 @@ module ApplicationHelper
   end
 
 
-  def changerStatus(txt)
-    #~ mc = obtenirMetaclasses
-    puts txt
-    #~ puts mc.nom
-    #~ if mc.status = "4-en_traitement"
-    #~ mc.status = "inactif"
-    #~ mc.save
+  def changerStatus(mc,status)
+    mc.status = status
+    mc.save
   end
 
 
