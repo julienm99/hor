@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   
   resources :activites
   resources :metaclasses
+  resources :metaclasses, path_names: { editStatus: 'editStatus' }
   
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   
@@ -13,6 +14,5 @@ Rails.application.routes.draw do
   get 'choixMatiere',      to: 'hor#choixMatiere'
   get 'miseAjour',         to: 'hor#miseAjour'
   get 'statusEnTraitement',to: 'hor#statusEnTraitement'
-
   
 end

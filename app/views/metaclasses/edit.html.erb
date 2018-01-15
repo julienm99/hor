@@ -1,6 +1,15 @@
-<h1>Editing Metaclass</h1>
+<h1>Editing <%= @metaclass.nom %></h1>
 
-<%= render 'form', metaclass: @metaclass %>
+<%= render 'formStatus', metaclass: @metaclass %> <!-- changer formStatus pour form 
 
 <%= link_to 'Show', @metaclass %> |
-<%= link_to 'Back', metaclasses_path %>
+<%= link_to 'Back', metaclasses_path %>  enlever le commentaire et ce qui vient apres-->
+
+
+<!.. <%= link_to 'HORAIRE-JDLM', root_path %> ..>
+
+<script>
+
+window.location.replace("http://localhost:3000/");
+
+</script>
