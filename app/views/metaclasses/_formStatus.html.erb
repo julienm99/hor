@@ -1,6 +1,6 @@
 <%= form_with(model: metaclass, local: true) do |form| %>
 
-    <% @metaclass.status = "4-en_traitement" %>
+    <% @metaclass.status == "inactif" ? @metaclass.status = "4-en_traitement" : @metaclass.status = "inactif"%>
     <% @metaclass.save %>
     
 <% end %> 

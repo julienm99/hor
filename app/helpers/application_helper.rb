@@ -29,9 +29,12 @@ module ApplicationHelper
     else
     end
     
-    style = "line-height:25px;background-color:#{back};color:#{color};font-weight:#{bold};font-style:#{italic};"
+    style  = "line-height: 25px; background-color: #{back}; color: #{color};"
+    style += "font-size:20px; font-weight:#{bold}; font-style:#{italic};"
+    style += "border-radius:5px;"
+    #~ style += "border-style:solid;border-radius:5px;"
     
-    return style, status, color = "blue"
+    return style, status
     
   end
 
