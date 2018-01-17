@@ -1,0 +1,28 @@
+<!-- --BOTTOM ----------------------->
+<nav class="navbar navbar-default navbar-fixed-bottom">
+
+  <form id="menuBas">
+  
+    <div class="container-fluid center" >
+
+      <div class="metaclassesChoisies" >
+	<input type="button" onclick="metaclassesChoisies()" value="METACLASSES-CHOISIES: ">
+	<text id="choixMetaclasses" color="white"> Michel </text>
+      </div>
+      
+      <br>
+      <%= link_to 'RÉPARTIR', root_path, class:"btn btn-primary" %>
+      <%= link_to 'VALIDER', valider_path, class:"btn btn-warning" %>
+      <%= link_to 'ORDONNER', root_path, class:"btn btn-primary" %>
+      <%= link_to 'FILTRER', root_path, class:"btn btn-primary" %>
+      <%= link_to 'FIXER-REP', root_path, class:"btn btn-primary" %>
+      <%= link_to 'CEDULER', root_path, class:"btn btn-primary" %>
+      <%= link_to 'VIABILISER', root_path, class:"btn btn-primary" %>
+      <%= link_to 'COMPACTER', root_path, class:"btn btn-primary" %>
+      <%= link_to 'DIAGONALISER', root_path, class:"btn btn-primary" %>
+      <%= link_to 'FIXER-HOR', fixerHoraire_path, class:"btn btn-success" %>
+      <%= link_to 'STOP', fixerHoraire_path, class:"btn btn-danger left" %>
+    </div>
+    
+  </form>
+</nav>

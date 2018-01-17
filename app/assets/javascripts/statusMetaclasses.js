@@ -17,3 +17,10 @@ function affiche() {
       document.getElementById("affiche").innerHTML;
 
 }
+
+
+function accueil() {
+  // NE FONCTIONNE PAS
+      window.location.replace("http://localhost:3000/");
+
+}

@@ -4,6 +4,15 @@ module ApplicationHelper
     Metaclass.all.order(:status, :nom)
   end
 
+  def deSelectionner(statut)    
+    Metaclass.all.order(:status, :nom).each do |mc|      
+       if mc.status == statut then
+	 mc.status = "inactif" ; mc.save  
+      end
+    end
+  end
+  
+  
   def statusMetaclasse(mc)
     case mc.status
     when "1-horaire_fixe"

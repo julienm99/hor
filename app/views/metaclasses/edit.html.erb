@@ -1,15 +1,24 @@
 <h1>Editing <%= @metaclass.nom %></h1>
 
-<%= render 'formStatus', metaclass: @metaclass %> <!-- changer formStatus pour form 
 
-<%= link_to 'Show', @metaclass %> |
-<%= link_to 'Back', metaclasses_path %>  enlever le commentaire et ce qui vient apres-->
+<!-- Pour revenir à l'édition complète des metaclasses :
+	1- DÉCOMMENTER les lignes commentées ci-après
+	2- COMMENTER : les suivantes qui ne le sont pas 
 
+<%= render 'form', metaclass: @metaclass %> 
 
-<!.. <%= link_to 'HORAIRE-JDLM', root_path %> ..>
+<%= link_to 'Afficher', @metaclass %> |
+<%= link_to 'Liste des metaclasses', metaclasses_path %>
+
+-->
+
+<!--  --> 
+
+<%= render 'formStatus', metaclass: @metaclass %> 
 
 <script>
 
 window.location.replace("http://localhost:3000/");
 
 </script>
+

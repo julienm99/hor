@@ -6,19 +6,16 @@ class HorController < ApplicationController
   def valider
   end
 
+  def miseAjour   
+  end
+
+  def deselectionner
+  end
+  
   def fixerHoraire    
   end
 
   def choixMatiere    
   end
-
-  def miseAjour   
-  end
-
-  def statusEnTraitement    
-  end
-
-
-
 
 end

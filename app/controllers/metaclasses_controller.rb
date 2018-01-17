@@ -22,8 +22,6 @@ class MetaclassesController < ApplicationController
   end
 
   # GET /metaclasses/1/edit
-  def editStatus
-  end
 
   # POST /metaclasses
   # POST /metaclasses.json

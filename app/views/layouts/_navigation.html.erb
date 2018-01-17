@@ -1,7 +1,7 @@
 <nav class="navbar navbar-default navbar-fixed-top">
   <form id="menuHaut">
   <div class="container-fluid btn-group center ">
-    <!-- Brand and toggle get grouped for better mobile display -->
+    <!-- LOGO et redirection à la page d'acceuil regroupé -->
     <div class="navbar-header">
       <%= link_to 'HORAIRE-JDLM', root_path, class:"navbar-brand", id:"logo" %>
     </div>
@@ -9,7 +9,7 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div role="main" class="container theme-showcase">
     
-      <!-- NAV-BAR-TOP btn:[METACLASSES] -->
+      <!-- nav-barTop btn:[METACLASSES] -->
       <div class="btn-group btn-group-primary">
 	<button type="button" class="btn btn-primary">METACLASSES </button>
 	<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -78,7 +78,20 @@
 	</ul>
       </div>
       
-    <%= link_to 'DÉ-SÉLECTIONNER', fixerHoraire_path, class:"btn btn-danger" %>
+      <div class="btn-group btn-group-primary">
+	<button type="button" class="btn btn-primary">DÉ-SÉLECTIONNER </button>
+	<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	  <span class="caret"></span>
+	  <span class="sr-only">Toggle Dropdown</span>
+	</button>
+	<ul class="dropdown-menu multi-level">
+	  <li><%= link_to '1-horaire_fixe',    fixerHoraire_path, class:"btn btn-warning" %></li>
+	  <li><%= link_to '2-cedulables_fixe', fixerHoraire_path, class:"btn btn-warning" %></li>
+	  <li><%= link_to '3-cedulables',      fixerHoraire_path, class:"btn btn-warning" %></li>
+	  <li><%= link_to '4-en_traitement',   fixerHoraire_path, class:"btn btn-warning" %></li>
+      </div>
+      
+    <%= link_to 'DÉ-SÉLECTIONNER', deselectionner_path, class:"btn btn-danger" %>
     <%= link_to 'INFO', fixerHoraire_path, class:"btn btn-info" %>      
     </div>
 
@@ -87,35 +100,10 @@
   </form>
 </nav>
 
+<!-- BARRE DE NAVIGATION DU BAS DE PAGE -->
+
+<%= render 'layouts/nav_barBottom' %> 
 
 
-<!-- --BOTTOM ----------------------->
-<nav class="navbar navbar-default navbar-fixed-bottom">
-
-  <form id="menuBas">
-  
-    <div class="container-fluid center" >
-
-      <div class="metaclassesChoisies" >
-	<input type="button" onclick="metaclassesChoisies()" value="METACLASSES-CHOISIES: ">
-	<text id="choixMetaclasses" color="white"> Michel </text>
-      </div>
-      
-      <br>
-      <%= link_to 'RÉPARTIR', root_path, class:"btn btn-primary" %>
-      <%= link_to 'VALIDER', valider_path, class:"btn btn-warning" %>
-      <%= link_to 'ORDONNER', root_path, class:"btn btn-primary" %>
-      <%= link_to 'FILTRER', root_path, class:"btn btn-primary" %>
-      <%= link_to 'FIXER-REP', root_path, class:"btn btn-primary" %>
-      <%= link_to 'CEDULER', root_path, class:"btn btn-primary" %>
-      <%= link_to 'VIABILISER', root_path, class:"btn btn-primary" %>
-      <%= link_to 'COMPACTER', root_path, class:"btn btn-primary" %>
-      <%= link_to 'DIAGONALISER', root_path, class:"btn btn-primary" %>
-      <%= link_to 'FIXER-HOR', fixerHoraire_path, class:"btn btn-success" %>
-      <%= link_to 'STOP', fixerHoraire_path, class:"btn btn-danger left" %>
-    </div>
-    
-  </form>
-</nav>
 
 
