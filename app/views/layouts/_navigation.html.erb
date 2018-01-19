@@ -17,7 +17,7 @@
 	  <span class="sr-only">Toggle Dropdown</span>
 	</button>
 	<ul class="dropdown-menu multi-level">
-	  <li><%= link_to 'Backbone', fixerHoraire_path, class:"btn btn-warning" %></li>
+	  <li><%= link_to 'Backbone', backbone_path, class:"btn btn-warning" %></li>
 	  <li class="dropdown-submenu">
 	    <a tabindex="-1" href="#" class="btn btn-warning">Groupes</a>
 	    <ul class="dropdown-menu">
@@ -25,7 +25,7 @@
 	      <li class="dropdown-submenu">
 		<a tabindex="-1" href="#" class="btn btn-warning" ><%= niv %></a>
 		<ul class="dropdown-menu">
-		  <li><%= link_to "Tous les Gr de #{niveau = niv}", fixerHoraire_path, class:"btn btn-warning" %></li>
+		  <li><%= link_to "Tous les Gr de #{niveau = niv}", nivS5_path, class:"btn btn-warning" %></li>
 		  <li class="divider"></li>
 		    <% niv == "S1" ? nbGroupes = 11 : nbGroupes = 9 ; i = 1%>
 		    <% until i > nbGroupes do gr = group_string(niv,i) %>
@@ -105,5 +105,11 @@
 <%= render 'layouts/nav_barBottom' %> 
 
 
-
+<script>
+  function horaireJDLM() {
+//    window.location.replace("http://localhost:3000/");
+//    window.location.replace("http://localhost:3000/");
+    location.reload();
+  }
+</script>
 

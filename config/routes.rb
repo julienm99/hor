@@ -13,5 +13,7 @@ Rails.application.routes.draw do
   get 'choixMatiere',      to: 'hor#choixMatiere'
   get 'miseAjour',         to: 'hor#miseAjour'
   get 'deselectionner',    to: 'hor#deselectionner'
+  get 'backbone',          to: 'hor#backbone'
+  get 'nivS5',             to: 'hor#nivS5'
   
 end

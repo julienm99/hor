@@ -1,8 +1,24 @@
 module ApplicationHelper
 
-  def obtenirMetaclasses
-    Metaclass.all.order(:status, :nom)
+  def backbone(bb)
+    Metaclass.all.order(:status, :nom).each do |mc|
+      bb << mc if %w[EPS ART OPT ANG CHI PHY FM5].include?(mc.nom[0,3])
+    end
   end
+  
+  
+  def nivS5(bb)
+    Metaclass.all.order(:status, :nom).each do |mc|
+      bb << mc if mc.nom[3,1] == "5"
+    end
+  end
+  
+  
+  def changerStatus(mc,status)
+    mc.status = status
+    mc.save
+  end
+
 
   def deSelectionner(statut)    
     Metaclass.all.order(:status, :nom).each do |mc|      
@@ -13,47 +29,6 @@ module ApplicationHelper
   end
   
   
-  def statusMetaclasse(mc)
-    case mc.status
-    when "1-horaire_fixe"
-      color = "blue"; bold="bold"; italic="italic"; back = "yellow"
-      status = " checked disabled"
-      
-    when "2-cedulables_fixe"
-      color = "white"; bold="bold"; italic="italic"; back = "Green"
-      status = " checked disabled"
-      
-    when "3-cedulables"
-      color = "white"; bold="bold"; italic="italic"; back = "MediumSeaGreen"
-      status = " checked disabled"
-      
-    when "4-en_traitement"
-      color = "white"; bold="bold"; italic="italic"; back = "red"
-      status = " checked"
-      
-    when "inactif"
-      color = "gray"; bold="normal"; italic="normal"; back = "white"
-      status = ""
-      
-    else
-    end
-    
-    style  = "line-height: 25px; background-color: #{back}; color: #{color};"
-    style += "font-size:20px; font-weight:#{bold}; font-style:#{italic};"
-    style += "border-radius:5px;"
-    #~ style += "border-style:solid;border-radius:5px;"
-    
-    return style, status
-    
-  end
-
-
-  def changerStatus(mc,status)
-    mc.status = status
-    mc.save
-  end
-
-
   def miseAjourMetaclasses
     fname = "public/metaclasses.txt"
     file = File.open(fname, "r:iso8859-1")
@@ -103,6 +78,47 @@ module ApplicationHelper
     file.close	
         
   end
+
+
+  def obtenirMetaclasses
+    Metaclass.all.order(:status, :nom)  
+  end
+
+
+  def statusMetaclasse(mc)
+    case mc.status
+    when "1-horaire_fixe"
+      color = "blue"; bold="bold"; italic="italic"; back = "yellow"
+      status = " checked disabled"
+      
+    when "2-cedulables_fixe"
+      color = "white"; bold="bold"; italic="italic"; back = "Green"
+      status = " checked disabled"
+      
+    when "3-cedulables"
+      color = "white"; bold="bold"; italic="italic"; back = "MediumSeaGreen"
+      status = " checked disabled"
+      
+    when "4-en_traitement"
+      color = "white"; bold="bold"; italic="italic"; back = "red"
+      status = " checked"
+      
+    when "inactif"
+      color = "gray"; bold="normal"; italic="normal"; back = "white"
+      status = ""
+      
+    else
+    end
+    
+    style  = "line-height: 25px; background-color: #{back}; color: #{color};"
+    style += "font-size:20px; font-weight:#{bold}; font-style:#{italic};"
+    style += "border-radius:5px;"
+    #~ style += "border-style:solid;border-radius:5px;"
+    
+    return style, status
+    
+  end
+
 
 
   def group_string(niv,i)

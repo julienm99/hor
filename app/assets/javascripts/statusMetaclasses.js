@@ -1,26 +1,28 @@
 
 function metaclassesChoisies() {
-    var mc = document.forms["listeMetaclasses"];
-    var i, mcChecked = "";
-  
-    for (i = 0; i < mc.length; i++) {
-        if (mc[i].checked) {
-            mcChecked +=  mc[i].value + " ";
-        }
+  var mc = document.forms["listeMetaclasses"];
+  var i, mcChecked = "";
+
+  for (i = 0; i < mc.length; i++) {
+      if (mc[i].checked) {
+	  mcChecked +=  mc[i].value + " ";
       }
-    document.getElementById("choixMetaclasses").innerHTML = mcChecked;
-      
-    affiche();
+    }
+  document.getElementById("choixMetaclasses").innerHTML = mcChecked;
+    
+  affiche();
 }
+
 
 function affiche() {
-      document.getElementById("affiche").innerHTML;
-
+  document.getElementById("affiche").innerHTML;
 }
 
 
-function accueil() {
-  // NE FONCTIONNE PAS
-      window.location.replace("http://localhost:3000/");
-
+function pageWeb() {
+  if (arguments[0] == "accueil")  { window.location.replace("/"); };
+  if (arguments[0] == "backbone") { window.location.replace("/backbone"); };
+  if (arguments[0] == "nivS5")    { window.location.replace("/nivS5"); };
 }
+
+

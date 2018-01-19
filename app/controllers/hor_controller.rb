@@ -1,5 +1,6 @@
 class HorController < ApplicationController
-  
+  attr_accessor :choix
+
   def index 
   end
 
@@ -16,6 +17,12 @@ class HorController < ApplicationController
   end
 
   def choixMatiere    
+  end
+
+  def backbone    
+  end
+
+  def nivS5    
   end
 
 end
