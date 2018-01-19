@@ -14,6 +14,13 @@ module ApplicationHelper
   end
   
   
+  def metaclassesEPS(bb)
+    Metaclass.all.order(:status, :nom).each do |mc|
+      bb << mc if mc.nom[0,3] == "EPS"
+    end
+  end
+  
+  
   def changerStatus(mc,status)
     mc.status = status
     mc.save

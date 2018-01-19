@@ -25,4 +25,7 @@ class HorController < ApplicationController
   def nivS5    
   end
 
+  def metaclassesEPS    
+  end
+
 end
