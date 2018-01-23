@@ -77,18 +77,43 @@ module ApplicationHelper
 		    
 	  mc.niveau = "S" + listeFoyers[2,1]
 	  mc.save
-	else
-	    
-	end
-	  
+	else	    
+	end	  
       end 
-    file.close	
-        
+    file.close	        
   end
 
 
   def obtenirMetaclasses
-    Metaclass.all.order(:status, :nom)  
+    Metaclass.all.order(:status, :nom) 
+  end
+
+
+  def obtenirMetaclassesEnJeu(str)
+    mcList = Metaclass.all.find_by_status("4-en_traitement")
+    puts " Debug mcList.class = #{mcList.class}"
+    mcList.each{|mc| str << mc.nom + " "}
+    str.strip
+  end
+
+
+  def statusMetaclassesEnHoraire
+    mcEnJeu = []
+    
+    file = File.open("public/horaires.txt", "r:iso8859-1")
+      while (line = file.gets)
+	type, reste = line.split("::")
+	case type.strip
+	when "Horaire" 
+	  nom,  reste = reste.split("\t")
+	  nom = nom.strip
+	  mcEnJeu << nom if !mcEnJeu.include?(nom)
+	else
+	end
+      end
+    file.close
+    
+    mcEnJeu.each{|nom| mc = Metaclass.find_by_nom(nom); mc.status = "1-horaire_fixe"; mc.save }
   end
 
 
@@ -120,7 +145,6 @@ module ApplicationHelper
     style  = "line-height: 25px; background-color: #{back}; color: #{color};"
     style += "font-size:20px; font-weight:#{bold}; font-style:#{italic};"
     style += "border-radius:5px;"
-    #~ style += "border-style:solid;border-radius:5px;"
     
     return style, status
     
