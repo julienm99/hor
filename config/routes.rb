@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   get 'deselectionner',    to: 'hor#deselectionner'
   get 'backbone',          to: 'hor#backbone'
   get 'nivS5',             to: 'hor#nivS5'
+  get 'info',              to: 'hor#info'
   get 'metaclassesEPS',    to: 'hor#metaclassesEPS'
   
 end

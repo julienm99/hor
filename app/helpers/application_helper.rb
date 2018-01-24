@@ -5,6 +5,7 @@ module ApplicationHelper
       case sujet
       when "backbone"
 	liste << mc if %w[EPS ART OPT ANG CHI PHY FM5].include?(mc.nom[0,3])
+	liste << mc if %w[MAT4].include?(mc.nom)
 	
       when /nivS/
 	liste << mc if mc.nom[3,1] == sujet[4,1]
@@ -20,6 +21,19 @@ module ApplicationHelper
   end
   
    
+  def info(horaireAfixer)
+    dir = Dir.glob("/home/julienm/hor13/op/cedulables/*").sort
+    fname = dir.last
+    
+    file = File.open(fname, "r:iso8859-1")    
+      line = file.gets
+    file.close
+    
+    variance, horaireAfixer = line.split("\t")
+    return variance, horaireAfixer
+  end
+
+
   def changerStatus(mc,status)
     mc.status = status
     mc.save
@@ -91,7 +105,7 @@ module ApplicationHelper
   def obtenirMetaclassesEnJeu(mcEnJeu)
     metaclasses(liste = [], "4-en_traitement")
     liste.each{|mc| mcEnJeu << mc.nom + ","}
-    mcEnJeu.strip ; mcEnJeu = mcEnJeu[0,(mcEnJeu.length-1)]
+    mcEnJeu.strip
   end
 
 

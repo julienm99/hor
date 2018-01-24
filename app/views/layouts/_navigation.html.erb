@@ -78,21 +78,9 @@
 	</ul>
       </div>
       
-      <div class="btn-group btn-group-primary">
-	<button type="button" class="btn btn-primary">DÉ-SÉLECTIONNER </button>
-	<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	  <span class="caret"></span>
-	  <span class="sr-only">Toggle Dropdown</span>
-	</button>
-	<ul class="dropdown-menu multi-level">
-	  <li><%= link_to '1-horaire_fixe',    fixerHoraire_path, class:"btn btn-warning" %></li>
-	  <li><%= link_to '2-cedulables_fixe', fixerHoraire_path, class:"btn btn-warning" %></li>
-	  <li><%= link_to '3-cedulables',      fixerHoraire_path, class:"btn btn-warning" %></li>
-	  <li><%= link_to '4-en_traitement',   fixerHoraire_path, class:"btn btn-warning" %></li>
-      </div>
       
-    <%= link_to 'DÉ-SÉLECTIONNER', deselectionner_path, class:"btn btn-danger" %>
-    <%= link_to 'INFO', fixerHoraire_path, class:"btn btn-info" %>      
+    <%= link_to 'DÉ-SÉLECT.', deselectionner_path, class:"btn btn-danger" %>
+    <%= link_to 'INFO', info_path, class:"btn btn-info" %>      
     </div>
 
   </div><!-- /.container-fluid -->
@@ -107,8 +95,6 @@
 
 <script>
   function horaireJDLM() {
-//    window.location.replace("http://localhost:3000/");
-//    window.location.replace("http://localhost:3000/");
     location.reload();
   }
 </script>

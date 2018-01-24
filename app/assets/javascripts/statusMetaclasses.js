@@ -21,6 +21,7 @@ function affiche() {
 
 function pageWeb() {
   if (arguments[0] == "accueil")        { window.location.replace("/"); };
+  if (arguments[0] == "info")           { window.location.replace("/"); };
   if (arguments[0] == "backbone")       { window.location.replace("/backbone"); };
   if (arguments[0] == "nivS5")          { window.location.replace("/nivS5"); };
   if (arguments[0] == "metaclassesEPS") { window.location.replace("/metaclassesEPS"); };
