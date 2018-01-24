@@ -1,7 +1,8 @@
 <body>
   <script> var page = "accueil"; </script>
  
-  <% statusMetaclassesEnHoraire %> 
+  <% system "./horaires.sh" %> 
+  <% fixerMetaclassesEnHoraire %> 
   <% mc = obtenirMetaclasses %> 
  
     <div class="container" id="affiche">

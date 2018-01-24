@@ -1,26 +1,25 @@
 module ApplicationHelper
 
-  def backbone(bb)
+  def metaclasses(liste, sujet)
     Metaclass.all.order(:status, :nom).each do |mc|
-      bb << mc if %w[EPS ART OPT ANG CHI PHY FM5].include?(mc.nom[0,3])
+      case sujet
+      when "backbone"
+	liste << mc if %w[EPS ART OPT ANG CHI PHY FM5].include?(mc.nom[0,3])
+	
+      when /nivS/
+	liste << mc if mc.nom[3,1] == sujet[4,1]
+      
+      when "4-en_traitement"
+	liste << mc if mc.status == sujet
+
+      else 
+	liste << mc if mc.nom[0,3] == sujet
+	
+      end
     end
   end
   
-  
-  def nivS5(bb)
-    Metaclass.all.order(:status, :nom).each do |mc|
-      bb << mc if mc.nom[3,1] == "5"
-    end
-  end
-  
-  
-  def metaclassesEPS(bb)
-    Metaclass.all.order(:status, :nom).each do |mc|
-      bb << mc if mc.nom[0,3] == "EPS"
-    end
-  end
-  
-  
+   
   def changerStatus(mc,status)
     mc.status = status
     mc.save
@@ -89,15 +88,20 @@ module ApplicationHelper
   end
 
 
-  def obtenirMetaclassesEnJeu(str)
-    mcList = Metaclass.all.find_by_status("4-en_traitement")
-    puts " Debug mcList.class = #{mcList.class}"
-    mcList.each{|mc| str << mc.nom + " "}
-    str.strip
+  def obtenirMetaclassesEnJeu(mcEnJeu)
+    metaclasses(liste = [], "4-en_traitement")
+    liste.each{|mc| mcEnJeu << mc.nom + ","}
+    mcEnJeu.strip ; mcEnJeu = mcEnJeu[0,(mcEnJeu.length-1)]
   end
 
 
-  def statusMetaclassesEnHoraire
+  def changerMetaclassesEnJeu_pourCedulables
+    metaclasses(liste = [], "4-en_traitement")
+    liste.each{|mc| mc.status = "3-cedulables" ; mc.save}
+  end
+
+
+  def fixerMetaclassesEnHoraire
     mcEnJeu = []
     
     file = File.open("public/horaires.txt", "r:iso8859-1")

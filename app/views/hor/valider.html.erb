@@ -4,9 +4,11 @@
 
 </div>
 
-<p><% str = obtenirMetaclassesEnJeu(str = "") %></p>
+  <%= mcEnJeu = obtenirMetaclassesEnJeu(mcEnJeu = "") %>
  
-<p><% system "./valider.sh #{str}"  %></p>
+  <%= system "./valider.sh #{mcEnJeu}" %>
+  
+  <% changerMetaclassesEnJeu_pourCedulables %>
   
 
 <div class="jumbotron">
