@@ -1,7 +1,13 @@
 module ApplicationHelper
 
-  def metaclasses(liste, sujet)
-    Metaclass.all.order(:status, :nom).each do |mc|
+  def obtenirToutesLesMetaclasses
+    Metaclass.all.order(:status, :nom) 
+  end
+
+
+  def metaclasses(sujet)
+    liste = []
+    obtenirToutesLesMetaclasses.each do |mc|
       case sujet
       when "backbone"
 	liste << mc if %w[EPS ART OPT ANG CHI PHY FM5].include?(mc.nom[0,3])
@@ -13,23 +19,24 @@ module ApplicationHelper
       when "4-en_traitement"
 	liste << mc if mc.status == sujet
 
-      else 
-	liste << mc if mc.nom[0,3] == sujet
-	
+      else 	
       end
+      
     end
+    return liste
   end
   
    
   def info(horaireAfixer)
-    dir = Dir.glob("/home/julienm/hor13/op/cedulables/*").sort
-    fname = dir.last
+    files = Dir.glob("/home/julienm/hor13/op/cedulables/*").sort
+    fname = files.last         
     
     file = File.open(fname, "r:iso8859-1")    
-      line = file.gets
+      line = file.gets       # prendre que la première ligne
     file.close
     
     variance, horaireAfixer = line.split("\t")
+    
     return variance, horaireAfixer
   end
 
@@ -48,85 +55,55 @@ module ApplicationHelper
     end
   end
   
-  
-  def miseAjourMetaclasses
-    fname = "public/metaclasses.txt"
-    file = File.open(fname, "r:iso8859-1")
-    
-      while (line = file.gets)
-	type, reste = line.split("::")
+
+  def sauverNomsMetaclasses(status)
+    mcEnJeu = []
+    metaclasses(status).each{|mc| mcEnJeu << mc.nom }
+    open("public/#{status}.txt", "w"){|f| f.puts "#{status}::#{mcEnJeu.join(",")}"}
+      #~ case status
+      #~ when "4-en_traitement"
 	
-	case type.strip
-	when "MetaClasse" 
-	  nom, listeActivites = reste.split("\t")
-	  listeActivites = listeActivites[7,listeActivites.length].strip
-	  niveau = "" ; status ="inactif"
-	  
-	  mc = Metaclass.create(
-		    nom: nom, 
-		    status: status, 
-		    niveau: niveau, 
-		    listeActivites: listeActivites
-		    )
-		    
-	when "Classe" 
-	  nom, reste = reste.split("\t")
-	  cours, groupe, periodes, periodesTache, semestre, prof, salle, list = reste.split(";")
-	  listeFoyers = list.strip
-	  
-	  activite = Activite.create(
-		    nom: nom, 
-		    identifiantmc: mc.nom, 
-		    cours: cours, 
-		    groupe: groupe, 
-		    periodes: periodes, 
-		    periodesTache: periodesTache, 
-		    semestre: semestre, 
-		    prof: prof, 
-		    salle: salle, 
-		    listeFoyers: listeFoyers,
-		    metaclass: mc
-		    )
-		    
-	  mc.niveau = "S" + listeFoyers[2,1]
-	  mc.save
-	else	    
-	end	  
-      end 
-    file.close	        
+      #~ when "3-cedulables"
+	#~ open("public/#{status}.txt", "w"){|f| f.puts "#{status}::#{mcEnJeu.join(",")}"}
+      #~ when "2-cedulables_fixe"
+      #~ when "1-horaire_fixe"
+      #~ else
+      #~ end      
   end
 
 
-  def obtenirMetaclasses
-    Metaclass.all.order(:status, :nom) 
-  end
-
-
-  def obtenirMetaclassesEnJeu(mcEnJeu)
-    metaclasses(liste = [], "4-en_traitement")
-    liste.each{|mc| mcEnJeu << mc.nom + ","}
-    mcEnJeu.strip
+  def obtenirNomsMetaclasses(status)
+    file = File.open("public/#{status}.txt", "r:iso8859-1")
+      line = file.gets
+      type, nomsMetaclasses = line.split("::")
+    file.close
+    #~ open("public/#{status}.txt", "r"){|line| type,nomsMetaclasses = line.gets.split("::")}
+    puts "DEBUG nomsMetaclasses =  #{nomsMetaclasses}"; exit
+    return nomsMetaclasses.strip
   end
 
 
   def changerMetaclassesEnJeu_pourCedulables
-    metaclasses(liste = [], "4-en_traitement")
+    metaclasses("4-en_traitement", liste = [])
     liste.each{|mc| mc.status = "3-cedulables" ; mc.save}
+    
   end
 
 
-  def fixerMetaclassesEnHoraire
+  def updateStatusMetaclasses
     mcEnJeu = []
     
     file = File.open("public/horaires.txt", "r:iso8859-1")
+    
       while (line = file.gets)
 	type, reste = line.split("::")
 	case type.strip
 	when "Horaire" 
 	  nom,  reste = reste.split("\t")
 	  nom = nom.strip
-	  mcEnJeu << nom if !mcEnJeu.include?(nom)
+	  mcEnJeu << nom unless mcEnJeu.include?(nom)
 	else
+	  
 	end
       end
     file.close
@@ -184,6 +161,52 @@ module ApplicationHelper
   def matieresDesMetaclasses(metaclasses, matieres)
       metaclasses.each{|mc| matieres << mc.nom[0,3] }
       matieres.uniq!
+    end
+    
+
+  def miseAjourMetaclasses
+    fname = "public/metaclasses.txt"
+    file = File.open(fname, "r:iso8859-1")
+    
+      while (line = file.gets)
+	type, reste = line.split("::")
+	
+	case type.strip
+	when "MetaClasse" 
+	  nom, listeActivites = reste.split("\t")
+	  listeActivites = listeActivites[7,listeActivites.length].strip
+	  niveau = "" ; status ="inactif"
+	  
+	  mc = Metaclass.create(
+		    nom: nom, 
+		    status: status, 
+		    niveau: niveau, 
+		    listeActivites: listeActivites
+		    )		    
+	when "Classe" 
+	  nom, reste = reste.split("\t")
+	  cours, groupe, periodes, periodesTache, semestre, prof, salle, list = reste.split(";")
+	  listeFoyers = list.strip
+	  
+	  activite = Activite.create(
+		    nom: nom, 
+		    identifiantmc: mc.nom, 
+		    cours: cours, 
+		    groupe: groupe, 
+		    periodes: periodes, 
+		    periodesTache: periodesTache, 
+		    semestre: semestre, 
+		    prof: prof, 
+		    salle: salle, 
+		    listeFoyers: listeFoyers,
+		    metaclass: mc
+		    )		    
+	  mc.niveau = "S" + listeFoyers[2,1]
+	  mc.save
+	else	    
+	end	  
+      end 
+    file.close	        
   end
 
 

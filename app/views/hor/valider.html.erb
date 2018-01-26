@@ -1,24 +1,28 @@
-<div class="jumbotron">
+<body>
 
-  <h1>VALIDER LES METACLASSES:</h1>
+  <script> var page = "valider"; </script>
 
-</div>
+  <div class="jumbotron">
+    <h1>VALIDER: METACLASSES EN JEU</h1>
+  </div>
 
-  <%= mcEnJeu = obtenirMetaclassesEnJeu(mcEnJeu = "") %>
- 
-  <%= system "./valider.sh #{mcEnJeu}" %>
+
+  <%  sauverNomsMetaclasses("4-en_traitement")                    %>
+  <%= nomsMetaclasses = obtenirNomsMetaclasses("4-en_traitement") %>
+  <%= system "./valider.sh #{nomsMetaclasses}"                    %>
+  <%  changerMetaclassesEnJeu_pourCedulables                      %>
+  <%  sauverNomsMetaclasses("3-ceculables")                       %>
   
-  <% changerMetaclassesEnJeu_pourCedulables %>
-  
 
-<div class="jumbotron">
-
-    <p> <%= link_to 'INDEX', root_path, class:"btn btn-primary btn-lg" %> </p>
+  <div class="jumbotron">
+      <p> <%= link_to 'INDEX', root_path, class:"btn btn-primary btn-lg" %> </p>
+  </div>
 
 
-</div>
+  <!--  Quand la procédure sera stable 
+  <script> pageWeb(); </script>
+  -->
 
-
-
+</body>
 
     

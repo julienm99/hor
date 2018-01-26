@@ -1,16 +1,17 @@
 <body>
-  <script> var page = "accueil"; </script>
+  <script> var page = "index"; </script>
  
-  <% system "./horaires.sh" %> 
-  <% fixerMetaclassesEnHoraire %> 
-  <% mc = obtenirMetaclasses %> 
+  <% system "./horaires.sh"           %> 
+  <% updateStatusMetaclasses           %> 
+  <% mc = obtenirToutesLesMetaclasses %> 
  
     <div class="container" id="affiche">
-      <div class="row">    
-	<% x = 0 ; y = 0 ; %>
+      <div class="row">   
+      
+	<% x = 0 ; y = 0 ;      %>
 	<% until x > mc.size do %>
 	
-	  <% until y == 5  do %>
+	  <% until y == 5  do                                   %>
 	    <% style, status = statusMetaclasse(mc[x]) if mc[x] %>
 	    
 	    <div class="col-lg-2 ligneHaute">
