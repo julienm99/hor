@@ -16,10 +16,12 @@ module ApplicationHelper
       when /nivS/
 	liste << mc if mc.nom[3,1] == sujet[4,1]
       
-      when "4-en_traitement"
+      when "4-en_traitement", "3-cedulables"
 	liste << mc if mc.status == sujet
 
-      else 	
+      else 
+	liste << mc if mc.nom[0,3] == sujet
+
       end
       
     end
@@ -27,17 +29,16 @@ module ApplicationHelper
   end
   
    
-  def info(horaireAfixer)
+  def info(horaireTemp)
     files = Dir.glob("/home/julienm/hor13/op/cedulables/*").sort
     fname = files.last         
     
     file = File.open(fname, "r:iso8859-1")    
       line = file.gets       # prendre que la première ligne
+      variance, horaireTemp = line.split("\t")
     file.close
     
-    variance, horaireAfixer = line.split("\t")
-    
-    return variance, horaireAfixer
+    return variance, horaireTemp
   end
 
 
@@ -49,26 +50,17 @@ module ApplicationHelper
 
   def deSelectionner(statut)    
     Metaclass.all.order(:status, :nom).each do |mc|      
-       if mc.status == statut then
+      if mc.status == statut then
 	 mc.status = "inactif" ; mc.save  
       end
     end
   end
   
 
-  def sauverNomsMetaclasses(status)
+  def saveNomsMetaclasses(status)
     mcEnJeu = []
     metaclasses(status).each{|mc| mcEnJeu << mc.nom }
     open("public/#{status}.txt", "w"){|f| f.puts "#{status}::#{mcEnJeu.join(",")}"}
-      #~ case status
-      #~ when "4-en_traitement"
-	
-      #~ when "3-cedulables"
-	#~ open("public/#{status}.txt", "w"){|f| f.puts "#{status}::#{mcEnJeu.join(",")}"}
-      #~ when "2-cedulables_fixe"
-      #~ when "1-horaire_fixe"
-      #~ else
-      #~ end      
   end
 
 
@@ -77,38 +69,44 @@ module ApplicationHelper
       line = file.gets
       type, nomsMetaclasses = line.split("::")
     file.close
-    #~ open("public/#{status}.txt", "r"){|line| type,nomsMetaclasses = line.gets.split("::")}
-    puts "DEBUG nomsMetaclasses =  #{nomsMetaclasses}"; exit
     return nomsMetaclasses.strip
   end
 
 
   def changerMetaclassesEnJeu_pourCedulables
-    metaclasses("4-en_traitement", liste = [])
-    liste.each{|mc| mc.status = "3-cedulables" ; mc.save}
-    
+    metaclasses("4-en_traitement").each{|mc| mc.status = "3-cedulables" ; mc.save}    
   end
 
 
   def updateStatusMetaclasses
-    mcEnJeu = []
     
-    file = File.open("public/horaires.txt", "r:iso8859-1")
-    
-      while (line = file.gets)
-	type, reste = line.split("::")
-	case type.strip
-	when "Horaire" 
-	  nom,  reste = reste.split("\t")
-	  nom = nom.strip
-	  mcEnJeu << nom unless mcEnJeu.include?(nom)
-	else
+    %w[1-horaire_fixe 2-cedulables_fixe 3-cedulables 4-en_traitement].each do |status|
+      
+      mcNomEnJeu = []
+      file = File.open("public/#{status}.txt", "r:iso8859-1")
+	case status
+	when "1-horaire_fixe" 
+	  while (line = file.gets)
+	    type, reste = line.split("::")
+	    if type.strip == "Horaire" then
+	      mcNom,  horaire = reste.split("\t")
+	      mcNom = mcNom.strip
+	      mcNomEnJeu << mcNom unless mcNomEnJeu.include?(mcNom)
+	    end
+	  end
 	  
+	when "2-cedulables_fixe", "3-cedulables", "4-en_traitement"
+	  line = file.gets
+	  type, mcNoms = line.split("::")
+	  mcNoms = mcNoms.strip
+	  mcNomEnJeu = mcNoms.split(",") unless mcNoms = ""
+	
+	else
 	end
-      end
-    file.close
-    
-    mcEnJeu.each{|nom| mc = Metaclass.find_by_nom(nom); mc.status = "1-horaire_fixe"; mc.save }
+	
+      file.close
+      mcNomEnJeu.each{|nom| mc = Metaclass.find_by_nom(nom); mc.status = status; mc.save } if mcNomEnJeu[0]
+    end
   end
 
 

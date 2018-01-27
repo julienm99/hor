@@ -7,11 +7,11 @@
   </div>
 
 
-  <%  sauverNomsMetaclasses("4-en_traitement")                    %>
+  <%  saveNomsMetaclasses("4-en_traitement")                      %>
   <%= nomsMetaclasses = obtenirNomsMetaclasses("4-en_traitement") %>
   <%= system "./valider.sh #{nomsMetaclasses}"                    %>
   <%  changerMetaclassesEnJeu_pourCedulables                      %>
-  <%  sauverNomsMetaclasses("3-ceculables")                       %>
+  <%  saveNomsMetaclasses("3-cedulables")                         %>
   
 
   <div class="jumbotron">

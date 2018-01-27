@@ -19,16 +19,24 @@
 	<ul class="dropdown-menu multi-level">
 	  <li><%= link_to 'Backbone', backbone_path, class:"btn btn-warning" %></li>
 	  <li class="dropdown-submenu">
+	    <a tabindex="-1" href="#" class="btn btn-warning">NIVEAUX </a>
+	    <ul class="dropdown-menu">
+	      <li><%= link_to 'S5', nivS5_path, class:"btn btn-warning" %></li>
+	      <li><%= link_to 'S4', nivS5_path, class:"btn btn-warning" %></li>
+	      <li><%= link_to 'S3', nivS5_path, class:"btn btn-warning" %></li>
+	      <li><%= link_to 'S2', nivS5_path, class:"btn btn-warning" %></li>
+	      <li><%= link_to 'S1', nivS5_path, class:"btn btn-warning" %></li>
+	    </ul>
+	  </li>
+	  <li class="dropdown-submenu">
 	    <a tabindex="-1" href="#" class="btn btn-warning">Groupes</a>
 	    <ul class="dropdown-menu">
 	      <% ["S5","S4","S3","S2","S1"].each do |niv| %>
 	      <li class="dropdown-submenu">
 		<a tabindex="-1" href="#" class="btn btn-warning" ><%= niv %></a>
 		<ul class="dropdown-menu">
-		  <li><%= link_to "Tous les Gr de #{niveau = niv}", nivS5_path, class:"btn btn-warning" %></li>
-		  <li class="divider"></li>
-		    <% niv == "S1" ? nbGroupes = 11 : nbGroupes = 9 ; i = 1%>
-		    <% until i > nbGroupes do gr = group_string(niv,i) %>
+		    <% niv == "S1" ? nbGroupes = 11 : nbGroupes = 9 ; i = 1                    %>
+		    <% until i > nbGroupes do gr = group_string(niv,i)                         %>
 		  <li><%= link_to "#{groupe = gr}", fixerHoraire_path, class:"btn btn-warning" %></li>
 		    <% i +=1 %>  
 		    <% end %>
@@ -41,27 +49,25 @@
 	  <li class="dropdown-submenu">
 	    <a tabindex="-1" href="#" class="btn btn-warning">Catégories (Matières/Cours) </a>
 	    <ul class="dropdown-menu">
-	      <li><%= link_to 'ANGlais', choixMatiere_path, class:"btn btn-warning" %></li>
+	      <li><%= link_to 'ANGlais', choixMatiere_path, class:"btn btn-warning"  %></li>
 	      <li><%= link_to 'FRAnçais', fixerHoraire_path, class:"btn btn-warning" %></li>
 	      <li><%= link_to 'ESPagnol', fixerHoraire_path, class:"btn btn-warning" %></li>
 	      <li class="divider"></li>
-	      <li><%= link_to 'MAThématique', fixerHoraire_path, class:"btn btn-warning" %></li>
-	      <li><%= link_to 'SCiences Technologie', fixerHoraire_path, class:"btn btn-warning" %></li>
-	      <li><%= link_to 'CHImie', fixerHoraire_path, class:"btn btn-warning" %></li>
-	      <li><%= link_to 'PHYsique', fixerHoraire_path, class:"btn btn-warning" %></li>
-	      <li><%= link_to 'Technique Méthode Scientifique', fixerHoraire_path, class:"btn btn-warning" %></li>
+	      <li><%= link_to 'MAThématique', fixerHoraire_path, class:"btn btn-warning"            %></li>
+	      <li><%= link_to 'SCiences Technologie', fixerHoraire_path, class:"btn btn-warning"    %></li>
+	      <li><%= link_to 'CHImie', fixerHoraire_path, class:"btn btn-warning"                  %></li>
+	      <li><%= link_to 'PHYsique', fixerHoraire_path, class:"btn btn-warning"                %></li>
+	      <li><%= link_to 'Techni. Méthode Scient.', fixerHoraire_path, class:"btn btn-warning" %></li>
 	      <li class="divider"></li>
-	      <li><%= link_to 'ARTs', fixerHoraire_path, class:"btn btn-warning" %></li>
+	      <li><%= link_to 'ARTs', fixerHoraire_path, class:"btn btn-warning"                 %></li>
 	      <li><%= link_to 'Education PhySique', metaclassesEPS_path, class:"btn btn-warning" %></li>
-	      <li><%= link_to 'HIStoire', fixerHoraire_path, class:"btn btn-warning" %></li>
-	      <li><%= link_to 'GEOgraphie', fixerHoraire_path, class:"btn btn-warning" %></li>
+	      <li><%= link_to 'HIStoire', fixerHoraire_path, class:"btn btn-warning"             %></li>
+	      <li><%= link_to 'GEOgraphie', fixerHoraire_path, class:"btn btn-warning"           %></li>
 	    </ul>
-	  <li>
-	  <li><%= link_to 'Salles', fixerHoraire_path, class:"btn btn-warning" %></li>
-	</ul>
+	  </li>
       </div> <!-- FIN : btn:[METACLASSES] -->
     
-    <%= link_to 'PRIORITÉS', fixerHoraire_path, class:"btn btn-warning" %>
+    <%= link_to 'PRIORITÉS', fixerHoraire_path, class:"btn btn-warning"    %>
     <%= link_to 'CONTRAINTES', fixerHoraire_path, class:"btn btn-warning " %>
 
 
@@ -80,8 +86,18 @@
       
       
     <%= link_to 'DÉ-SÉLECT.', deselectionner_path, class:"btn btn-danger" %>
-    <%= link_to 'INFO', info_path, class:"btn btn-info" %>      
+    <div class="btn-group btn-group-primary">
+      <button type="button" class="btn btn-primary">INFO</button>
+      <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	<span class="caret"></span>
+	<span class="sr-only">Toggle Dropdown</span>
+      </button>
+      <ul class="dropdown-menu multi-level">
+	<li><%= link_to 'info HORAIRE',    infoHoraire_path,    class:"btn btn-warning" %></li>
+	<li><%= link_to 'info CÉDULABLES', infoCedulables_path, class:"btn btn-warning" %></li>
+      </ul>
     </div>
+  </div>
 
   </div><!-- /.container-fluid -->
   

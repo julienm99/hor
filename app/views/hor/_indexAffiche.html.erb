@@ -1,15 +1,15 @@
     <div class="container" id="affiche">
       <div class="row">    
 	<% x = 0 ; y = 0 ; %>
-	<% until x > mc.size do %>
+	<% until x > @mc.size do %>
 	
 	  <% until y == 5  do %>
-	    <% style, status = statusMetaclasse(mc[x]) if mc[x] %>
+	    <% style, status = statusMetaclasse(@mc[x]) if @mc[x] %>
 	    
 	    <div class="col-lg-2 ligneHaute">
-	      <% if mc[x] %>		
-		<% path = "/metaclasses/#{mc[x].id}/edit" %>
-		<%= link_to mc[x].nom, path, style: style %>
+	      <% if @mc[x] %>		
+		<% path = "/metaclasses/#{@mc[x].id}/edit" %>
+		<%= link_to @mc[x].nom, path, style: style %>
 	      <% end ; x += 1; y += 1 %>
 	    </div>
  	    
