@@ -31,29 +31,18 @@
 	  <li class="dropdown-submenu">
 	    <a tabindex="-1" href="#" class="btn btn-warning">Groupes</a>
 	    <ul class="dropdown-menu">
-	    
+	      <% ["S5","S4","S3","S2","S1"].each do |niv| %>
 	      <li class="dropdown-submenu">
-		<a tabindex="-1" href="#" class="btn btn-warning" >S2</a>
+		<a tabindex="-1" href="#" class="btn btn-warning" ><%= niv %></a>
 		<ul class="dropdown-menu">
-		  <li><%= link_to "Gr21", gr21_path, class:"btn btn-warning" %></li>
+		    <% niv == "S1" ? nbGroupes = 11 : nbGroupes = 9 ; i = 1                    %>
+		    <% until i > nbGroupes do gr = group_string(niv,i)                         %>
+		  <li><%= link_to "#{groupe = gr}", fixerHoraire_path, class:"btn btn-warning" %></li>
+		    <% i +=1 %>  
+		    <% end %>
 		</ul>
 	      </li>
-	      
-	      <li class="dropdown-submenu">
-		<a tabindex="-1" href="#" class="btn btn-warning" >S5</a>
-		<ul class="dropdown-menu">
-		  <li><%= link_to "Gr51", gr51_path, class:"btn btn-warning" %></li>
-		  <li><%= link_to "Gr52", gr52_path, class:"btn btn-warning" %></li>
-		  <li><%= link_to "Gr53", gr53_path, class:"btn btn-warning" %></li>
-		  <li><%= link_to "Gr54", gr54_path, class:"btn btn-warning" %></li>
-		  <li><%= link_to "Gr55", gr55_path, class:"btn btn-warning" %></li>
-		  <li><%= link_to "Gr56", gr56_path, class:"btn btn-warning" %></li>
-		  <li><%= link_to "Gr57", gr57_path, class:"btn btn-warning" %></li>
-		  <li><%= link_to "Gr58", gr58_path, class:"btn btn-warning" %></li>
-		  <li><%= link_to "Gr59", gr59_path, class:"btn btn-warning" %></li>
-		</ul>
-	      </li>
-	      
+	      <% end %>  
 	    </ul>
 	  </li>
 	  
