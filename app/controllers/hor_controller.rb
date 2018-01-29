@@ -1,27 +1,31 @@
 class HorController < ApplicationController
   attr_accessor :choix
+
+  if true # TOP: boutons nav-bar du haut de page
+    def choixMatiere    
+    end
+
+    def deselectionner
+    end
+    
+    def miseAjour   
+    end
+    
+    def infoHoraire    
+    end
+
+    def infoCedulables   
+    end
+
+  end
   
-  def index 
-    @mc = obtenirToutesLesMetaclasses
-  end
+  if true # BOTTOM: boutons nav-bar du bas
+    def valider
+    end
+    
+    def fixerHoraire    
+    end
 
-  def valider
-  end
-
-  def miseAjour   
-  end
-
-  def deselectionner
-  end
-  
-  def fixerHoraire    
-  end
-
-  def choixMatiere    
-  end
-
-  def backbone 
-    @mc = metaclasses("backbone") 
   end
 
   if true # metaclasses: NIVEAUX
@@ -35,6 +39,16 @@ class HorController < ApplicationController
   if true # metaclasses: GROUPES
     def gr21 ; @mc = metaclasses("Gr21") ; end
     
+    def gr41 ; @mc = metaclasses("Gr41") ; end
+    def gr42 ; @mc = metaclasses("Gr42") ; end
+    def gr43 ; @mc = metaclasses("Gr43") ; end
+    def gr44 ; @mc = metaclasses("Gr44") ; end
+    def gr45 ; @mc = metaclasses("Gr45") ; end
+    def gr46 ; @mc = metaclasses("Gr46") ; end
+    def gr47 ; @mc = metaclasses("Gr47") ; end
+    def gr48 ; @mc = metaclasses("Gr48") ; end
+    def gr49 ; @mc = metaclasses("Gr49") ; end
+    
     def gr51 ; @mc = metaclasses("Gr51") ; end
     def gr52 ; @mc = metaclasses("Gr52") ; end
     def gr53 ; @mc = metaclasses("Gr53") ; end
@@ -45,17 +59,18 @@ class HorController < ApplicationController
     def gr58 ; @mc = metaclasses("Gr58") ; end
     def gr59 ; @mc = metaclasses("Gr59") ; end
   end
+
+
+  if true # metaclasses: COURS/MATIÈRE/ACTIVITÉS
+    def index    ; @mc = obtenirToutesLesMetaclasses ; end
+    def backbone ; @mc = metaclasses("backbone") ; end
+    def coursEPS ; @mc = metaclasses("EPS") ; end
+    def coursART ; @mc = metaclasses("ART") ; end
+    def coursANG ; @mc = metaclasses("ANG") ; end
+  end
   
-  def coursEPS ; @mc = metaclasses("EPS") ; end
-
-  def infoHoraire    
-  end
-
-  def infoCedulables   
-  end
-
+  
 private
-
   def metaclasses(sujet)
     liste = []
     obtenirToutesLesMetaclasses.each do |mc|

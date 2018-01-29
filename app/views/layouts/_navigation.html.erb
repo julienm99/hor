@@ -29,13 +29,28 @@
 	    </ul>
 	  </li>
 	  <li class="dropdown-submenu">
-	    <a tabindex="-1" href="#" class="btn btn-warning">Groupes</a>
+	    <a tabindex="-1" href="#" class="btn btn-warning">GROUPES</a>
 	    <ul class="dropdown-menu">
 	    
 	      <li class="dropdown-submenu">
 		<a tabindex="-1" href="#" class="btn btn-warning" >S2</a>
 		<ul class="dropdown-menu">
 		  <li><%= link_to "Gr21", gr21_path, class:"btn btn-warning" %></li>
+		</ul>
+	      </li>
+	      
+	      <li class="dropdown-submenu">
+		<a tabindex="-1" href="#" class="btn btn-warning" >S4</a>
+		<ul class="dropdown-menu">
+		  <li><%= link_to "Gr41", gr41_path, class:"btn btn-warning" %></li>
+		  <li><%= link_to "Gr42", gr42_path, class:"btn btn-warning" %></li>
+		  <li><%= link_to "Gr43", gr43_path, class:"btn btn-warning" %></li>
+		  <li><%= link_to "Gr44", gr44_path, class:"btn btn-warning" %></li>
+		  <li><%= link_to "Gr45", gr45_path, class:"btn btn-warning" %></li>
+		  <li><%= link_to "Gr46", gr46_path, class:"btn btn-warning" %></li>
+		  <li><%= link_to "Gr47", gr47_path, class:"btn btn-warning" %></li>
+		  <li><%= link_to "Gr48", gr48_path, class:"btn btn-warning" %></li>
+		  <li><%= link_to "Gr49", gr49_path, class:"btn btn-warning" %></li>
 		</ul>
 	      </li>
 	      
@@ -58,9 +73,9 @@
 	  </li>
 	  
 	  <li class="dropdown-submenu">
-	    <a tabindex="-1" href="#" class="btn btn-warning">Catégories (Matières/Cours) </a>
+	    <a tabindex="-1" href="#" class="btn btn-warning">COURS/ACTIVITÉS/MATIÈRES</a>
 	    <ul class="dropdown-menu">
-	      <li><%= link_to 'ANGlais', choixMatiere_path, class:"btn btn-warning"  %></li>
+	      <li><%= link_to 'ANGlais', coursANG_path, class:"btn btn-warning"  %></li>
 	      <li><%= link_to 'FRAnçais', fixerHoraire_path, class:"btn btn-warning" %></li>
 	      <li><%= link_to 'ESPagnol', fixerHoraire_path, class:"btn btn-warning" %></li>
 	      <li class="divider"></li>
@@ -70,7 +85,7 @@
 	      <li><%= link_to 'PHYsique', fixerHoraire_path, class:"btn btn-warning"                %></li>
 	      <li><%= link_to 'Techni. Méthode Scient.', fixerHoraire_path, class:"btn btn-warning" %></li>
 	      <li class="divider"></li>
-	      <li><%= link_to 'ARTs', fixerHoraire_path, class:"btn btn-warning"                 %></li>
+	      <li><%= link_to 'ARTs', coursART_path, class:"btn btn-warning"                 %></li>
 	      <li><%= link_to 'Education PhySique', coursEPS_path, class:"btn btn-warning" %></li>
 	      <li><%= link_to 'HIStoire', fixerHoraire_path, class:"btn btn-warning"             %></li>
 	      <li><%= link_to 'GEOgraphie', fixerHoraire_path, class:"btn btn-warning"           %></li>

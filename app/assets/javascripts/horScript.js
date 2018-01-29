@@ -43,6 +43,16 @@ function pageWeb() {
   if (arguments[0] == "nivS5")          { window.location.replace("/nivS5"); };
 
   // metaclasses: GROUPES ------------------------------------------------------------------
+  if (arguments[0] == "gr41")           { window.location.replace("/gr41"); };
+  if (arguments[0] == "gr42")           { window.location.replace("/gr42"); };
+  if (arguments[0] == "gr43")           { window.location.replace("/gr43"); };
+  if (arguments[0] == "gr45")           { window.location.replace("/gr44"); };
+  if (arguments[0] == "gr44")           { window.location.replace("/gr45"); };
+  if (arguments[0] == "gr46")           { window.location.replace("/gr46"); };
+  if (arguments[0] == "gr47")           { window.location.replace("/gr47"); };
+  if (arguments[0] == "gr48")           { window.location.replace("/gr48"); };
+  if (arguments[0] == "gr49")           { window.location.replace("/gr49"); };
+  
   if (arguments[0] == "gr51")           { window.location.replace("/gr51"); };
   if (arguments[0] == "gr52")           { window.location.replace("/gr52"); };
   if (arguments[0] == "gr53")           { window.location.replace("/gr53"); };
