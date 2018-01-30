@@ -39,6 +39,16 @@ class HorController < ApplicationController
   if true # metaclasses: GROUPES
     def gr21 ; @mc = metaclasses("Gr21") ; end
     
+    def gr31 ; @mc = metaclasses("Gr31") ; end
+    def gr32 ; @mc = metaclasses("Gr32") ; end
+    def gr33 ; @mc = metaclasses("Gr33") ; end
+    def gr34 ; @mc = metaclasses("Gr34") ; end
+    def gr35 ; @mc = metaclasses("Gr35") ; end
+    def gr36 ; @mc = metaclasses("Gr36") ; end
+    def gr37 ; @mc = metaclasses("Gr37") ; end
+    def gr38 ; @mc = metaclasses("Gr38") ; end
+    def gr39 ; @mc = metaclasses("Gr39") ; end
+
     def gr41 ; @mc = metaclasses("Gr41") ; end
     def gr42 ; @mc = metaclasses("Gr42") ; end
     def gr43 ; @mc = metaclasses("Gr43") ; end
@@ -48,7 +58,7 @@ class HorController < ApplicationController
     def gr47 ; @mc = metaclasses("Gr47") ; end
     def gr48 ; @mc = metaclasses("Gr48") ; end
     def gr49 ; @mc = metaclasses("Gr49") ; end
-    
+
     def gr51 ; @mc = metaclasses("Gr51") ; end
     def gr52 ; @mc = metaclasses("Gr52") ; end
     def gr53 ; @mc = metaclasses("Gr53") ; end
@@ -67,6 +77,9 @@ class HorController < ApplicationController
     def coursEPS ; @mc = metaclasses("EPS") ; end
     def coursART ; @mc = metaclasses("ART") ; end
     def coursANG ; @mc = metaclasses("ANG") ; end
+    def coursFRA ; @mc = metaclasses("FRA") ; end
+    def coursMAT ; @mc = metaclasses("MAT") ; end
+    def coursSCT ; @mc = metaclasses("SCT") ; end
   end
   
   
@@ -91,6 +104,9 @@ private
 
       when "4-en_traitement"
 	liste << mc if mc.status == sujet
+
+      when "SCT"
+	liste << mc if  %w[SCT, CHI, PHY, TMS, OPT].include?(mc.nom[0,3]) 
 
       else 
 	liste << mc if mc.nom[0,3] == sujet

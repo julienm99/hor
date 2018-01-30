@@ -28,6 +28,9 @@ Rails.application.routes.draw do
     get 'coursEPS',  to: 'hor#coursEPS'
     get 'coursART',  to: 'hor#coursART'
     get 'coursANG',  to: 'hor#coursANG'
+    get 'coursFRA',  to: 'hor#coursFRA'
+    get 'coursMAT',  to: 'hor#coursMAT'
+    get 'coursSCT',  to: 'hor#coursSCT'
   end
   
   if true #~ routes: NIVEAUX -----------------------------------------------
@@ -61,15 +64,15 @@ Rails.application.routes.draw do
     #~ get 'gr28',  to: 'hor#gr28'
     #~ get 'gr29',  to: 'hor#gr29'
 
-    #~ get 'gr31',  to: 'hor#gr31'
-    #~ get 'gr32',  to: 'hor#gr32'
-    #~ get 'gr33',  to: 'hor#gr33'
-    #~ get 'gr34',  to: 'hor#gr34'
-    #~ get 'gr35',  to: 'hor#gr35'
-    #~ get 'gr36',  to: 'hor#gr36'
-    #~ get 'gr37',  to: 'hor#gr37'
-    #~ get 'gr38',  to: 'hor#gr38'
-    #~ get 'gr39',  to: 'hor#gr39'
+    get 'gr31',  to: 'hor#gr31'
+    get 'gr32',  to: 'hor#gr32'
+    get 'gr33',  to: 'hor#gr33'
+    get 'gr34',  to: 'hor#gr34'
+    get 'gr35',  to: 'hor#gr35'
+    get 'gr36',  to: 'hor#gr36'
+    get 'gr37',  to: 'hor#gr37'
+    get 'gr38',  to: 'hor#gr38'
+    get 'gr39',  to: 'hor#gr39'
 
     get 'gr41',  to: 'hor#gr41'
     get 'gr42',  to: 'hor#gr42'
