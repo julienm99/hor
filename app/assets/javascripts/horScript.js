@@ -1,3 +1,6 @@
+function horaireJDLM() {
+    window.location.replace("/");
+}
 
 function metaclassesChoisies() {
   var mc = document.forms["listeMetaclasses"];

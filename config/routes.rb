@@ -21,10 +21,11 @@ Rails.application.routes.draw do
   
   if true #~ routes: BOTTOM nav_bar  ---------------------------------------
     get 'valider',           to: 'hor#valider'
+    get 'invalider',         to: 'hor#invalider'
     get 'fixerHoraire',      to: 'hor#fixerHoraire'
   end
 
-  if true #~ routes: COURS/ACTIVITÉS/MATIÈRE -------------------------------
+  if true #~ routes: COURS/ACTIVITES/MATIERE -------------------------------
     get 'coursEPS',  to: 'hor#coursEPS'
     get 'coursART',  to: 'hor#coursART'
     get 'coursANG',  to: 'hor#coursANG'

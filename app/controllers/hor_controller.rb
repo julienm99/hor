@@ -23,6 +23,9 @@ class HorController < ApplicationController
     def valider
     end
     
+    def invalider
+    end
+    
     def fixerHoraire    
     end
 
@@ -106,7 +109,7 @@ private
 	liste << mc if mc.status == sujet
 
       when "SCT"
-	liste << mc if  %w[SCT, CHI, PHY, TMS, OPT].include?(mc.nom[0,3]) 
+	liste << mc if  %w[SCT CHI PHY TMS OPT].include?(mc.nom[0,3]) 
 
       else 
 	liste << mc if mc.nom[0,3] == sujet
