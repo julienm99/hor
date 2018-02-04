@@ -78,26 +78,16 @@ module ApplicationHelper
   end
 
 
-  def reactiverMetaclasses(status)
+  def restaurerMetaclasses(status)
     mcNomEnJeu = []
     file = File.open("public/#{status}.txt", "r:iso8859-1")
       type, str = file.gets.split("::")
       str.strip!
       mcNomEnJeu = str.split(",")
-  #~ puts "DEBUG 01: mcNomEnJeu = #{mcNomEnJeu} type = #{type} str = #{str} status = #{status}" ; exit
     file.close
-    saveStatusMetaclassesParNom(mcNomEnJeu, status)
+    saveStatusMetaclassesParNom(mcNomEnJeu, status)	  
   end
-
-
-	  while (line = file.gets)
-	    type, reste = line.split("::")
-	    if type.strip == "Horaire" then
-	      mcNom,  horaire = reste.split("\t")
-	      mcNom = mcNom.strip
-	      mcNomEnJeu << mcNom unless mcNomEnJeu.include?(mcNom)
-	    end
-	  end
+	
   def updateStatusMetaclasses
     
     %w[1-horaire_fixe 2-cedulables_fixe 3-cedulables 4-en_traitement].each do |status|
@@ -160,15 +150,14 @@ module ApplicationHelper
     style += "border-radius:5px;"
     
     return style, status
-    
   end
-
 
 
   def group_string(niv,i)
        i  > 9 ? ajout = "" : ajout = "0" 
        niv == "S1" ? gr ="Gr#{niv[1,1] + ajout + i.to_s}" : gr ="Gr#{niv[1,1] + i.to_s}"
   end
+
 
   def saveStatusMetaclassesParNom(mcNomEnJeu, status)
     mcNomEnJeu.each{|nom| mc = Metaclass.find_by_nom(nom); mc.status = status; mc.save } if mcNomEnJeu[0]
