@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   if true #~ routes: BOTTOM nav_bar  ---------------------------------------
     get 'valider',           to: 'hor#valider'
     get 'invalider',         to: 'hor#invalider'
+    get 'filtrer',           to: 'hor#filtrer'
     get 'fixerHoraire',      to: 'hor#fixerHoraire'
   end
 

@@ -29,15 +29,18 @@ module ApplicationHelper
   end
   
    
+  def derniereFiliereDuRepertoire(repertoire)
+    files = Dir.glob(repertoire).sort
+    fname = files.last
+  end
+
+
   def info(horaireTemp)
-    files = Dir.glob("/home/julienm/hor13/op/cedulables/*").sort
-    fname = files.last         
-    
+    fname = derniereFiliereDuRepertoire("/home/julienm/hor13/op/cedulables/*")        
     file = File.open(fname, "r:iso8859-1")    
       line = file.gets       # prendre que la première ligne
       variance, horaireTemp = line.split("\t")
-    file.close
-    
+    file.close    
     return variance, horaireTemp
   end
 
@@ -162,6 +165,13 @@ module ApplicationHelper
   def saveStatusMetaclassesParNom(mcNomEnJeu, status)
     mcNomEnJeu.each{|nom| mc = Metaclass.find_by_nom(nom); mc.status = status; mc.save } if mcNomEnJeu[0]
   end
+
+
+  def obtenirIntervalleDerniereFiliereValider
+    intervalle = File.readlines(derniereFiliereDuRepertoire("/home/julienm/hor13/op/cedulables/*")).size
+    while i < 20 
+      intervalle = nbLignes / 2
+end
 
 
   def filtrerMatiereChoisie(metaclasses, metaclassesChoisies = [], matiere)

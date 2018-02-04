@@ -29,6 +29,9 @@ class HorController < ApplicationController
     def fixerHoraire    
     end
 
+    def filtrer    
+    end
+
   end
 
   if true # metaclasses: NIVEAUX

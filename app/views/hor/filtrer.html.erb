@@ -1,0 +1,19 @@
+<body>
+
+  <script> var page = "filtrer"; </script>
+
+  <div class="jumbotron">
+    <h2>FILTRER UNE FILIÈRE</h2>
+  </div>
+
+
+  <%= intervalle = obtenirIntervalleDerniereFiliereValider %> 
+  <% exit %>
+  <%  system "./filtrer.sh #{intervalle}"                 %>
+  
+
+  <script> pageWeb(); </script>
+
+</body>
+
+    
