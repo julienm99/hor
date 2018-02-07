@@ -26,10 +26,10 @@ class HorController < ApplicationController
     def invalider
     end
     
-    def fixerHoraire    
+    def filtrer    
     end
 
-    def filtrer    
+    def fixerHoraire    
     end
 
   end

@@ -29,6 +29,7 @@ function pageWeb() {
 
   // BOTTOM: boutons --------------------------------------------------------------------------- 
   if (arguments[0] == "valider")        { window.location.replace("/"); };
+  if (arguments[0] == "filtrer")        { window.location.replace("/"); };
 
 
   // metaclasses: TOUTES et BACKBONE -------------------------------------------------------

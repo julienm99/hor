@@ -167,10 +167,9 @@ module ApplicationHelper
   end
 
 
-  def obtenirIntervalleDerniereFiliereValider
-    intervalle = File.readlines(derniereFiliereDuRepertoire("/home/julienm/hor13/op/cedulables/*")).size
-    while i < 20 
-      intervalle = nbLignes / 2
+  def obtenirIntervalleDerniereFiliereValider(diviseur)
+    nbLignes = File.readlines(derniereFiliereDuRepertoire("/home/julienm/hor13/op/cedulables/*")).size
+    (nbLignes.to_i / diviseur).to_s
 end
 
 

@@ -7,9 +7,8 @@
   </div>
 
 
-  <%= intervalle = obtenirIntervalleDerniereFiliereValider %> 
-  <% exit %>
-  <%  system "./filtrer.sh #{intervalle}"                 %>
+  <%= intervalle = obtenirIntervalleDerniereFiliereValider(diviseur = 10) %> 
+  <%  system "./filtrer.sh #{intervalle}"                                 %>
   
 
   <script> pageWeb(); </script>
