@@ -1,22 +1,22 @@
 <body>
 
-<!--
-  <script> var page = "valider"; </script>
--->
-
   <div class="jumbotron">
-    <h2>VALIDER: METACLASSES EN JEU</h2>
+    <h2>VALIDER: METACLASSES:</h2>
   </div>
 
 
-  <%  saveNomsMetaclasses("4-en_traitement")                      %>
-  <%= nomsMetaclasses = obtenirNomsMetaclasses("4-en_traitement") %>
-  <%= system "./valider.sh #{nomsMetaclasses}"                    %>
-  <%  changerMetaclassesEnTraitement_pourCedulables               %>
-  <%  saveNomsMetaclasses("3-cedulables")                         %>
-  
+  <% saveNomsMetaclasses("4-en_traitement")                      %>
+  <% mc_A_valider = obtenirNomsMetaclasses("4-en_traitement")    %>
 
-  <script> pageWeb(); </script>
+  <% executionSansErreur = system "./valider.sh #{mc_A_valider}" %>
+  
+  <% effacerLaDerniereFiliere("cedulables") if !valide        %>
+  <% analyseExecutionValider(executionSansErreur)                %>
+  <% changerMetaclassesEnTraitement_pourCedulables if valide     %>
+  <% saveNomsMetaclasses("3-cedulables") if valide               %>
+  
+  
+  <script> pageWeb(page); </script>
 
 </body>
 

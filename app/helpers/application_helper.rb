@@ -1,5 +1,10 @@
 module ApplicationHelper
 
+  def dirHor13op(repertoire)
+    "/home/julienm/hor13/op/#{repertoire}/*"
+  end
+
+
   def obtenirToutesLesMetaclasses
     Metaclass.all.order(:status, :nom) 
   end
@@ -29,14 +34,42 @@ module ApplicationHelper
   end
   
    
-  def derniereFiliereDuRepertoire(repertoire)
+  def derniereFiliereDuDir(repertoire)
     files = Dir.glob(repertoire).sort
     fname = files.last
   end
 
 
-  def info(horaireTemp)
-    fname = derniereFiliereDuRepertoire("/home/julienm/hor13/op/cedulables/*")        
+  def nbLignesFiliere(filiere)
+    File.readlines(filiere).size
+  end
+
+
+  def nbLignesDerniereFiliere(repertoire)
+    nbLignesFiliere(derniereFiliereDuDir(dirHor13op(repertoire)))
+  end
+
+
+  def valide
+    nbLignesFiliere(derniereFiliereDuDir(dirHor13op("cedulables"))) > 0
+  end
+
+
+  def analyseExecutionValider(executionSansErreur)
+    flash[:notice] = "ERREUR de fonctionnement " unless executionSansErreur
+    flash[:notice] = "EXECUTION [VALIDER] REUSSIE" if executionSansErreur
+    flash[:notice] += " ---> CEDULABLES [ #{nbLignesDerniereFiliere("cedulables")}]" if executionSansErreur && valide
+    flash[:notice] += " mais pas de CEDULABLES " if executionSansErreur && !valide
+  end
+
+
+  def effacerLaDerniereFiliere(repertoire)
+    File.delete(derniereFiliereDuDir(dirHor13op(repertoire)))
+  end
+
+
+  def infoDesCedulables
+    fname = derniereFiliereDuDir(dirHor13op("cedulables"))        
     file = File.open(fname, "r:iso8859-1")    
       line = file.gets       # prendre que la première ligne
       variance, horaireTemp = line.split("\t")
@@ -168,7 +201,8 @@ module ApplicationHelper
 
 
   def obtenirIntervalleDerniereFiliereValider(diviseur)
-    nbLignes = File.readlines(derniereFiliereDuRepertoire("/home/julienm/hor13/op/cedulables/*")).size
+    #~ nbLignes = File.readlines(derniereFiliereDuDir(dirHor13op("cedulables"))).size
+    nbLignes = nbLignesFiliere(derniereFiliereDuDir(dirHor13op("cedulables")))
     (nbLignes.to_i / diviseur).to_s
 end
 

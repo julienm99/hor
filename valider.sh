@@ -2,7 +2,7 @@ cd
 cd hor13
 
 #~ La filière SOURCE est la dernière (ex.: 102.txt) dans le répertoire [hor13/op/cedulables/]
-derniere=$(ls op/cedulables -rt | tail -n1)
+derniere=$(ls op/cedulables -rt | tail -n1) ; echo $derniere
 SOURCE="op/cedulables/"$derniere
 
 
@@ -12,6 +12,13 @@ suivante="$((suivante += 1))"
 suivante=$suivante".txt"
 DESTINATION="op/cedulables/"$suivante
 
+#~ ------------------------------------
+echo "derniere:"$derniere
+echo "SOURCE:"$SOURCE
+echo "suivante: "$suivante
+echo "argument de répartition: "$1
+echo "DESTINATION: "$DESTINATION
+#~ ------------------------------------
 
 #~ $1 est la variable qui contient les metaclasses à valider (cedulables)
 cat $SOURCE | ruby mapred/repartir.rb $1  | mapred/valider_01 > $DESTINATION

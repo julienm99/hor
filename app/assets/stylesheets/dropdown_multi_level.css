@@ -63,7 +63,7 @@
 }
 .btn-group-primary .dropdown-menu .dropdown-submenu li > a:hover,
 .btn-group-primary .dropdown-menu .dropdown-submenu li > a:focus {
-  background-color: #428bca !important;
+  background-color: "white" !important;
 }
 
 

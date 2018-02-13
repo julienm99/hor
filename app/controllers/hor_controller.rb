@@ -79,13 +79,13 @@ class HorController < ApplicationController
 
   if true # metaclasses: COURS/MATIÈRE/ACTIVITÉS
     def index    ; @mc = obtenirToutesLesMetaclasses ; end
-    def backbone ; @mc = metaclasses("backbone") ; end
-    def coursEPS ; @mc = metaclasses("EPS") ; end
-    def coursART ; @mc = metaclasses("ART") ; end
-    def coursANG ; @mc = metaclasses("ANG") ; end
-    def coursFRA ; @mc = metaclasses("FRA") ; end
-    def coursMAT ; @mc = metaclasses("MAT") ; end
-    def coursSCT ; @mc = metaclasses("SCT") ; end
+    def backbone ; @mc = metaclasses("backbone")     ; end
+    def coursEPS ; @mc = metaclasses("EPS")          ; end
+    def coursART ; @mc = metaclasses("ART")          ; end
+    def coursANG ; @mc = metaclasses("ANG")          ; end
+    def coursFRA ; @mc = metaclasses("FRA")          ; end
+    def coursMAT ; @mc = metaclasses("MAT")          ; end
+    def coursSCT ; @mc = metaclasses("SCT")          ; end
   end
   
   

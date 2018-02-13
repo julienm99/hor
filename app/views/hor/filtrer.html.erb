@@ -1,17 +1,17 @@
 <body>
 
-  <script> var page = "filtrer"; </script>
-
   <div class="jumbotron">
     <h2>FILTRER UNE FILIÈRE</h2>
   </div>
 
 
-  <%= intervalle = obtenirIntervalleDerniereFiliereValider(diviseur = 10) %> 
-  <%  system "./filtrer.sh #{intervalle}"                                 %>
+  <% intervalle = obtenirIntervalleDerniereFiliereValider(diviseur = 10)               %> 
+  <% system "./filtrer.sh #{intervalle}"                                               %>
+  <% flash[:notice] = "FILTRE: #{intervalle} lignes d'intervalle"                      %>
+  <% flash[:notice] += " ---> CEDULABLES [ #{nbLignesDerniereFiliere("cedulables")} ]" %>
   
 
-  <script> pageWeb(); </script>
+  <script> pageWeb(page); </script>
 
 </body>
 

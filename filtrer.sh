@@ -4,7 +4,7 @@ cd hor13
 #~ La dernière filière du répertoire [hor13/op/cedulables] est renommée {$SOURCE} 
 #~ 	EXEMPLE: La filière 102.txt est renommée {$SOURCE} = 0102.txt-filtre
 derniere=$(ls "op/cedulables" -rt | tail -n1)
-SOURCE="op/cedulables/0"$derniere"-filtre"
+SOURCE="op/cedulables/0_"$derniere
 
 mv "op/cedulables/"$derniere $SOURCE
 
