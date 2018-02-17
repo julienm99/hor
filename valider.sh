@@ -9,10 +9,10 @@ SOURCE="op/cedulables/"$derniere
 #~ La filière DESTINATION deviendra la dernière [ex.103.txt] dans le répertoire [hor13/op/cedulables/]
 suivante=`expr substr $derniere 1 3`
 suivante="$((suivante += 1))" 
-suivante=$suivante".txt"
+suivante=$suivante".ceds"
 DESTINATION="op/cedulables/"$suivante
 
-#~ ------------------------------------
+#~ ------------------------------------ utile pour DEBUG
 echo "derniere:"$derniere
 echo "SOURCE:"$SOURCE
 echo "suivante: "$suivante
@@ -24,7 +24,15 @@ echo "DESTINATION: "$DESTINATION
 cat $SOURCE | ruby mapred/repartir.rb $1  | mapred/valider_01 > $DESTINATION
 
 
-[ -e $DESTINATION ]
+#~ ------------------------------
+#~ -e la filière $DESTINATION existe-t-elle ?
+#~ -s la filière $DESTINATION n'est pas vide (0 size).
+#~ -n créer une filière $DESTINATION vide (0 byte) donc PAS DE SOLUTION
+if [ -e $DESTINATION ] && [ -s $DESTINATION ]; 
+  then echo $DESTINATION" contient des CEDULABLES"; 
+  else echo -n > $DESTINATION ; echo "PAS DE SOLUTION"; 
+fi
+#~ ------------------------------
 
 
 cd

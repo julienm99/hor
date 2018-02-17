@@ -55,15 +55,15 @@ module ApplicationHelper
   end
 
 
-  def analyseExecutionValider(executionSansErreur)
+  def afficher_MsgOperationValider(executionSansErreur)
     flash[:notice] = "ERREUR de fonctionnement " unless executionSansErreur
-    flash[:notice] = "EXECUTION [VALIDER] REUSSIE" if executionSansErreur
+    flash[:notice] = "Execution de [VALIDER]: REUSSIE" if executionSansErreur
     flash[:notice] += " ---> CEDULABLES [ #{nbLignesDerniereFiliere("cedulables")}]" if executionSansErreur && valide
-    flash[:notice] += " mais pas de CEDULABLES " if executionSansErreur && !valide
+    flash[:notice] += " mais --->  PAS DE SOLUTION" if executionSansErreur && !valide
   end
 
 
-  def effacerLaDerniereFiliere(repertoire)
+  def effacer_DerniereFiliere(repertoire)
     File.delete(derniereFiliereDuDir(dirHor13op(repertoire)))
   end
 
@@ -93,7 +93,7 @@ module ApplicationHelper
   end
   
 
-  def saveNomsMetaclasses(status)
+  def save_NomsMetaclasses(status)
     mcEnJeu = []
     metaclasses(status).each{|mc| mcEnJeu << mc.nom }
     open("public/#{status}.txt", "w"){|f| f.puts "#{status}::#{mcEnJeu.join(",")}"}
@@ -109,7 +109,7 @@ module ApplicationHelper
   end
 
 
-  def changerMetaclassesEnTraitement_pourCedulables
+  def changer_MetaclassesEnTraitement_pourCedulables
     metaclasses("4-en_traitement").each{|mc| mc.status = "3-cedulables" ; mc.save}    
   end
 
@@ -197,6 +197,13 @@ module ApplicationHelper
 
   def saveStatusMetaclassesParNom(mcNomEnJeu, status)
     mcNomEnJeu.each{|nom| mc = Metaclass.find_by_nom(nom); mc.status = status; mc.save } if mcNomEnJeu[0]
+  end
+
+
+  def save_NomsMetaclasses(status)
+    mcEnJeu = []
+    metaclasses(status).each{|mc| mcEnJeu << mc.nom }
+    open("public/#{status}.txt", "w"){|f| f.puts "#{status}::#{mcEnJeu.join(",")}"}
   end
 
 
