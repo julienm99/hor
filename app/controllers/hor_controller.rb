@@ -5,10 +5,13 @@ class HorController < ApplicationController
     def choixMatiere    
     end
 
-    def deselectionner
+    def contraintes   
+    end
+
+    def miseAjour   
     end
     
-    def miseAjour   
+    def deselectionner
     end
     
     def infoHoraire    
@@ -30,6 +33,9 @@ class HorController < ApplicationController
     end
 
     def fixerHoraire    
+    end
+
+    def variance   
     end
 
   end

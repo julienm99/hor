@@ -12,13 +12,15 @@ suivante="$((suivante += 1))"
 suivante=$suivante".ceds"
 DESTINATION="op/cedulables/"$suivante
 
-#~ ------------------------------------ utile pour DEBUG
+#~ utile pour DEBUG
+echo "VALIDER ------------------------"
 echo "derniere:"$derniere
 echo "SOURCE:"$SOURCE
 echo "suivante: "$suivante
 echo "argument de repartition: "$1
 echo "DESTINATION: "$DESTINATION
-#~ ------------------------------------
+echo "---------------------------------"
+
 
 #~ $1 est la variable qui contient les metaclasses à valider (cedulables)
 cat $SOURCE | ruby mapred/repartir.rb $1  | mapred/valider_01 > $DESTINATION

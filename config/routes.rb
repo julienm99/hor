@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     get 'choixMatiere',      to: 'hor#choixMatiere'
     
     get 'miseAjour',         to: 'hor#miseAjour'
+    get 'contraintes',       to: 'hor#contraintes'
     
     get 'deselectionner',    to: 'hor#deselectionner'
     
@@ -23,6 +24,7 @@ Rails.application.routes.draw do
     get 'valider',           to: 'hor#valider'
     get 'invalider',         to: 'hor#invalider'
     get 'filtrer',           to: 'hor#filtrer'
+    get 'variance',          to: 'hor#variance'
     get 'fixerHoraire',      to: 'hor#fixerHoraire'
   end
 
