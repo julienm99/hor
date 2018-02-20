@@ -2,13 +2,19 @@ class HorController < ApplicationController
   attr_accessor :choix
 
   if true # TOP: boutons nav-bar du haut de page
-    def choixMatiere    
-    end
+    #~ def choixMatiere    
+    #~ end
 
     def contraintes   
     end
 
-    def miseAjour   
+    def creerBaseDeDonnees   
+    end
+    
+    def updateMetaclasses   
+    end
+    
+    def updateCedulables   
     end
     
     def deselectionner

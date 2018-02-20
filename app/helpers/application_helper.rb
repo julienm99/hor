@@ -222,10 +222,9 @@ end
   def matieresDesMetaclasses(metaclasses, matieres)
       metaclasses.each{|mc| matieres << mc.nom[0,3] }
       matieres.uniq!
-    end
-    
+  end
 
-  def miseAjourMetaclasses
+  def creerBaseDeDonnees
     fname = "public/metaclasses.txt"
     file = File.open(fname, "r:iso8859-1")
     
@@ -268,6 +267,98 @@ end
 	end	  
       end 
     file.close	        
+  end
+
+
+  def updateMetaclasses
+    #~ fname = "public/metaclasses.txt"
+    #~ file = File.open(fname, "r:iso8859-1")
+    
+      #~ while (line = file.gets)
+	#~ type, reste = line.split("::")
+	
+	#~ case type.strip
+	#~ when "MetaClasse" 
+	  #~ nom, listeActivites = reste.split("\t")
+	  #~ listeActivites = listeActivites[7,listeActivites.length].strip
+	  #~ niveau = "" ; status ="inactif"
+	  
+	  #~ mc = Metaclass.create(
+		    #~ nom: nom, 
+		    #~ status: status, 
+		    #~ niveau: niveau, 
+		    #~ listeActivites: listeActivites
+		    #~ )		    
+	#~ when "Classe" 
+	  #~ nom, reste = reste.split("\t")
+	  #~ cours, groupe, periodes, periodesTache, semestre, prof, salle, list = reste.split(";")
+	  #~ listeFoyers = list.strip
+	  
+	  #~ activite = Activite.create(
+		    #~ nom: nom, 
+		    #~ identifiantmc: mc.nom, 
+		    #~ cours: cours, 
+		    #~ groupe: groupe, 
+		    #~ periodes: periodes, 
+		    #~ periodesTache: periodesTache, 
+		    #~ semestre: semestre, 
+		    #~ prof: prof, 
+		    #~ salle: salle, 
+		    #~ listeFoyers: listeFoyers,
+		    #~ metaclass: mc
+		    #~ )		    
+	  #~ mc.niveau = "S" + listeFoyers[2,1]
+	  #~ mc.save
+	#~ else	    
+	#~ end	  
+      #~ end 
+    #~ file.close	        
+  end
+
+
+  def updateCedulables
+    #~ fname = "public/metaclasses.txt"
+    #~ file = File.open(fname, "r:iso8859-1")
+    
+      #~ while (line = file.gets)
+	#~ type, reste = line.split("::")
+	
+	#~ case type.strip
+	#~ when "MetaClasse" 
+	  #~ nom, listeActivites = reste.split("\t")
+	  #~ listeActivites = listeActivites[7,listeActivites.length].strip
+	  #~ niveau = "" ; status ="inactif"
+	  
+	  #~ mc = Metaclass.create(
+		    #~ nom: nom, 
+		    #~ status: status, 
+		    #~ niveau: niveau, 
+		    #~ listeActivites: listeActivites
+		    #~ )		    
+	#~ when "Classe" 
+	  #~ nom, reste = reste.split("\t")
+	  #~ cours, groupe, periodes, periodesTache, semestre, prof, salle, list = reste.split(";")
+	  #~ listeFoyers = list.strip
+	  
+	  #~ activite = Activite.create(
+		    #~ nom: nom, 
+		    #~ identifiantmc: mc.nom, 
+		    #~ cours: cours, 
+		    #~ groupe: groupe, 
+		    #~ periodes: periodes, 
+		    #~ periodesTache: periodesTache, 
+		    #~ semestre: semestre, 
+		    #~ prof: prof, 
+		    #~ salle: salle, 
+		    #~ listeFoyers: listeFoyers,
+		    #~ metaclass: mc
+		    #~ )		    
+	  #~ mc.niveau = "S" + listeFoyers[2,1]
+	  #~ mc.save
+	#~ else	    
+	#~ end	  
+      #~ end 
+    #~ file.close	        
   end
 
 

@@ -8,16 +8,19 @@ Rails.application.routes.draw do
   root 'hor#index'
   
   if true #~ routes: TOP nav_bar  ------------------------------------------
-    get 'backbone',          to: 'hor#backbone'
-    get 'choixMatiere',      to: 'hor#choixMatiere'
+    get 'backbone',           to: 'hor#backbone'
+    #~ get 'choixMatiere',       to: 'hor#choixMatiere'
     
-    get 'miseAjour',         to: 'hor#miseAjour'
-    get 'contraintes',       to: 'hor#contraintes'
+    get 'updateMetaclasses',  to: 'hor#updateMetaclasses'
+    get 'updateCedulables',   to: 'hor#updateCedulables'
+    get 'creerBaseDeDonnees', to: 'hor#creerBaseDeDonnees'
     
-    get 'deselectionner',    to: 'hor#deselectionner'
+    get 'contraintes',        to: 'hor#contraintes'
     
-    get 'infoHoraire',       to: 'hor#infoHoraire'
-    get 'infoCedulables',    to: 'hor#infoCedulables'
+    get 'deselectionner',     to: 'hor#deselectionner'
+    
+    get 'infoHoraire',        to: 'hor#infoHoraire'
+    get 'infoCedulables',     to: 'hor#infoCedulables'
   end
   
   if true #~ routes: BOTTOM nav_bar  ---------------------------------------

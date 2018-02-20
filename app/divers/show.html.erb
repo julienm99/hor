@@ -1,0 +1,27 @@
+
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nom:</strong>
+  <%= @metaclass.nom %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @metaclass.status %>
+</p>
+
+<p>
+  <strong>Niveau:</strong>
+  <%= @metaclass.niveau %>
+</p>
+
+<p>
+  <strong>Listeactivites:</strong>
+  <%= @metaclass.listeActivites %>
+</p>
+
+<%= link_to 'Modifier', edit_metaclass_path(@metaclass) %> |
+<%= link_to 'Liste des métaclasses', metaclasses_path %> 
+
+
