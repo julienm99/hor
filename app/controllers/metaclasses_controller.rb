@@ -21,8 +21,6 @@ class MetaclassesController < ApplicationController
   def edit
   end
 
-  # GET /metaclasses/1/edit
-
   # POST /metaclasses
   # POST /metaclasses.json
   def create

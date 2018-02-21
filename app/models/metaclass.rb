@@ -1,3 +1,3 @@
 class Metaclass < ApplicationRecord
-        has_many :activites
+  has_many :activites
 end

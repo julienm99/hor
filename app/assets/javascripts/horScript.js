@@ -26,6 +26,7 @@ function pageWeb() {
   // TOP: boutons --------------------------------------------------------------------------- 
   if (arguments[0] == "infoHoraire")    { window.location.replace("/"); };
   if (arguments[0] == "infoCedulables") { window.location.replace("/"); };
+  if (arguments[0] == "BaseDeDonnees")  { window.location.replace("/"); };
 
   // BOTTOM: boutons --------------------------------------------------------------------------- 
   if (arguments[0] == "valider")        { window.location.replace("/"); };
@@ -53,6 +54,8 @@ function pageWeb() {
   if (arguments[0] == "nivS5")          { window.location.replace("/nivS5"); };
 
   // metaclasses: GROUPES ------------------------------------------------------------------
+  if (arguments[0] == "gr21")           { window.location.replace("/gr21"); };
+  
   if (arguments[0] == "gr31")           { window.location.replace("/gr31"); };
   if (arguments[0] == "gr32")           { window.location.replace("/gr32"); };
   if (arguments[0] == "gr33")           { window.location.replace("/gr33"); };
@@ -83,8 +86,6 @@ function pageWeb() {
   if (arguments[0] == "gr58")           { window.location.replace("/gr58"); };
   if (arguments[0] == "gr59")           { window.location.replace("/gr59"); };
   
-  if (arguments[0] == "gr21")           { window.location.replace("/gr21"); };
-
   
 }
 

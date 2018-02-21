@@ -1,9 +1,6 @@
 class HorController < ApplicationController
-  attr_accessor :choix
 
   if true # TOP: boutons nav-bar du haut de page
-    #~ def choixMatiere    
-    #~ end
 
     def contraintes   
     end

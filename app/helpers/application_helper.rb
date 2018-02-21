@@ -115,44 +115,39 @@ module ApplicationHelper
 
 
   def restaurerMetaclasses(status)
-    mcNomEnJeu = []
-    file = File.open("public/#{status}.txt", "r:iso8859-1")
-      type, str = file.gets.split("::")
-      str.strip!
-      mcNomEnJeu = str.split(",")
-    file.close
-    saveStatusMetaclassesParNom(mcNomEnJeu, status)	  
-  end
-	
-  def updateStatusMetaclasses
-    
-    %w[1-horaire_fixe 2-cedulables_fixe 3-cedulables 4-en_traitement].each do |status|
-      
       mcNomEnJeu = []
       file = File.open("public/#{status}.txt", "r:iso8859-1")
-	case status
-	when "1-horaire_fixe" 
-	  while (line = file.gets)
-	    type, reste = line.split("::")
-	    if type.strip == "Horaire" then
-	      mcNom,  horaire = reste.split("\t")
-	      mcNom = mcNom.strip
-	      mcNomEnJeu << mcNom unless mcNomEnJeu.include?(mcNom)
-	    end
-	  end
-	  
-	when "2-cedulables_fixe", "3-cedulables", "4-en_traitement"
-	  line = file.gets
-	  type, mcNoms = line.split("::")
-	  mcNoms = mcNoms.strip
-	  mcNomEnJeu = mcNoms.split(",") unless mcNoms = ""
-	
-	else
-	end
-	
+	type, mcNoms = file.gets.split("::")
+	mcNoms.strip! if mcNoms
+	mcNomEnJeu = mcNoms.split(",") if mcNoms
       file.close
-      saveStatusMetaclassesParNom(mcNomEnJeu, status)
+      saveStatusMetaclassesParNom(mcNomEnJeu, status)	  
+  end
+	
+  def updateStatusMetaclasses    
+    %w[1-horaire_fixe 2-cedulables_fixe 3-cedulables 4-en_traitement].each do |status|
+      case status
+      when "1-horaire_fixe"
+	file = File.open("public/#{status}.txt", "r:iso8859-1")
+	mcNomEnJeu = []
+	while (line = file.gets)
+	  type, reste = line.split("::")
+	  if type.strip == "Horaire" then
+	    mcNom, horaire = reste.split("\t")
+	    mcNom.strip!
+	    mcNomEnJeu << mcNom unless mcNomEnJeu.include?(mcNom)
+	  end
+	end
+	file.close
+	saveStatusMetaclassesParNom(mcNomEnJeu, status)
+	
+      when "2-cedulables_fixe", "3-cedulables", "4-en_traitement"
+	restaurerMetaclasses(status)
+      
+      else
+      end	
     end
+    
   end
 
 
@@ -317,48 +312,16 @@ end
 
 
   def updateCedulables
-    #~ fname = "public/metaclasses.txt"
-    #~ file = File.open(fname, "r:iso8859-1")
+    mcNomEnJeu = []
     
-      #~ while (line = file.gets)
-	#~ type, reste = line.split("::")
-	
-	#~ case type.strip
-	#~ when "MetaClasse" 
-	  #~ nom, listeActivites = reste.split("\t")
-	  #~ listeActivites = listeActivites[7,listeActivites.length].strip
-	  #~ niveau = "" ; status ="inactif"
-	  
-	  #~ mc = Metaclass.create(
-		    #~ nom: nom, 
-		    #~ status: status, 
-		    #~ niveau: niveau, 
-		    #~ listeActivites: listeActivites
-		    #~ )		    
-	#~ when "Classe" 
-	  #~ nom, reste = reste.split("\t")
-	  #~ cours, groupe, periodes, periodesTache, semestre, prof, salle, list = reste.split(";")
-	  #~ listeFoyers = list.strip
-	  
-	  #~ activite = Activite.create(
-		    #~ nom: nom, 
-		    #~ identifiantmc: mc.nom, 
-		    #~ cours: cours, 
-		    #~ groupe: groupe, 
-		    #~ periodes: periodes, 
-		    #~ periodesTache: periodesTache, 
-		    #~ semestre: semestre, 
-		    #~ prof: prof, 
-		    #~ salle: salle, 
-		    #~ listeFoyers: listeFoyers,
-		    #~ metaclass: mc
-		    #~ )		    
-	  #~ mc.niveau = "S" + listeFoyers[2,1]
-	  #~ mc.save
-	#~ else	    
-	#~ end	  
-      #~ end 
-    #~ file.close	        
+    obtenirToutesLesMetaclasses.each{|mc| mc.status = "inactif"; mc.save }
+    variance, horaires = infoDesCedulables
+    
+    horaires.strip! ; a = horaires.split(",")
+    Hash[*a].each{|k,v| mcNomEnJeu << k} if horaires
+    
+    saveStatusMetaclassesParNom(mcNomEnJeu, "3-cedulables")	  
+  
   end
 
 
