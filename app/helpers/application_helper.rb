@@ -1,7 +1,30 @@
 module ApplicationHelper
 
-  def dirHor13op(repertoire)
-    "/home/julienm/hor13/op/#{repertoire}/*"
+require 'fileutils'
+
+  def dirHor13(repertoire)
+    "/home/julienm/hor13/#{repertoire}"
+  end
+
+
+  def listHor13(repertoire)
+    dirHor13(repertoire)+"/*"
+  end
+
+
+  def derniereFiliereDuDir(repertoire)
+    files = Dir.glob(repertoire).sort
+    fname = files.last
+  end
+
+
+  def nbLignesDerniereFiliere(repertoire)
+    nbLignesFiliere(derniereFiliereDuDir(listHor13(repertoire)))
+  end
+
+
+  def nbLignesFiliere(filiere)
+    File.readlines(filiere).size
   end
 
 
@@ -39,42 +62,28 @@ module ApplicationHelper
   end
   
    
-  def derniereFiliereDuDir(repertoire)
-    files = Dir.glob(repertoire).sort
-    fname = files.last
-  end
-
-
-  def nbLignesFiliere(filiere)
-    File.readlines(filiere).size
-  end
-
-
-  def nbLignesDerniereFiliere(repertoire)
-    nbLignesFiliere(derniereFiliereDuDir(dirHor13op(repertoire)))
-  end
 
 
   def valide
-    nbLignesFiliere(derniereFiliereDuDir(dirHor13op("cedulables"))) > 0
+    nbLignesFiliere(derniereFiliereDuDir(listHor13("op/cedulables"))) > 0
   end
 
 
-  def afficher_MsgOperationValider(executionSansErreur)
+  def msgOperationValider(executionSansErreur)
     flash[:notice] = "ERREUR de fonctionnement " unless executionSansErreur
     flash[:notice] = "Execution de [VALIDER]: REUSSIE" if executionSansErreur
-    flash[:notice] += " ---> CEDULABLES [ #{nbLignesDerniereFiliere("cedulables")}]" if executionSansErreur && valide
+    flash[:notice] += " ---> CEDULABLES [ #{nbLignesDerniereFiliere("op/cedulables")}]" if executionSansErreur && valide
     flash[:notice] += " mais --->  PAS DE SOLUTION" if executionSansErreur && !valide
   end
 
 
   def effacer_DerniereFiliere(repertoire)
-    File.delete(derniereFiliereDuDir(dirHor13op(repertoire)))
+    File.delete(derniereFiliereDuDir(listHor13(repertoire)))
   end
 
 
   def infoDesCedulables
-    fname = derniereFiliereDuDir(dirHor13op("cedulables"))        
+    fname = derniereFiliereDuDir(listHor13("op/cedulables"))        
     file = File.open(fname, "r:iso8859-1")    
       line = file.gets       # prendre que la première ligne
       variance, horaireTemp = line.split("\t")
@@ -129,30 +138,13 @@ module ApplicationHelper
       saveStatusMetaclassesParNom(mcNomEnJeu, status)	  
   end
 	
-  def updateStatusMetaclasses    
-    %w[1-horaire_fixe 2-cedulables_fixe 3-cedulables 4-en_traitement].each do |status|
-      case status
-      when "1-horaire_fixe"
-	file = File.open("public/#{status}.txt", "r:iso8859-1")
-	mcNomEnJeu = []
-	while (line = file.gets)
-	  type, reste = line.split("::")
-	  if type.strip == "Horaire" then
-	    mcNom, horaire = reste.split("\t")
-	    mcNom.strip!
-	    mcNomEnJeu << mcNom unless mcNomEnJeu.include?(mcNom)
-	  end
-	end
-	file.close
-	saveStatusMetaclassesParNom(mcNomEnJeu, status)
+  def updateStatusMetaclasses 
+    #~ obtenirToutesLesMetaclasses.each{|mc| mc.status = "inactif"; mc.save }
+
+    updateHoraires
 	
-      when "2-cedulables_fixe", "3-cedulables", "4-en_traitement"
-	restaurerMetaclasses(status)
+    updateCedulables
       
-      else
-      end	
-    end
-    
   end
 
 
@@ -200,16 +192,8 @@ module ApplicationHelper
   end
 
 
-  def save_NomsMetaclasses(status)
-    mcEnJeu = []
-    metaclasses(status).each{|mc| mcEnJeu << mc.nom }
-    open("public/#{status}.txt", "w"){|f| f.puts "#{status}::#{mcEnJeu.join(",")}"}
-  end
-
-
   def obtenirIntervalleDerniereFiliereValider(diviseur)
-    #~ nbLignes = File.readlines(derniereFiliereDuDir(dirHor13op("cedulables"))).size
-    nbLignes = nbLignesFiliere(derniereFiliereDuDir(dirHor13op("cedulables")))
+    nbLignes = nbLignesFiliere(derniereFiliereDuDir(listHor13("op/cedulables")))
     (nbLignes.to_i / diviseur).to_s
 end
 
@@ -272,21 +256,40 @@ end
 
   def updateMetaclasses
     obtenirToutesLesMetaclasses.each{|mc| mc.destroy}
-    obtenirToutesLesActivites.each{|act| act.destroy}    
+    obtenirToutesLesActivites.each{|act| act.destroy}
+    src = dirHor13("init/metaclasses.txt") ;  dst = "public/metaclasses.txt"
+    FileUtils.cp(src, des)
     creerBaseDeDonnees
   end
 
 
   def updateCedulables
     mcNomEnJeu = []
-    
-    obtenirToutesLesMetaclasses.each{|mc| mc.status = "inactif"; mc.save }
     variance, horaires = infoDesCedulables
     
     horaires.strip! ; a = horaires.split(",")
     Hash[*a].each{|k,v| mcNomEnJeu << k} if horaires
     
     saveStatusMetaclassesParNom(mcNomEnJeu, "3-cedulables")	  
+  
+  end
+
+
+  def updateHoraires
+    mcNomEnJeu = []
+    
+    file = File.open(dirHor13("data/horaires.txt"), "r:iso8859-1")    
+      while (line = file.gets)
+	type, reste = line.split("::")
+	if type.strip == "Horaire" then
+	  mcNom, horaire = reste.split("\t")
+	  mcNom.strip!
+	  mcNomEnJeu << mcNom unless mcNomEnJeu.include?(mcNom)
+	end
+      end
+    file.close
+    
+    saveStatusMetaclassesParNom(mcNomEnJeu, "1-horaire_fixe")
   
   end
 

@@ -8,7 +8,7 @@
   <% intervalle = obtenirIntervalleDerniereFiliereValider(diviseur = 10)               %> 
   <% system "./filtrer.sh #{intervalle}"                                               %>
   <% flash[:notice] = "FILTRE: #{intervalle} lignes d'intervalle"                      %>
-  <% flash[:notice] += " ---> CEDULABLES [ #{nbLignesDerniereFiliere("cedulables")} ]" %>
+  <% flash[:notice] += " ---> CEDULABLES [ #{nbLignesDerniereFiliere("op/cedulables")} ]" %>
   
 
   <script> pageWeb(page); </script>

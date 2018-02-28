@@ -12,9 +12,8 @@
 
   <% executionSansErreur = system "./valider.sh #{mc_A_valider}" %>
   
-  <% afficher_MsgOperationValider(executionSansErreur)           %>
+  <% msgOperationValider(executionSansErreur)                    %>
   <% changer_MetaclassesEnTraitement_pourCedulables if valide    %>
-  <% save_NomsMetaclasses("3-cedulables") if valide              %>
   <% effacer_DerniereFiliere("cedulables") if !valide            %>
   
   
