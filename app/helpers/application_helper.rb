@@ -123,11 +123,6 @@ require 'fileutils'
   end
 
 
-  def changer_MetaclassesEnTraitement_pourCedulables
-    metaclasses("4-en_traitement").each{|mc| mc.status = "3-cedulables" ; mc.save}    
-  end
-
-
   def restaurerMetaclasses(status)
       mcNomEnJeu = []
       file = File.open("public/#{status}.txt", "r:iso8859-1")
@@ -139,12 +134,13 @@ require 'fileutils'
   end
 	
   def updateStatusMetaclasses 
-    #~ obtenirToutesLesMetaclasses.each{|mc| mc.status = "inactif"; mc.save }
+    updateCedulables      
+    updateHoraires	
+  end
 
-    updateHoraires
-	
-    updateCedulables
-      
+
+  def mettreTousLesStatusInactif 
+    obtenirToutesLesMetaclasses.each{|mc| mc.status = "inactif"; mc.save }
   end
 
 
@@ -255,11 +251,15 @@ end
 
 
   def updateMetaclasses
-    obtenirToutesLesMetaclasses.each{|mc| mc.destroy}
-    obtenirToutesLesActivites.each{|act| act.destroy}
     src = dirHor13("init/metaclasses.txt") ;  dst = "public/metaclasses.txt"
-    FileUtils.cp(src, des)
+    FileUtils.cp(src, dst)
+    
+    Activite.delete_all
+    Metaclass.delete_all
+    
     creerBaseDeDonnees
+    updateCedulables
+    updateHoraires
   end
 
 

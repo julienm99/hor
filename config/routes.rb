@@ -9,7 +9,6 @@ Rails.application.routes.draw do
   
   if true #~ routes: TOP nav_bar  ------------------------------------------
     get 'backbone',           to: 'hor#backbone'
-    #~ get 'choixMatiere',       to: 'hor#choixMatiere'
     
     get 'updateMetaclasses',  to: 'hor#updateMetaclasses'
     get 'updateCedulables',   to: 'hor#updateCedulables'
