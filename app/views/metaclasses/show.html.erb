@@ -1,4 +1,3 @@
-
 <p id="notice"><%= notice %></p>
 
 <p>
@@ -21,7 +20,5 @@
   <%= @metaclass.listeActivites %>
 </p>
 
-<%= link_to 'Modifier', edit_metaclass_path(@metaclass) %> |
-<%= link_to 'Liste des Metaclasses', metaclasses_path %> 
-
-
+<%= link_to 'Edit', edit_metaclass_path(@metaclass) %> |
+<%= link_to 'Back', metaclasses_path %>

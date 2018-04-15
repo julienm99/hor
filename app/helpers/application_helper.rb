@@ -70,8 +70,9 @@ require 'fileutils'
 
 
   def msgOperationValider(executionSansErreur)
-    flash[:notice] = "ERREUR de fonctionnement " unless executionSansErreur
-    flash[:notice] = "Execution de [VALIDER]: REUSSIE" if executionSansErreur
+    #~ flash[:notice] = "ERREUR de fonctionnement " unless executionSansErreur
+    #~ flash[:notice] = "Execution de [VALIDER]: REUSSIE" if executionSansErreur
+    executionSansErreur ? flash[:notice] = "Execution de [VALIDER]: REUSSIE" : flash[:notice] = "ERREUR de fonctionnement "
     flash[:notice] += " ---> CEDULABLES [ #{nbLignesDerniereFiliere("op/cedulables")}]" if executionSansErreur && valide
     flash[:notice] += " mais --->  PAS DE SOLUTION" if executionSansErreur && !valide
   end

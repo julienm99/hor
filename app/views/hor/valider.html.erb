@@ -9,12 +9,15 @@
   <% save_NomsMetaclasses("4-en_traitement")                     %>
   <% mc_A_valider = obtenirNomsMetaclasses("4-en_traitement")    %>
   
-    <h2><%= mc_A_valider  %></h2>
+  <h2>
+  <%= mc_A_valider                                               %>
+  </h2>
 
   <% executionSansErreur = system "./valider.sh #{mc_A_valider}" %>
   
   <% msgOperationValider(executionSansErreur)                    %>
   <% effacer_DerniereFiliere("cedulables") if !valide            %>
+  <% updateCedulables                                            %>
   
   
   <script> pageWeb(page); </script>
