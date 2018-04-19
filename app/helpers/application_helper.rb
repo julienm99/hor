@@ -215,7 +215,7 @@ end
 	case type.strip
 	when "MetaClasse" 
 	  nom, listeActivites = reste.split("\t")
-	  listeActivites = listeActivites[7,listeActivites.length].strip
+	  listeActivites = listeActivites[14,listeActivites.length].strip
 	  niveau = "" ; status ="inactif"
 	  
 	  mc = Metaclass.create(

@@ -1,0 +1,23 @@
+<body>
+
+  <div class="jumbotron">
+    <h2>RÉPARTIR: METACLASSES:</h2>
+  </div>
+
+  <script> if (timeout) clearTimeout(timeout); </script>
+
+  <% save_NomsMetaclasses("4-en_traitement")                     %>
+  <% mc_A_repartir = obtenirNomsMetaclasses("4-en_traitement")   %>
+  
+  <h2>
+  <%= mc_A_repartir                                              %>
+  </h2>
+
+  <% executionSansErreur = system "./repartir.sh #{mc_A_repartir}" %>
+  
+  
+  <script> pageWeb(page); </script>
+
+</body>
+
+    

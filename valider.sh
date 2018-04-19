@@ -23,7 +23,7 @@ echo "---------------------------------"
 
 
 #~ $1 est la variable qui contient les metaclasses à valider (cedulables)
-cat $SOURCE | ruby mapred/repartir.rb $1  | mapred/valider_01 > $DESTINATION
+cat $SOURCE | ruby mapred/repartir.rb $1  | mapred/valider_01 > $DESTINATION | tail -f $DESTINATION
 #~ cat $SOURCE | ruby mapred/repartir.rb $1  | ruby mapred/cedulable2.rb > $DESTINATION
 
 

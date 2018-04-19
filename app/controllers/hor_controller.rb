@@ -1,47 +1,25 @@
 class HorController < ApplicationController
 
   if true # TOP: boutons nav-bar du haut de page
-
-    def contraintes   
-    end
-
-    def creerBaseDeDonnees   
-    end
-    
-    def updateMetaclasses   
-    end
-    
-    def updateCedulables   
-    end
-    
-    def deselectionner
-    end
-    
-    def infoHoraire    
-    end
-
-    def infoCedulables   
-    end
-
+    def contraintes         ; end
+    def creerBaseDeDonnees  ; end    
+    def updateMetaclasses   ; end    
+    def updateCedulables    ; end    
+    def deselectionner      ; end
+    def infoHoraire         ; end
+    def infoCedulables      ; end
   end
-  
+
+
   if true # BOTTOM: boutons nav-bar du bas
-    def valider
-    end
-    
-    def invalider
-    end
-    
-    def filtrer    
-    end
-
-    def fixerHoraire    
-    end
-
-    def variance   
-    end
-
+    def repartir     ; end
+    def valider      ; end
+    def invalider    ; end
+    def filtrer      ; end
+    def fixerHoraire ; end
+    def variance     ; end
   end
+
 
   if true # metaclasses: NIVEAUX
     def nivS1 ; @mc = metaclasses("nivS1") ; end
@@ -50,7 +28,8 @@ class HorController < ApplicationController
     def nivS4 ; @mc = metaclasses("nivS4") ; end
     def nivS5 ; @mc = metaclasses("nivS5") ; end
   end
-  
+
+
   if true # metaclasses: GROUPES
     def gr21 ; @mc = metaclasses("Gr21") ; end
     

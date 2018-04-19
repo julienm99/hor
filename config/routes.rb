@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   end
   
   if true #~ routes: BOTTOM nav_bar  ---------------------------------------
+    get 'repartir',          to: 'hor#repartir'
     get 'valider',           to: 'hor#valider'
     get 'invalider',         to: 'hor#invalider'
     get 'filtrer',           to: 'hor#filtrer'
