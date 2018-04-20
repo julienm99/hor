@@ -84,11 +84,11 @@ require 'fileutils'
 
 
   def infoDesCedulables
-    fname = derniereFiliereDuDir(listHor13("op/cedulables"))        
+    fname = derniereFiliereDuDir(listHor13("op/cedulables")) 
     file = File.open(fname, "r:iso8859-1")    
       line = file.gets       # prendre que la première ligne
       variance, horaireTemp = line.split("\t")
-    file.close    
+    file.close   
     return variance, horaireTemp
   end
 
@@ -185,6 +185,7 @@ require 'fileutils'
 
 
   def saveStatusMetaclassesParNom(mcNomEnJeu, status)
+puts "mcNomEnJeu = #{mcNomEnJeu}  status = #{status}"
     mcNomEnJeu.each{|nom| mc = Metaclass.find_by_nom(nom); mc.status = status; mc.save } if mcNomEnJeu[0]
   end
 
@@ -252,7 +253,8 @@ end
 
 
   def updateMetaclasses
-    src = dirHor13("init/metaclasses.txt") ;  dst = "public/metaclasses.txt"
+    src = dirHor13("init/metaclasses.txt") 
+    dst = "public/metaclasses.txt"
     FileUtils.cp(src, dst)
     
     Activite.delete_all
@@ -265,13 +267,17 @@ end
 
 
   def updateCedulables
-    mcNomEnJeu = []
+puts "debug updateCedulables"
+    mc = obtenirToutesLesMetaclasses # Vider la bases de données ne garder que le statut fixé
+    mc.each{|metaclass| metaclass.status = "inactif" if metaclass.status != "1-horaire_fixe"; metaclass.save}
+    
+    mcNomEnJeu = [] # Cédulables de la dernière filière et les mettre dans la base de données
     variance, horaires = infoDesCedulables
     
     horaires.strip! ; a = horaires.split(",")
     Hash[*a].each{|k,v| mcNomEnJeu << k} if horaires
-    
-    saveStatusMetaclassesParNom(mcNomEnJeu, "3-cedulables")	  
+
+    saveStatusMetaclassesParNom(mcNomEnJeu, "3-cedulables") if horaires	  
   
   end
 
