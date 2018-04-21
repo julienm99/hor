@@ -5,8 +5,8 @@
   </div>
 
 
-  <% variance, horaireTemp = infoDesCedulables %> 
-  <%= system "./infoCedulables.sh #{horaireTemp}"          %>
+  <% horaireTemp = infoDesCedulables               %> 
+  <%= system "./infoCedulables.sh #{horaireTemp}"  %>
 
 
   <script> pageWeb(page);  </script>

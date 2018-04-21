@@ -87,7 +87,7 @@ require 'fileutils'
     fname = derniereFiliereDuDir(listHor13("op/cedulables")) 
     file = File.open(fname, "r:iso8859-1")    
       line = file.gets       # prendre que la première ligne
-      variance, horaireTemp = line.split("\t")
+      variance, horaireTemp = line.split("\t") if line.strip != nil
     file.close   
     return variance, horaireTemp
   end
@@ -134,12 +134,6 @@ require 'fileutils'
       saveStatusMetaclassesParNom(mcNomEnJeu, status)	  
   end
 	
-  def updateStatusMetaclasses 
-    updateCedulables      
-    updateHoraires	
-  end
-
-
   def mettreTousLesStatusInactif 
     obtenirToutesLesMetaclasses.each{|mc| mc.status = "inactif"; mc.save }
   end
@@ -185,7 +179,6 @@ require 'fileutils'
 
 
   def saveStatusMetaclassesParNom(mcNomEnJeu, status)
-puts "mcNomEnJeu = #{mcNomEnJeu}  status = #{status}"
     mcNomEnJeu.each{|nom| mc = Metaclass.find_by_nom(nom); mc.status = status; mc.save } if mcNomEnJeu[0]
   end
 
@@ -252,6 +245,27 @@ end
   end
 
 
+  def infoDesCedulables
+    fname = derniereFiliereDuDir(listHor13("op/cedulables")) 
+    nomMetaclasses = obtenirNomMetaclasses(fname)
+  end
+
+
+  def infoEnTraitement
+    fname = "public/4-en_traitement.txt"
+    nomMetaclasses = obtenirNomMetaclasses(fname)
+  end
+
+
+  def obtenirNomMetaclasses(fname)
+    file = File.open(fname, "r:iso8859-1")    
+      line = file.gets       # prendre que la première ligne
+      variance, nomsMetaclasses = line.split("\t") if line.strip != nil || "nil"
+    file.close   
+    return nomsMetaclasses
+  end
+
+
   def updateMetaclasses
     src = dirHor13("init/metaclasses.txt") 
     dst = "public/metaclasses.txt"
@@ -261,24 +275,26 @@ end
     Metaclass.delete_all
     
     creerBaseDeDonnees
-    updateCedulables
+    updateStatusMetaclasses
+  end
+
+
+  def updateStatusMetaclasses 
+    updateCedulables      
     updateHoraires
   end
 
 
   def updateCedulables
-puts "debug updateCedulables"
     mc = obtenirToutesLesMetaclasses # Vider la bases de données ne garder que le statut fixé
-    mc.each{|metaclass| metaclass.status = "inactif" if metaclass.status != "1-horaire_fixe"; metaclass.save}
-    
-    mcNomEnJeu = [] # Cédulables de la dernière filière et les mettre dans la base de données
-    variance, horaires = infoDesCedulables
-    
-    horaires.strip! ; a = horaires.split(",")
-    Hash[*a].each{|k,v| mcNomEnJeu << k} if horaires
-
-    saveStatusMetaclassesParNom(mcNomEnJeu, "3-cedulables") if horaires	  
-  
+    mc.each do |metaclass|
+      unless metaclass.status == "1-horaire_fixe" || metaclass.status == "4-en_traitement" then
+	metaclass.status = "inactif"
+	metaclass.save
+      end
+    end
+    mc_cedulables = infoDesCedulables
+    saveStatusMetaClasses(mc_cedulables, "3-cedulables")  
   end
 
 
@@ -295,9 +311,17 @@ puts "debug updateCedulables"
 	end
       end
     file.close
-    
-    saveStatusMetaclassesParNom(mcNomEnJeu, "1-horaire_fixe")
-  
+    saveStatusMetaclassesParNom(mcNomEnJeu, "1-horaire_fixe")  
+  end
+
+
+  def saveStatusMetaClasses(nomMC, status)
+    if nomMC then
+      mcNomEnJeu = [] # Cédulables de la dernière filière et les mettre dans la base de données
+      nomMC.strip! ; a = nomMC.split(",") 
+      Hash[*a].each{|k,v| mcNomEnJeu << k} 
+      saveStatusMetaclassesParNom(mcNomEnJeu, status)
+    end    
   end
 
 
