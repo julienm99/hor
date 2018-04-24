@@ -43,7 +43,7 @@ require 'fileutils'
     obtenirToutesLesMetaclasses.each do |mc|
       case sujet
       when "backbone"
-	liste << mc if %w[EPS ART OPT ANG CHI PHY FM5].include?(mc.nom[0,3])
+	liste << mc if %w[EPS ART OPT ANG CHI PHY FM5 MON].include?(mc.nom[0,3])
 	liste << mc if %w[MAT4].include?(mc.nom)
 	
       when /nivS/
