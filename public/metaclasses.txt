@@ -978,22 +978,22 @@ MetaClasse::MAT57	Cycle_unique2;MAT506_57
 Classe::MAT506_57	MAT506;00057;7.0;7.0;0;menm;B10;Gr57
 
 MetaClasse::MON52	Cycle_unique2;MON504_52
-Classe::MON504_52	MON504;00052;5.0;5.0;0;chee;B8;Gr52
+Classe::MON504_52	MON504;00052;5.0;5.0;0;chee;C206;Gr52
 
 MetaClasse::MON54	Cycle_unique2;MON504_54
-Classe::MON504_54	MON504;00054;5.0;5.0;0;stop;C206;Gr54
+Classe::MON504_54	MON504;00054;5.0;5.0;0;eths;B8;Gr54
 
 MetaClasse::MON55	Cycle_unique2;MON504_55
 Classe::MON504_55	MON504;00055;5.0;5.0;0;chee;C206;Gr55
 
 MetaClasse::MON56	Cycle_unique2;MON504_56
-Classe::MON504_56	MON504;00056;5.0;5.0;0;chee;B8;Gr56
+Classe::MON504_56	MON504;00056;5.0;5.0;0;chee;C206;Gr56
 
 MetaClasse::MON57	Cycle_unique2;MON504_57
 Classe::MON504_57	MON504;00057;5.0;5.0;0;eths;B8;Gr57
 
 MetaClasse::MON58	Cycle_unique2;MON504_58
-Classe::MON504_58	MON504;00058;5.0;5.0;0;eths;nil;Gr58
+Classe::MON504_58	MON504;00058;5.0;5.0;0;stop;nil;Gr58
 
 MetaClasse::MON59	Cycle_unique2;MON504_59
 Classe::MON504_59	MON504;00059;5.0;5.0;0;chee;C206;Gr59
