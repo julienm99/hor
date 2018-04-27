@@ -260,7 +260,7 @@ end
   def obtenirNomMetaclasses(fname)
     file = File.open(fname, "r:iso8859-1")    
       line = file.gets       # prendre que la première ligne
-      variance, nomsMetaclasses = line.split("\t") if line.strip != nil || "nil"
+      variance, nomsMetaclasses = line.split("\t") if line.strip != nil || line.strip !="nil"
     file.close   
     return nomsMetaclasses
   end

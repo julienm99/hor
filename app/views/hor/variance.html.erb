@@ -6,7 +6,7 @@
 
 
   <% variance = system "./variance.sh"                                                             %>
-  <% variance ? flash[:notice] = "VARIANCE: RÉUSSIE" : flash[:notice] = "ERREUR DE FONCTIONNEMENT" %>
+  <% variance ? flash[:notice] = "VARIANCE: RÉUSSIE" : flash[:notice] = "ERREUR: ./variance.sh   " %>
   
 
   <script> pageWeb(page); </script>

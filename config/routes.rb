@@ -28,6 +28,7 @@ Rails.application.routes.draw do
     get 'invalider',         to: 'hor#invalider'
     get 'filtrer',           to: 'hor#filtrer'
     get 'variance',          to: 'hor#variance'
+    get 'fixerCedulables',   to: 'hor#fixerCedulables'
     get 'fixerHoraire',      to: 'hor#fixerHoraire'
   end
 

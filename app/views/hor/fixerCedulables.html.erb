@@ -1,0 +1,15 @@
+<body>
+
+  <div class="jumbotron">
+    <h2>FIXER des HORAIRES CÉDULABLES</h2>
+  </div>
+  
+
+  <% horaireTemp = infoDesCedulables                %> 
+  <%= system "./fixerCedulables.sh #{horaireTemp}"  %>
+
+
+  <script> pageWeb(page);  </script>
+
+  
+</body>

@@ -12,12 +12,13 @@ class HorController < ApplicationController
 
 
   if true # BOTTOM: boutons nav-bar du bas
-    def repartir     ; end
-    def valider      ; end
-    def invalider    ; end
-    def filtrer      ; end
-    def fixerHoraire ; end
-    def variance     ; end
+    def repartir        ; end
+    def valider         ; end
+    def invalider       ; end
+    def filtrer         ; end
+    def fixerHoraire    ; end
+    def variance        ; end
+    def fixerCedulables ; end
   end
 
 
