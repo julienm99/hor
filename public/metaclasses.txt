@@ -613,13 +613,13 @@ MetaClasse::FRA52	Cycle_unique2;FRA506E_52
 Classe::FRA506E_52	FRA506E;00052;6.0;6.0;0;lapc;nil;Gr52
 
 MetaClasse::FRA54	Cycle_unique2;FRA506E_54
-Classe::FRA506E_54	FRA506E;00054;6.0;6.0;0;lamb;B110;Gr54
+Classe::FRA506E_54	FRA506E;00054;6.0;6.0;0;lamb;nil;Gr54
 
 MetaClasse::FRA55	Cycle_unique2;FRA506_55
 Classe::FRA506_55	FRA506;00055;7.0;7.0;0;lamb;nil;Gr55
 
 MetaClasse::FRA56	Cycle_unique2;FRA506E_56
-Classe::FRA506E_56	FRA506E;00056;6.0;6.0;0;lapc;B110;Gr56
+Classe::FRA506E_56	FRA506E;00056;6.0;6.0;0;lapc;nil;Gr56
 
 MetaClasse::FRA57	Cycle_unique2;FRA506_57
 Classe::FRA506_57	FRA506;00057;7.0;7.0;0;lamb;nil;Gr57

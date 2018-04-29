@@ -21,6 +21,6 @@ $(document).ready(function(){
 });
 
 
-function rafraichirPage() {
-    location.reload();
+//function rafraichirPage() {
+//    location.reload();
 
