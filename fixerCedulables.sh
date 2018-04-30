@@ -9,22 +9,22 @@ cd hor13
 cp data/horaires.txt data/horairesTemp.txt
 
 
-echo "Métaclasses en jeu ------"
+echo "Métaclasses en jeu : trouvées par [rails_projects/hor/app/views/fixerCedulables.html.erb]"
 echo $1
 ruby script/format_horaire_string.rb $1 >> data/horaires.txt
 
 
-echo "Placer l'horaire cédulables dans l'horaire en cours: horaires.txt ---> horaires_TACHES.txt"
-cp data/horaires.txt data/horaires_TACHES.txt
+#~ echo "Placer l'horaire cédulables dans l'horaire en cours: horaires.txt ---> horaires_TACHES.txt"
+#~ cp data/horaires.txt data/horaires_TACHES.txt
 
 
-echo "-------------------------------------------"
-echo "Transfert de l'horaire cédulables dans TACHES"
-echo "-------------------------------------------"
-ruby mapred/http.rb
+#~ echo "-------------------------------------------"
+#~ echo "Transfert de l'horaire cédulables dans TACHES"
+#~ echo "-------------------------------------------"
+#~ ruby mapred/http.rb
 
 
-echo "formation des filières INFO_"
+echo "formation des filières INFO_***"
 ./info.sh
 
 
