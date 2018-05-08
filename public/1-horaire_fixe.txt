@@ -53,8 +53,8 @@ Horaire::ART19	A3;C5;E1
 Horaire::ANG5D	A2;C2;D5;E6;G5
 Horaire::ANG5C	A6;C5;D6;F3;H1
 Horaire::ANG59	A6;B1;D3;F3;G2
-#~ Horaire::ANG4C	A1;C6;E1;F2;H5
-#~ Horaire::ANG49	A2;C1;E3;F1;H1
+Horaire::ANG4C	A1;C6;E1;F2;H5
+Horaire::ANG49	A2;C1;E3;F1;H1
 Horaire::ANG48	A5;B3;D1;E1;G2
 Horaire::ANG39	A3;C1;D1;F5;G6
 Horaire::ANG1A	A6;C5;D1;F5;G1
