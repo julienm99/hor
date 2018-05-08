@@ -12,9 +12,8 @@ require 'fileutils'
   end
 
 
-  def derniereFiliereDuDir(repertoire)
-    files = Dir.glob(repertoire).sort
-    fname = files.last
+  def derniereFiliereDuDir(repertoire)   #dernière filière modifiée
+    Dir.glob(repertoire).sort {|a,b| File.mtime(a) <=> File.mtime(b)}.last
   end
 
 

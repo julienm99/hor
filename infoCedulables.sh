@@ -4,6 +4,7 @@ echo "FORMATION DES FILIERES: INFO_XX.txt"
 echo "-------------------------------------------"
 echo "changement de repertoire ---> hor13"
 echo "savegarde de l'horaire en cours: horaires.txt ---> horairesTemp.txt"
+
 cd
 cd hor13
 cp data/horaires.txt data/horairesTemp.txt
@@ -18,18 +19,19 @@ echo "Placer l'horaire cédulables dans l'horaire en cours: horaires.txt ---> ho
 cp data/horaires.txt data/horaires_TACHES.txt
 
 
-echo "-------------------------------------------"
-echo "Transfert de l'horaire cédulables dans TACHES"
-echo "-------------------------------------------"
-ruby mapred/http.rb
+#~ echo "-------------------------------------------"
+#~ echo "Transfert de l'horaire cédulables dans TACHES"
+#~ echo "-------------------------------------------"
+#~ ruby mapred/http.rb
 
 
 echo "formation des filières INFO_"
 ./info.sh
 
 
-cp data/horairesTemp.txt data/horaires.txt
-cd
-cd rails_projects/hor
 echo "Rappel de l'horaire en cours: horairesTemp.txt ---> horaires.txt"
 echo "-------------------------------------------"
+cp data/horairesTemp.txt data/horaires.txt
+
+cd
+cd rails_projects/hor
