@@ -544,7 +544,7 @@ MetaClasse::FRA31X	Cycle_unique2;FRA308x_31
 Classe::FRA308x_31	FRA308x;00031;1.0;1.0;0;desjj;nil;Gr31
 
 MetaClasse::FRA32	Cycle_unique2;FRA308E_32
-Classe::FRA308E_32	FRA308E;00032;8.0;8.0;0;deguf;B117;Gr32
+Classe::FRA308E_32	FRA308E;00032;8.0;8.0;0;deguf;nil;Gr32
 
 MetaClasse::FRA33	Cycle_unique2;FRA308_33
 Classe::FRA308_33	FRA308;00033;8.0;8.0;0;beam;C205;Gr33
@@ -601,13 +601,13 @@ MetaClasse::FRA46	Cycle_unique2;FRA406E_46
 Classe::FRA406E_46	FRA406E;00046;6.0;6.0;0;fism;nil;Gr46
 
 MetaClasse::FRA47	Cycle_unique2;FRA406_47
-Classe::FRA406_47	FRA406;00047;7.0;7.0;0;begm;nil;Gr47
+Classe::FRA406_47	FRA406;00047;7.0;7.0;0;lahg;nil;Gr47
 
 MetaClasse::FRA48	Cycle_unique2;FRA406_48
-Classe::FRA406_48	FRA406;00048;7.0;7.0;0;lahg;nil;Gr48
+Classe::FRA406_48	FRA406;00048;7.0;7.0;0;lahg;B120;Gr48
 
 MetaClasse::FRA49	Cycle_unique2;FRA406_49
-Classe::FRA406_49	FRA406;00049;7.0;7.0;0;lahg;B120;Gr49
+Classe::FRA406_49	FRA406;00049;7.0;7.0;0;begm;nil;Gr49
 
 MetaClasse::FRA52	Cycle_unique2;FRA506E_52
 Classe::FRA506E_52	FRA506E;00052;6.0;6.0;0;lapc;nil;Gr52
@@ -775,10 +775,10 @@ MetaClasse::HIS41	Cycle_unique2;HIS404_41
 Classe::HIS404_41	HIS404;00041;5.0;5.0;0;heba;B119;Gr41
 
 MetaClasse::HIS42	Cycle_unique2;HIS404_42
-Classe::HIS404_42	HIS404;00042;5.0;5.0;0;arcs;C207;Gr42
+Classe::HIS404_42	HIS404;00042;5.0;5.0;0;heba;B119;Gr42
 
 MetaClasse::HIS43	Cycle_unique2;HIS404_43
-Classe::HIS404_43	HIS404;00043;5.0;5.0;0;heba;B119;Gr43
+Classe::HIS404_43	HIS404;00043;5.0;5.0;0;arcs;C207;Gr43
 
 MetaClasse::HIS44	Cycle_unique2;HIS404_44
 Classe::HIS404_44	HIS404;00044;5.0;5.0;0;arcs;C207;Gr44
@@ -860,13 +860,13 @@ MetaClasse::MAT13	Cycle_unique1;MAT106_13
 Classe::MAT106_13	MAT106;00013;7.0;7.0;0;desm;nil;Gr13
 
 MetaClasse::MAT14	Cycle_unique1;MAT106E_14
-Classe::MAT106E_14	MAT106E;00014;6.0;6.0;0;dumi;P103;Gr14
+Classe::MAT106E_14	MAT106E;00014;6.0;6.0;0;dumi;I101;Gr14
 
 MetaClasse::MAT15	Cycle_unique1;MAT106_15
 Classe::MAT106_15	MAT106;00015;7.0;7.0;0;desm;nil;Gr15
 
 MetaClasse::MAT16	Cycle_unique1;MAT106E_16
-Classe::MAT106E_16	MAT106E;00016;6.0;6.0;0;dumi;P103;Gr16
+Classe::MAT106E_16	MAT106E;00016;6.0;6.0;0;dumi;I101;Gr16
 
 MetaClasse::MAT17	Cycle_unique1;MAT106_17
 Classe::MAT106_17	MAT106;00017;7.0;7.0;0;blam;nil;Gr17
