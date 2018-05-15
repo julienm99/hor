@@ -562,7 +562,7 @@ MetaClasse::FRA35X	Cycle_unique2;FRA308x_35
 Classe::FRA308x_35	FRA308x;00035;1.0;1.0;0;fism;nil;Gr35
 
 MetaClasse::FRA36	Cycle_unique2;FRA308E_36
-Classe::FRA308E_36	FRA308E;00036;8.0;8.0;0;beam;nil;Gr36
+Classe::FRA308E_36	FRA308E;00036;8.0;8.0;0;beam;C205;Gr36
 
 MetaClasse::FRA37	Cycle_unique2;FRA308_37
 Classe::FRA308_37	FRA308;00037;8.0;8.0;0;desjj;B117;Gr37
@@ -589,7 +589,7 @@ MetaClasse::FRA42	Cycle_unique2;FRA406E_42
 Classe::FRA406E_42	FRA406E;00042;6.0;6.0;0;fism;nil;Gr42
 
 MetaClasse::FRA43	Cycle_unique2;FRA406_43
-Classe::FRA406_43	FRA406;00043;7.0;7.0;0;lahg;B120;Gr43
+Classe::FRA406_43	FRA406;00043;7.0;7.0;0;lahg;nil;Gr43
 
 MetaClasse::FRA44	Cycle_unique2;FRA406E_44
 Classe::FRA406E_44	FRA406E;00044;6.0;6.0;0;fism;nil;Gr44
@@ -604,7 +604,7 @@ MetaClasse::FRA47	Cycle_unique2;FRA406_47
 Classe::FRA406_47	FRA406;00047;7.0;7.0;0;lahg;nil;Gr47
 
 MetaClasse::FRA48	Cycle_unique2;FRA406_48
-Classe::FRA406_48	FRA406;00048;7.0;7.0;0;lahg;B120;Gr48
+Classe::FRA406_48	FRA406;00048;7.0;7.0;0;lahg;nil;Gr48
 
 MetaClasse::FRA49	Cycle_unique2;FRA406_49
 Classe::FRA406_49	FRA406;00049;7.0;7.0;0;begm;nil;Gr49
@@ -748,28 +748,28 @@ MetaClasse::HIS31	Cycle_unique2;HIS304_31
 Classe::HIS304_31	HIS304;00031;5.0;5.0;0;stop;nil;Gr31
 
 MetaClasse::HIS32	Cycle_unique2;HIS304_32
-Classe::HIS304_32	HIS304;00032;5.0;5.0;0;bour;C106;Gr32
+Classe::HIS304_32	HIS304;00032;5.0;5.0;0;stop;C106;Gr32
 
 MetaClasse::HIS33	Cycle_unique2;HIS304_33
-Classe::HIS304_33	HIS304;00033;5.0;5.0;0;stop;nil;Gr33
+Classe::HIS304_33	HIS304;00033;5.0;5.0;0;bour;nil;Gr33
 
 MetaClasse::HIS34	Cycle_unique2;HIS304_34
-Classe::HIS304_34	HIS304;00034;5.0;5.0;0;bour;C106;Gr34
+Classe::HIS304_34	HIS304;00034;5.0;5.0;0;arcs;C106;Gr34
 
 MetaClasse::HIS35	Cycle_unique2;HIS304_35
 Classe::HIS304_35	HIS304;00035;5.0;5.0;0;bour;C106;Gr35
 
 MetaClasse::HIS36	Cycle_unique2;HIS304_36
-Classe::HIS304_36	HIS304;00036;5.0;5.0;0;arcs;C207;Gr36
+Classe::HIS304_36	HIS304;00036;5.0;5.0;0;bour;C207;Gr36
 
 MetaClasse::HIS37	Cycle_unique2;HIS304_37
-Classe::HIS304_37	HIS304;00037;5.0;5.0;0;bour;C106;Gr37
+Classe::HIS304_37	HIS304;00037;5.0;5.0;0;stop;C106;Gr37
 
 MetaClasse::HIS38	Cycle_unique2;HIS304_38
 Classe::HIS304_38	HIS304;00038;5.0;5.0;0;bour;C106;Gr38
 
 MetaClasse::HIS39	Cycle_unique2;HIS304_39
-Classe::HIS304_39	HIS304;00039;5.0;5.0;0;stop;nil;Gr39
+Classe::HIS304_39	HIS304;00039;5.0;5.0;0;bour;nil;Gr39
 
 MetaClasse::HIS41	Cycle_unique2;HIS404_41
 Classe::HIS404_41	HIS404;00041;5.0;5.0;0;heba;B119;Gr41
@@ -1102,22 +1102,22 @@ MetaClasse::SCT33	Cycle_unique2;SCT306_33
 Classe::SCT306_33	SCT306;00033;7.0;7.0;0;gagd;C04;Gr33
 
 MetaClasse::SCT34	Cycle_unique2;SCT306_34
-Classe::SCT306_34	SCT306;00034;7.0;7.0;0;gagd;C03;Gr34
+Classe::SCT306_34	SCT306;00034;7.0;7.0;0;gagd;C04;Gr34
 
 MetaClasse::SCT35	Cycle_unique2;SCT306_35
-Classe::SCT306_35	SCT306;00035;7.0;7.0;0;gagd;C03;Gr35
+Classe::SCT306_35	SCT306;00035;7.0;7.0;0;gagd;C04;Gr35
 
 MetaClasse::SCT36	Cycle_unique2;SCT306_36
 Classe::SCT306_36	SCT306;00036;7.0;7.0;0;vaia;C04;Gr36
 
 MetaClasse::SCT37	Cycle_unique2;SCT306_37
-Classe::SCT306_37	SCT306;00037;7.0;7.0;0;lapl;C04;Gr37
+Classe::SCT306_37	SCT306;00037;7.0;7.0;0;lapl;C03;Gr37
 
 MetaClasse::SCT38	Cycle_unique2;SCT306_38
-Classe::SCT306_38	SCT306;00038;7.0;7.0;0;vaia;C03;Gr38
+Classe::SCT306_38	SCT306;00038;7.0;7.0;0;vaia;C04;Gr38
 
 MetaClasse::SCT39	Cycle_unique2;SCT306_39
-Classe::SCT306_39	SCT306;00039;7.0;7.0;0;lapl;C04;Gr39
+Classe::SCT306_39	SCT306;00039;7.0;7.0;0;lapl;C03;Gr39
 
 MetaClasse::SCT41	Cycle_unique2;SCT404_41
 Classe::SCT404_41	SCT404;00041;8.0;8.0;0;frem;B14;Gr41
@@ -1153,5 +1153,5 @@ MetaClasse::TMS54	Cycle_unique2;TMS542_54
 Classe::TMS542_54	TMS542;00054;2.0;2.0;0;vaia;nil;Gr54
 
 MetaClasse::TMS56	Cycle_unique2;TMS542_56
-Classe::TMS542_56	TMS542;00056;2.0;2.0;0;boum;nil;Gr56
+Classe::TMS542_56	TMS542;00056;2.0;2.0;0;boum;B14;Gr56
 
