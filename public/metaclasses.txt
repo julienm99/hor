@@ -266,10 +266,10 @@ MetaClasse::ECR19	Cycle_unique1;ECR102_19
 Classe::ECR102_19	ECR102;00019;2.0;2.0;0;fra1;nil;Gr19
 
 MetaClasse::ECR201	Cycle_unique1;ECR202_201
-Classe::ECR202_201	ECR202;00201;2.0;2.0;0;tremc;nil;Gr201
+Classe::ECR202_201	ECR202;00201;2.0;2.0;0;choqd;nil;Gr201
 
 MetaClasse::ECR202	Cycle_unique1;ECR202_202
-Classe::ECR202_202	ECR202;00202;2.0;2.0;0;choqd;nil;Gr202
+Classe::ECR202_202	ECR202;00202;2.0;2.0;0;tremc;nil;Gr202
 
 MetaClasse::ECR203	Cycle_unique1;ECR202_203
 Classe::ECR202_203	ECR202;00203;2.0;2.0;0;myri;nil;Gr203
@@ -290,10 +290,10 @@ MetaClasse::ECR208	Cycle_unique1;ECR202_208
 Classe::ECR202_208	ECR202;00208;2.0;2.0;0;choqd;nil;Gr208
 
 MetaClasse::ECR209	Cycle_unique1;ECR202_209
-Classe::ECR202_209	ECR202;00209;2.0;2.0;0;myri;nil;Gr209
+Classe::ECR202_209	ECR202;00209;2.0;2.0;0;tremc;nil;Gr209
 
 MetaClasse::ECR210	Cycle_unique1;ECR202_210
-Classe::ECR202_210	ECR202;00210;2.0;2.0;0;tremc;nil;Gr210
+Classe::ECR202_210	ECR202;00210;2.0;2.0;0;myri;nil;Gr210
 
 MetaClasse::ECR211	Cycle_unique1;ECR202_211
 Classe::ECR202_211	ECR202;00211;2.0;2.0;0;myri;nil;Gr211
@@ -724,7 +724,7 @@ MetaClasse::HIS204	Cycle_unique1;HIS203E_204
 Classe::HIS203E_204	HIS203E;00204;3.0;3.0;0;choqd;nil;Gr204
 
 MetaClasse::HIS205	Cycle_unique1;HIS203_205
-Classe::HIS203_205	HIS203;00205;3.0;3.0;0;bour;C106;Gr205
+Classe::HIS203_205	HIS203;00205;3.0;3.0;0;bour;nil;Gr205
 
 MetaClasse::HIS206	Cycle_unique1;HIS203E_206
 Classe::HIS203E_206	HIS203E;00206;3.0;3.0;0;choqd;nil;Gr206
@@ -832,7 +832,7 @@ Classe::HIS203x_203	HIS203x;00203;1.0;0.5;0;choqd;nil;Gr203
 
 MetaClasse::HISGEO205	Cycle_unique1;GEO203x_205;HIS203x_205
 Classe::GEO203x_205	GEO203x;00205;1.0;0.5;0;tremc;P107;Gr205
-Classe::HIS203x_205	HIS203x;00205;1.0;0.5;0;bour;C106;Gr205
+Classe::HIS203x_205	HIS203x;00205;1.0;0.5;0;bour;nil;Gr205
 
 MetaClasse::HISGEO207	Cycle_unique1;GEO203x_207;HIS203x_207
 Classe::GEO203x_207	GEO203x;00207;1.0;0.5;0;tremc;P107;Gr207
@@ -870,6 +870,9 @@ Classe::MAT106E_16	MAT106E;00016;6.0;6.0;0;dumi;I101;Gr16
 
 MetaClasse::MAT17	Cycle_unique1;MAT106_17
 Classe::MAT106_17	MAT106;00017;7.0;7.0;0;blam;nil;Gr17
+
+#~ MetaClasse::MAT17	Cycle_unique1;MAT106_17
+#~ Classe::MAT106_17	MAT106;00017;7.0;7.0;0;blam;nil;Gr17
 
 MetaClasse::MAT18	Cycle_unique1;MAT106_18
 Classe::MAT106_18	MAT106;00018;7.0;7.0;0;marc;nil;Gr18
@@ -1035,20 +1038,32 @@ Classe::PHY504_56	PHY504;00056;5.0;5.0;0;begp;LaboPhy;Gr56
 MetaClasse::SCT11	Cycle_unique1;SCT104_11
 Classe::SCT104_11	SCT104;00011;4.0;4.0;0;orif;I102;Gr11
 
-MetaClasse::SCT12	Cycle_unique1;SCT104_12
+MetaClasse::SCT12	Cycle_unique1;SCT104_12;SCT104_09
 Classe::SCT104_12	SCT104;00012;4.0;4.0;0;dumi;I102;Gr12
+Classe::SCT104_09	SCT104;00009;4.0;4.0;0;dumi;I101;Gr12
+
+#~ MetaClasse::SCT12	Cycle_unique1;SCT104_12
+#~ Classe::SCT104_12	SCT104;00012;4.0;4.0;0;dumi;I102;Gr12
 
 MetaClasse::SCT13	Cycle_unique1;SCT104_13
 Classe::SCT104_13	SCT104;00013;4.0;4.0;0;orif;I102;Gr13
 
-MetaClasse::SCT14	Cycle_unique1;SCT104_14
+MetaClasse::SCT14	Cycle_unique1;SCT104_14;SCT104_10
 Classe::SCT104_14	SCT104;00014;4.0;4.0;0;dumi;I102;Gr14
+Classe::SCT104_10	SCT104;00010;4.0;4.0;0;dumi;I101;Gr14
+
+#~ MetaClasse::SCT14	Cycle_unique1;SCT104_14
+#~ Classe::SCT104_14	SCT104;00014;4.0;4.0;0;dumi;I102;Gr14
 
 MetaClasse::SCT15	Cycle_unique1;SCT104_15
 Classe::SCT104_15	SCT104;00015;4.0;4.0;0;orif;I102;Gr15
 
-MetaClasse::SCT16	Cycle_unique1;SCT104_16
+MetaClasse::SCT16	Cycle_unique1;SCT104_16;SCT104_08
 Classe::SCT104_16	SCT104;00016;4.0;4.0;0;dumi;I102;Gr16
+Classe::SCT104_08	SCT104;00008;4.0;4.0;0;dumi;I101;Gr16
+
+#~ MetaClasse::SCT16	Cycle_unique1;SCT104_16
+#~ Classe::SCT104_16	SCT104;00016;4.0;4.0;0;dumi;I102;Gr16
 
 MetaClasse::SCT17	Cycle_unique1;SCT104_17
 Classe::SCT104_17	SCT104;00017;4.0;4.0;0;orif;I102;Gr17

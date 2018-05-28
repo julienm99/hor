@@ -171,88 +171,117 @@ Horaire::FRA31X	G3
 Horaire::FRA38X	H6
 Horaire::FRA37X	H1
 
+
 NIVEAU::S2
 
 Horaire::ART2A	B1;D5;F5;H5
 Horaire::ART2B	A5;C5;E5;G1
-#~ Horaire::ART2C	A6;C3;E2;G5
-#~ Horaire::ART2D	A3;C1;E5;G6
-#~ Horaire::ART2E	A2;C5;E1;G1
-#~ Horaire::ART2F	A1;C2;E2;G2
+Horaire::ART2C	A6;C3;E2;G5
+Horaire::ART2D	A3;C1;E5;G6
+Horaire::ART2E	A2;C5;E1;G1
+Horaire::ART2F	A1;C2;E2;G2
 
+--------------
 Horaire::ART1A	B6;D2;H5
 Horaire::ART1B	B1;F6;H2
 Horaire::ART1C	D5;F5;H1
 Horaire::ART1D	B5;D1;F3
 Horaire::ART19	A3;C6;E1
 
-------------------
-
-#~ Horaire::ANG211	B1;D1;F1;H1
-#~ Horaire::ANG2A	B2;C1;E1;G1
-#~ Horaire::ANG2B	B3;C2;E2;G2
-#~ Horaire::ANG2C	C5;D2;F2;H2
-#~ Horaire::ANG2D	C3;D3;F3;H3
-#~ Horaire::ANG2E	B5;D5;F5;H5
-#~ Horaire::ART2C	A6;C3;E2;G5
-#~ Horaire::ART2D	A1;C2;E3;G1
-#~ Horaire::ART2E	A2;C5;E5;G2
-#~ Horaire::ART2F	A3;D2;F6;G3
-#~ Horaire::ECR201	B3;F2
-#~ Horaire::ECR202	D6;H2
-#~ Horaire::ECR205	A1;E3
-#~ Horaire::ECR208	F1;H1
-#~ Horaire::ECR209	B3;F1
-#~ Horaire::ECR210	B1;F1
-#~ Horaire::ESP202	A5;D3;G6
-#~ Horaire::ESP208	A2;D1;G3
-#~ Horaire::FRA201	A2;B5;C2;D2;E2;F3;G2;H1
-#~ Horaire::FRA201X	H2
-#~ Horaire::FRA202	A3;B3;C2;D2;E2;F2;G3;H1
-#~ Horaire::FRA203	A2;B1;C1;D3;E1;F2;G3;H1
-#~ Horaire::FRA204	A3;B1;C1;D3;E1;F2;G3;H3
-#~ Horaire::FRA205	A3;B2;C2;D5;E5;F3;G1;H5
-#~ Horaire::FRA205X	G6
-#~ Horaire::FRA206	A1;B1;C1;D3;E3;F3;G1;H3
-#~ Horaire::FRA207	A2;B2;C5;D1;E2;F1;G3;H1
-#~ Horaire::FRA208	A5;B1;C5;D5;E5;F5;G5;H2
-#~ Horaire::FRA209	A1;B6;C3;D1;E2;F6;G5;H3
-#~ Horaire::FRA209X	D2
-#~ Horaire::FRA210	A5;B2;C3;D1;E6;F6;G1;H6
-#~ Horaire::FRA210X	D6
-#~ Horaire::FRA211	A5;B3;C2;D5;E1;F2;G2;H5
-#~ Horaire::GEO201	C3;D3;G3
-#~ Horaire::GEO202	B5;E6;H6
-#~ Horaire::GEO205	C1;E6;H1
-#~ Horaire::GEO208	B2;D2;F2
-#~ Horaire::GEO209	C2;F3;H1
-#~ Horaire::GEO210	C6;F3;H3
-#~ Horaire::HIS201	B6;E3;H3
-#~ Horaire::HIS202	A6;C6;F6
-#~ Horaire::HIS205	B3;D1;F1
-#~ Horaire::HIS208	B3;E2;H6
-#~ Horaire::HIS209	B1;D6;G3
-#~ Horaire::HIS210	B3;D2;G6
-#~ Horaire::HISGEO201	A3
-#~ Horaire::HISGEO205	A2
-#~ Horaire::HISGEO209	A5
-#~ Horaire::HISGEO210	A6
-#~ Horaire::MAT201	A6;C6;D6;E6;F6;G6;H6
-#~ Horaire::MAT202	B6;C5;E5;F3;G5;H3
-#~ Horaire::MAT205	A5;B1;C6;D6;F5;G3;H6
-#~ Horaire::MAT208	A3;B5;C6;D6;F6;H5
-#~ Horaire::MAT209	A6;B2;D3;E6;F2;G6;H6
-#~ Horaire::MAT210	A3;B6;D3;E1;F2;G5;H1
-#~ Horaire::SCT201	A5;C5;E5;G5
-#~ Horaire::SCT202	A2;C3;E3;G2
-#~ Horaire::SCT203	B2;D2;F3;H2
-#~ Horaire::SCT204	B6;D5;F5;H5
-#~ Horaire::SCT205	B5;D3;F6;H3
-#~ Horaire::SCT206	B3;D1;F1;H1
-#~ Horaire::SCT207	B1;D6;F2;H6
-#~ Horaire::SCT208	A6;C1;E6;G6
-#~ Horaire::SCT209	A3;C6;E1;G1
-#~ Horaire::SCT210	A1;C2;E2;G3
-#~ Horaire::SCT211	A1;C5;E2;G5
-
 #~ -------------------------
+
+
+Horaire::HISGEO205	A1
+Horaire::ANG2A	A2;C1;E3;G1
+Horaire::ANG2C	A5;C2;E6;G3
+Horaire::ESP204	A3;D2;G3
+Horaire::ESP202	A5;C2;G5
+Horaire::SCT211	A2;C3;E1;G3
+Horaire::SCT209	A3;C2;E5;G2
+Horaire::SCT207	A1;C5;E2;G1
+Horaire::SCT204	A6;C1;E3;G5
+Horaire::SCT203	A2;C3;E1;G3
+Horaire::SCT201	A5;C6;E6;G6
+Horaire::MAT211	A6;B1;D1;E5;F5;G1;H3
+Horaire::MAT210	A1;B1;D5;E5;F6;G6;H5
+Horaire::MAT209	A1;B3;D6;E6;F3;G3;H5
+Horaire::MAT208	A2;C3;D3;F5;G1;H6
+Horaire::MAT207	A5;B2;C2;D6;E6;F2;H2
+Horaire::MAT205	A3;B2;C1;D6;F6;G6;H1
+Horaire::HISGEO211	A5
+Horaire::HISGEO203	A6
+Horaire::HIS210	A6;C3;G5
+Horaire::HIS206	A1;D3;G6
+Horaire::HIS202	A3;E5;F2
+Horaire::HIS201	A3;D6;F6
+Horaire::GEO209	A5;C6;G6
+Horaire::GEO208	A6;C2;F2
+Horaire::GEO207	A2;D5;H6
+Horaire::GEO206	A3;D1;F2
+Horaire::FRA211	A3;B2;C5;D5;E6;F2;G5;H1
+Horaire::FRA210X	A3
+Horaire::FRA210	A5;B3;C6;D3;E6;F3;G2;H6
+Horaire::FRA209	A6;B1;C3;D5;E2;F1;G5;H1
+Horaire::FRA208	A1;B5;C6;D2;E6;F6;G5;H5
+Horaire::FRA207	A6;B5;C3;D2;E3;F3;G3;H5
+Horaire::FRA206	A2;B1;C6;D6;E5;F6;G1;H6
+Horaire::FRA205	A2;B5;C6;D2;E5;F5;G1;H6
+Horaire::FRA204	A2;B6;C3;D6;E1;F6;G6;H5
+Horaire::FRA203	A3;B2;C2;D6;E6;F2;G6;H5
+Horaire::FRA202	A6;B3;C5;D3;E2;F3;G3;H3
+Horaire::FRA201	A6;B5;C5;D2;E5;F2;G5;H2
+Horaire::ECR208	A5;D6
+Horaire::HIS205	B3;D1;F1
+Horaire::ANG2D	B1;D1;F1;H1
+Horaire::ECR211	B3;F1
+Horaire::ECR203	B5;F6
+Horaire::ANG2E	B2;D2;F2;H3
+Horaire::ANG2B	B3;D5;F3;H2
+Horaire::ESP208	B2;E2;H2
+Horaire::SCT208	B3;D5;F3;H3
+Horaire::SCT205	B1;D3;F2;H5
+Horaire::SCT202	B2;D6;F6;H6
+Horaire::SCT210	B6;D1;F1;H1
+Horaire::SCT206	B5;D2;F5;H2
+Horaire::MAT206	B3;C5;D5;E3;F3;H5
+Horaire::MAT204	B5;C6;D3;F2;G2;H6
+Horaire::MAT203	B6;C6;D2;E3;F5;G5;H6
+Horaire::MAT202	B5;C6;D2;E1;G2;H1
+Horaire::MAT201	B3;C3;D3;E2;F3;G2;H3
+Horaire::HISGEO201	B2
+Horaire::HIS211	B6;D2;G6
+Horaire::HIS209	B5;D1;H6
+Horaire::HIS207	B3;C6;F6
+Horaire::HIS204	B1;E6;H1
+Horaire::GEO210	B5;D6;F5
+Horaire::GEO204	B2;E2;H3
+Horaire::GEO203	B1;D3;H1
+Horaire::GEO202	B6;E6;H2
+Horaire::ECR209	B6;F6
+Horaire::ECR206	B2;H3
+Horaire::ECR201	B6;H6
+Horaire::ANG211	B5;D6;F6;H6
+Horaire::ECR210	C2;G3
+Horaire::ESP206	C1;F1;H1
+Horaire::HIS208	C5;E3;G3
+Horaire::HIS203	C1;E2;G2
+Horaire::GEO211	C6;F3;H5
+Horaire::GEO205	C5;E3;H3
+Horaire::GEO201	C2;E1;G3
+Horaire::ECR204	C2;F5
+Horaire::ECR202	C3;G6
+Horaire::ECR207	D3;F5
+Horaire::FRA211X	D3
+Horaire::FRA209X	D3
+Horaire::ECR205	D5;H2
+Horaire::HISGEO210	E2
+Horaire::HISGEO209	F5
+Horaire::FRA205X	F3
+Horaire::HISGEO207	G5
+Horaire::FRA207X	H3
+Horaire::FRA203X	H3
+Horaire::FRA201X	H1
+
+
+NIVEAU::S1
+
