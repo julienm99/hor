@@ -17,7 +17,7 @@ Rails.application.routes.draw do
     
     get 'contraintes',        to: 'hor#contraintes'
     
-    get 'deselectionner',     to: 'hor#deselectionner'
+    get 'deSelect',           to: 'hor#deSelect'
     
     get 'infoHoraire',        to: 'hor#infoHoraire'
     get 'infoCedulables',     to: 'hor#infoCedulables'

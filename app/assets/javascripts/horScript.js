@@ -37,16 +37,7 @@ function pageWeb() {
 
   // metaclasses: TOUTES et BACKBONE -------------------------------------------------------
   if (arguments[0] == "index")          { window.location.replace("/"); };
-  //~ if (arguments[0] == "backbone")       { window.location.replace("/backbone"); };
-  
-  // metaclasses: COURS/ACTIVITÉS/MATIÈRES --------------------------------------------------
-  //~ if (arguments[0] == "coursANG")       { window.location.replace("/coursANG"); };
-  //~ if (arguments[0] == "coursART")       { window.location.replace("/coursART"); };
-  //~ if (arguments[0] == "coursEPS")       { window.location.replace("/coursEPS"); };
-  //~ if (arguments[0] == "coursFRA")       { window.location.replace("/coursFRA"); };
-  //~ if (arguments[0] == "coursMAT")       { window.location.replace("/coursMAT"); };
-  //~ if (arguments[0] == "coursSCT")       { window.location.replace("/coursSCT"); };
-
+ 
 }
 
 

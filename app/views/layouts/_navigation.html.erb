@@ -134,6 +134,7 @@
       </div> <!-- FIN : btn:[METACLASSES] -->
     
     <%= link_to 'PRIORITÉS', fixerHoraire_path, class:"btn btn-warning"    %>
+    
     <%= link_to 'CONTRAINTES', contraintes_path, class:"btn btn-warning "  %>
 
 
@@ -144,7 +145,7 @@
 	<ul class="dropdown-menu">
 	  <li><%= link_to 'METACLASSES', metaclasses_path, class:"btn btn-warning "                           %></li>
 	      <li class="divider"></li>
-	  <li><%= link_to 'ACTIVITÉS', activites_path, class:"btn btn-warning "                               %></li>
+	  <li><%= link_to 'ACTIVITÉS (CLASSES Coba)', activites_path, class:"btn btn-warning "                               %></li>
 	      <li class="divider"></li>
 	  <li><%= link_to 'REPLACER AUX DERNIERS CÉDULABLES', updateCedulables_path, class:"btn btn-warning " %></li>
 	      <li class="divider"></li>
@@ -154,8 +155,21 @@
 	</ul>
       </div>
       
-      
-    <%= link_to 'DÉ-SÉLECT.', deselectionner_path, class:"btn btn-danger" %>
+    <div class="btn-group btn-group-primary">
+      <button type="button" class="btn btn-primary">DÉ-SÉLECTIONNER</button>
+      <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	<span class="caret"></span>
+	<span class="sr-only">Toggle Dropdown</span>
+      </button>
+      <ul class="dropdown-menu multi-level">
+	<li><%= link_to 'Metaclasses 1-HORAIRE fixe.......',deSelect_path(:param => "1-horaire_fixe"), class:"btn btn-warning" %></li>
+	<li><%= link_to 'Metaclasses 2-CEDULABLES fixe',deSelect_path(:param => "2-cedulables_fixe"), class:"btn btn-warning" %></li>
+	<li><%= link_to 'Metaclasses 3-CEDULABLES........',deSelect_path(:param => "3-cedulables"), class:"btn btn-warning" %></li>
+	<li><%= link_to 'Metaclasses 4-EN_TRAITEMENT..',deSelect_path(:param => "4-en_traitement"), class:"btn btn-warning" %></li>
+      </ul>
+    </div>
+    
+    
     <div class="btn-group btn-group-primary">
       <button type="button" class="btn btn-primary">INFO</button>
       <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -167,6 +181,7 @@
 	<li><%= link_to 'info CÉDULABLES', infoCedulables_path, class:"btn btn-warning" %></li>
       </ul>
     </div>
+    
   </div>
 
   </div><!-- /.container-fluid -->

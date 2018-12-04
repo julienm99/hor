@@ -5,10 +5,12 @@ class HorController < ApplicationController
     def creerBaseDeDonnees  ; end    
     def updateMetaclasses   ; end    
     def updateCedulables    ; end    
-    def deselectionner      ; end
     def infoHoraire         ; end
     def infoCedulables      ; end
+    
+    def deSelect        ; @status = params[:param]          ; end
     def blocMetaclasses ; @mc = metaclasses(params[:param]) ; end
+    def index           ; @mc = obtenirToutesLesMetaclasses ; end
   end
 
 
@@ -22,29 +24,7 @@ class HorController < ApplicationController
     def fixerCedulables ; end
   end
 
-
-  #~ if true # metaclasses: NIVEAUX
-    #~ def nivS1 ; @mc = metaclasses("nivS1") ; end
-    #~ def nivS2 ; @mc = metaclasses("nivS2") ; end
-    #~ def nivS3 ; @mc = metaclasses("nivS3") ; end
-    #~ def nivS4 ; @mc = metaclasses("nivS4") ; end
-    #~ def nivS5 ; @mc = metaclasses("nivS5") ; end
-  #~ end
-
-
-
-
-  #~ if true # metaclasses: COURS/MATIÈRE/ACTIVITÉS
-    def index    ; @mc = obtenirToutesLesMetaclasses ; end
-    #~ def backbone ; @mc = metaclasses("backbone")     ; end
-    #~ def coursEPS ; @mc = metaclasses("EPS")          ; end
-    #~ def coursART ; @mc = metaclasses("ART")          ; end
-    #~ def coursANG ; @mc = metaclasses("ANG")          ; end
-    #~ def coursFRA ; @mc = metaclasses("FRA")          ; end
-    #~ def coursMAT ; @mc = metaclasses("MAT")          ; end
-    #~ def coursSCT ; @mc = metaclasses("SCT")          ; end
-  #~ end
-  
+ 
   
 private
   def metaclasses(sujet)
