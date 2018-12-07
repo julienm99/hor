@@ -60,11 +60,9 @@ require 'fileutils'
     return liste
   end
   
-   
-
 
   def valide
-    nbLignesFiliere(derniereFiliereDuDir(listHor13("op/cedulables"))) > 0
+    nbLignesFiliere(derniereFiliereDuDir(listHor13(@repCedulables))) > 0
   end
 
 
@@ -72,23 +70,13 @@ require 'fileutils'
     #~ flash[:notice] = "ERREUR de fonctionnement " unless executionSansErreur
     #~ flash[:notice] = "Execution de [VALIDER]: REUSSIE" if executionSansErreur
     executionSansErreur ? flash[:notice] = "Execution de [VALIDER]: REUSSIE" : flash[:notice] = "ERREUR de fonctionnement "
-    flash[:notice] += " ---> CEDULABLES [ #{nbLignesDerniereFiliere("op/cedulables")}]" if executionSansErreur && valide
+    flash[:notice] += " ---> CEDULABLES [ #{nbLignesDerniereFiliere(@repCedulables)}]" if executionSansErreur && valide
     flash[:notice] += " mais --->  PAS DE SOLUTION" if executionSansErreur && !valide
   end
 
 
   def effacer_DerniereFiliere(repertoire)
     File.delete(derniereFiliereDuDir(listHor13(repertoire)))
-  end
-
-
-  def infoDesCedulables
-    fname = derniereFiliereDuDir(listHor13("op/cedulables")) 
-    file = File.open(fname, "r:iso8859-1")    
-      line = file.gets       # prendre que la première ligne
-      variance, horaireTemp = line.split("\t") if line.strip != nil
-    file.close   
-    return variance, horaireTemp
   end
 
 
@@ -132,7 +120,8 @@ require 'fileutils'
       file.close
       saveStatusMetaclassesParNom(mcNomEnJeu, status)	  
   end
-	
+
+
   def mettreTousLesStatusInactif 
     obtenirToutesLesMetaclasses.each{|mc| mc.status = "inactif"; mc.save }
   end
@@ -183,7 +172,7 @@ require 'fileutils'
 
 
   def obtenirIntervalleDerniereFiliereValider(diviseur)
-    nbLignes = nbLignesFiliere(derniereFiliereDuDir(listHor13("op/cedulables")))
+    nbLignes = nbLignesFiliere(derniereFiliereDuDir(listHor13(@repCedulables)))
     (nbLignes.to_i / diviseur).to_s
 end
 
@@ -244,8 +233,18 @@ end
   end
 
 
+  #~ def infoDesCedulables
+    #~ fname = derniereFiliereDuDir(listHor13(@repCedulables)) 
+    #~ file = File.open(fname, "r:iso8859-1")    
+      #~ line = file.gets       # prendre que la première ligne
+      #~ variance, horaireTemp = line.split("\t") if line.strip != nil
+    #~ file.close   
+    #~ return variance, horaireTemp
+  #~ end
+  
+  
   def infoDesCedulables
-    fname = derniereFiliereDuDir(listHor13("op/cedulables")) 
+    fname = derniereFiliereDuDir(listHor13(@repCedulables)) 
     nomMetaclasses = obtenirNomMetaclasses(fname)
   end
 
@@ -265,7 +264,7 @@ end
   end
 
 
-  def updateMetaclasses
+  def updateMetaClasses
     src = dirHor13("init/metaclasses.txt") 
     dst = "public/metaclasses.txt"
     FileUtils.cp(src, dst)
@@ -279,27 +278,29 @@ end
 
 
   def updateStatusMetaclasses 
+    puts "updateStatusMetaclasses"
     updateCedulables      
     updateHoraires
   end
 
 
   def updateCedulables
-    mc = obtenirToutesLesMetaclasses # Vider la bases de données ne garder que le statut fixé
+    mc = obtenirToutesLesMetaclasses 
+    mc_cedulables = infoDesCedulables
+    
     mc.each do |metaclass|
-      unless metaclass.status == "1-horaire_fixe" || metaclass.status == "4-en_traitement" then
-	metaclass.status = "inactif"
-	metaclass.save
+      unless metaclass.status == "inactif" || metaclass.status == "4-en_traitement" || mc_cedulables != "start" then
+	metaclass.status = "inactif" 
+	metaclass.save if mc_cedulables == "start"
       end
     end
-    mc_cedulables = infoDesCedulables
-    saveStatusMetaClasses(mc_cedulables, "3-cedulables")  
+    puts "mc_cedulables = #{mc_cedulables} #{mc_cedulables.length}"
+    saveStatusMetaClasses(mc_cedulables, "3-cedulables") if mc_cedulables != "start" 
   end
 
 
   def updateHoraires
-    mcNomEnJeu = []
-    
+    mcNomEnJeu = []    
     file = File.open(dirHor13("data/horaires.txt"), "r:iso8859-1")    
       while (line = file.gets)
 	type, reste = line.split("::")

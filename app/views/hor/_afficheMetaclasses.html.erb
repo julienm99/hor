@@ -8,7 +8,7 @@
 	    
 	    <div class="col-lg-2 ligneHaute">
 	      <% if @mc[x] %>		
-		<% path = "/metaclasses/#{@mc[x].id}/edit" %>
+		<% path = "/metaclasses/#{@mc[x].id}/edit?blocMC=#{@blocMC}" %>
 		<%= link_to @mc[x].nom, path, style: style %>
 	      <% end ; x += 1; y += 1 %>
 	    </div>

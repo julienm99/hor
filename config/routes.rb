@@ -8,7 +8,6 @@ Rails.application.routes.draw do
   root 'hor#index'
   
   if true #~ routes: TOP nav_bar  ------------------------------------------
-    #~ get 'backbone',           to: 'hor#backbone'
     get 'blocMetaclasses',    to: 'hor#blocMetaclasses'
     
     get 'updateMetaclasses',  to: 'hor#updateMetaclasses'

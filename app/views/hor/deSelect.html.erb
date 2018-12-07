@@ -1,11 +1,11 @@
 <body>
 
-<h2>DÉ-SÉLECTIONNER METACLASSES EN TRAITEMENT</h2>
 
+  <h2>DÉ-SÉLECTIONNER METACLASSES AVEC LE STATUT: <%= "[#{@status}]" %> </h2>
 
-  <% deSelectionner(@status) %>
-  
-
-<script> pageWeb(page);  </script>
-
+    <% deSelectionner(@status) %>
+    
+    <% redirect_back(fallback_location: root_path) %>
+   
+ 
 </body>

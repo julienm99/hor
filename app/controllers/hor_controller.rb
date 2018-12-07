@@ -1,6 +1,13 @@
 class HorController < ApplicationController
-
-  if true # TOP: boutons nav-bar du haut de page
+  
+  
+    def index           ; 
+      @mc = obtenirToutesLesMetaclasses
+      @annee = "2019"
+      @repCedulables = "op/cedulables"
+    end
+    
+  if true # TOP: boutons nav-bar du haut de page liant les pagesWeb
     def contraintes         ; end
     def creerBaseDeDonnees  ; end    
     def updateMetaclasses   ; end    
@@ -8,9 +15,14 @@ class HorController < ApplicationController
     def infoHoraire         ; end
     def infoCedulables      ; end
     
-    def deSelect        ; @status = params[:param]          ; end
-    def blocMetaclasses ; @mc = metaclasses(params[:param]) ; end
-    def index           ; @mc = obtenirToutesLesMetaclasses ; end
+    def deSelect    
+      @status = params[:param]
+    end
+    
+    def blocMetaclasses 
+      @blocMC = params[:blocMC]
+      @mc = metaclasses(@blocMC)
+    end
   end
 
 

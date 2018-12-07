@@ -10,7 +10,7 @@ cd hor13
 cp data/horaires.txt data/horairesTemp.txt
 
 
-echo "Métaclasses en jeu ------"
+echo "Metaclasses cédulables en jeu incorporées dans l'horaire pour fin de vérification ------"
 echo $1
 ruby script/format_horaire_string.rb $1 >> data/horaires.txt
 

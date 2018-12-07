@@ -14,9 +14,10 @@
 
 <!--  --> 
 
+<% @blocMC ="index" if @blocMC =="" %> 
 <%= render 'formStatus', metaclass: @metaclass %> 
 
 <p id="demon"></p>
 
-<script> pageWeb(page); </script>
 
+<script> pageWeb("<%= @blocMC %>") </script>
