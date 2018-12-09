@@ -40,6 +40,9 @@ function pageWeb() {
 	  //~ window.location.replace(path);};
  
   switch(arguments[0]) {
+    case "4-en_traitement" :
+      window.location.replace("/");
+      break;
     case "infoCedulables" :
       window.location.replace("/");
       break;

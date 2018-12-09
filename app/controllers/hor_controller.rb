@@ -16,7 +16,8 @@ class HorController < ApplicationController
     def infoCedulables      ; end
     
     def deSelect    
-      @status = params[:param]
+      @status = params[:status]
+      @blocMC = params[:blocMC]
     end
     
     def blocMetaclasses 

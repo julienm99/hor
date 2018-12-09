@@ -156,20 +156,8 @@
 	</ul>
       </div>
       
-    <div class="btn-group btn-group-primary">
-      <button type="button" class="btn btn-primary">DÉ-SÉLECTIONNER</button>
-      <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	<span class="caret"></span>
-	<span class="sr-only">Toggle Dropdown</span>
-      </button>
-      <ul class="dropdown-menu multi-level">
-	<li><%= link_to 'Metaclasses 1-HORAIRE fixe.......',deSelect_path(:status => "1-horaire_fixe"), class:"btn btn-warning" %></li>
-	<li><%= link_to 'Metaclasses 2-CEDULABLES fixe',deSelect_path(:status => "2-cedulables_fixe"), class:"btn btn-warning" %></li>
-	<li><%= link_to 'Metaclasses 3-CEDULABLES........',deSelect_path(:status => "3-cedulables"), class:"btn btn-warning" %></li>
-	<li><%= link_to 'Metaclasses 4-EN_TRAITEMENT..',deSelect_path(:status => "4-en_traitement"), class:"btn btn-warning" %></li>
-      </ul>
-    </div>
-    
+    <%= link_to 'DÉ-SÉLECTIONNER',deSelect_path(:status => "4-en_traitement", :blocMC => @blocMC), class:"btn btn-warning "  %>
+       
     
     <div class="btn-group btn-group-primary">
       <button type="button" class="btn btn-primary">INFO</button>

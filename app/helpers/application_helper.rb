@@ -278,7 +278,6 @@ end
 
 
   def updateStatusMetaclasses 
-    puts "updateStatusMetaclasses"
     updateCedulables      
     updateHoraires
   end
@@ -294,7 +293,6 @@ end
 	metaclass.save if mc_cedulables == "start"
       end
     end
-    puts "mc_cedulables = #{mc_cedulables} #{mc_cedulables.length}"
     saveStatusMetaClasses(mc_cedulables, "3-cedulables") if mc_cedulables != "start" 
   end
 
