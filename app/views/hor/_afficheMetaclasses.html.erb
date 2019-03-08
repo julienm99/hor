@@ -8,8 +8,7 @@
 	    
 	    <div class="col-lg-2 ligneHaute">
 	      <% if @mc[x] %>		
-		<% path = "/metaclasses/#{@mc[x].id}/edit?blocMC=#{@blocMC}" %>
-		<%= link_to @mc[x].nom, path, style: style %>
+		<%= link_to @mc[x], changerEtatMetaclasse_path(:mcTraitee=>@mc[x],:blocMC=>@blocMC), style: style %>
 	      <% end ; x += 1; y += 1 %>
 	    </div>
  	    

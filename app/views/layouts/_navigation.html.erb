@@ -1,164 +1,35 @@
 <nav class="navbar navbar-default navbar-fixed-top">
+
   <form id="menuHaut">
-  <div class="container-fluid btn-group center ">
-    <!-- LOGO et redirection à la page d'acceuil regroupé -->
+  <div class="container-fluid">
+  
+    <!-- LOGO et redirection a la page d'acceuil regroupe -->
     <div class="navbar-header">
-      <%= link_to "HORAIRE-JDLM #{@annee}", root_path, class:"navbar-brand", id:"logo" %>
+      <%= link_to "HORAIRE-JDLM\n #{$annee}", root_path, class:"navbar-brand", id:"logo" %>
     </div>
-
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div role="main" class="container theme-showcase">
-    
-      <!-- nav-barTop btn:[METACLASSES] -->
-      <div class="btn-group btn-group-primary">
-	<button class="btn btn-primary">METACLASSES </button>
-	<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	  <span class="caret"></span>
-	  <span class="sr-only">Toggle Dropdown</span>
-	</button>
-	<ul class="dropdown-menu multi-level", id="selectionMc">
-	  <li><%= link_to 'Backbone', blocMetaclasses_path(:blocMC => "backbone"), class:"btn btn-warning" %></li>
-	  <li class="dropdown-submenu">
-	    <a tabindex="-1" href="#" class="btn btn-warning">NIVEAUX </a>
-	    <ul class="dropdown-menu">
-	      <li><%= link_to 'S1', blocMetaclasses_path(:blocMC => "nivS1"), class:"btn btn-warning" %></li>
-	      <li><%= link_to 'S2', blocMetaclasses_path(:blocMC => "nivS2"), class:"btn btn-warning" %></li>
-	      <li><%= link_to 'S3', blocMetaclasses_path(:blocMC => "nivS3"), class:"btn btn-warning" %></li>
-	      <li><%= link_to 'S4', blocMetaclasses_path(:blocMC => "nivS4"), class:"btn btn-warning" %></li>
-	      <li><%= link_to 'S5', blocMetaclasses_path(:blocMC => "nivS5"), class:"btn btn-warning" %></li>
-	    </ul>
-	  </li>
-	  <li class="dropdown-submenu">
-	    <a tabindex="-1" href="#" class="btn btn-warning">GROUPES</a>
-	    <ul class="dropdown-menu">
-	    
-	      <li class="dropdown-submenu">
-		<a tabindex="-1" href="#" class="btn btn-warning" >S1</a>
-		<ul class="dropdown-menu">
-		  <li><%= link_to "Gr11", blocMetaclasses_path(:blocMC => "Gr11"), class:"btn btn-warning" %></li>
-		  <li><%= link_to "Gr12", blocMetaclasses_path(:blocMC => "Gr12"), class:"btn btn-warning" %></li>
-		  <li><%= link_to "Gr13", blocMetaclasses_path(:blocMC => "Gr13"), class:"btn btn-warning" %></li>
-		  <li><%= link_to "Gr14", blocMetaclasses_path(:blocMC => "Gr14"), class:"btn btn-warning" %></li>
-		  <li><%= link_to "Gr15", blocMetaclasses_path(:blocMC => "Gr15"), class:"btn btn-warning" %></li>
-		  <li><%= link_to "Gr16", blocMetaclasses_path(:blocMC => "Gr16"), class:"btn btn-warning" %></li>
-		  <li><%= link_to "Gr17", blocMetaclasses_path(:blocMC => "Gr17"), class:"btn btn-warning" %></li>
-		  <li><%= link_to "Gr18", blocMetaclasses_path(:blocMC => "Gr18"), class:"btn btn-warning" %></li>
-		  <li><%= link_to "Gr19", blocMetaclasses_path(:blocMC => "Gr19"), class:"btn btn-warning" %></li>
-		</ul>
-	      </li>
-	      
-	      <li class="dropdown-submenu">
-		<a tabindex="-1" href="#" class="btn btn-warning" >S2</a>
-		<ul class="dropdown-menu">
-		  <li><%= link_to "Gr201", blocMetaclasses_path(:blocMC => "Gr201"), class:"btn btn-warning" %></li>
-		  <li><%= link_to "Gr202", blocMetaclasses_path(:blocMC => "Gr202"), class:"btn btn-warning" %></li>
-		  <li><%= link_to "Gr203", blocMetaclasses_path(:blocMC => "Gr203"), class:"btn btn-warning" %></li>
-		  <li><%= link_to "Gr204", blocMetaclasses_path(:blocMC => "Gr204"), class:"btn btn-warning" %></li>
-		  <li><%= link_to "Gr205", blocMetaclasses_path(:blocMC => "Gr205"), class:"btn btn-warning" %></li>
-		  <li><%= link_to "Gr206", blocMetaclasses_path(:blocMC => "Gr206"), class:"btn btn-warning" %></li>
-		  <li><%= link_to "Gr207", blocMetaclasses_path(:blocMC => "Gr207"), class:"btn btn-warning" %></li>
-		  <li><%= link_to "Gr208", blocMetaclasses_path(:blocMC => "Gr208"), class:"btn btn-warning" %></li>
-		  <li><%= link_to "Gr209", blocMetaclasses_path(:blocMC => "Gr209"), class:"btn btn-warning" %></li>
-		  <li><%= link_to "Gr210", blocMetaclasses_path(:blocMC => "Gr210"), class:"btn btn-warning" %></li>
-		  <li><%= link_to "Gr211", blocMetaclasses_path(:blocMC => "Gr211"), class:"btn btn-warning" %></li>
-		</ul>
-	      </li>
-	      
-	      <li class="dropdown-submenu">
-		<a tabindex="-1" href="#" class="btn btn-warning" >S3</a>
-		<ul class="dropdown-menu">
-		  <li><%= link_to "Gr31", blocMetaclasses_path(:blocMC => "Gr31"), class:"btn btn-warning" %></li>
-		  <li><%= link_to "Gr32", blocMetaclasses_path(:blocMC => "Gr32"), class:"btn btn-warning" %></li>
-		  <li><%= link_to "Gr33", blocMetaclasses_path(:blocMC => "Gr33"), class:"btn btn-warning" %></li>
-		  <li><%= link_to "Gr34", blocMetaclasses_path(:blocMC => "Gr34"), class:"btn btn-warning" %></li>
-		  <li><%= link_to "Gr35", blocMetaclasses_path(:blocMC => "Gr35"), class:"btn btn-warning" %></li>
-		  <li><%= link_to "Gr36", blocMetaclasses_path(:blocMC => "Gr36"), class:"btn btn-warning" %></li>
-		  <li><%= link_to "Gr37", blocMetaclasses_path(:blocMC => "Gr37"), class:"btn btn-warning" %></li>
-		  <li><%= link_to "Gr38", blocMetaclasses_path(:blocMC => "Gr38"), class:"btn btn-warning" %></li>
-		  <li><%= link_to "Gr39", blocMetaclasses_path(:blocMC => "Gr39"), class:"btn btn-warning" %></li>
-		</ul>
-	      </li>
-	      
-	      <li class="dropdown-submenu">
-		<a tabindex="-1" href="#" class="btn btn-warning" >S4</a>
-		<ul class="dropdown-menu">
-		  <li><%= link_to "Gr41", blocMetaclasses_path(:blocMC => "Gr41"), class:"btn btn-warning" %></li>
-		  <li><%= link_to "Gr42", blocMetaclasses_path(:blocMC => "Gr42"), class:"btn btn-warning" %></li>
-		  <li><%= link_to "Gr43", blocMetaclasses_path(:blocMC => "Gr43"), class:"btn btn-warning" %></li>
-		  <li><%= link_to "Gr44", blocMetaclasses_path(:blocMC => "Gr44"), class:"btn btn-warning" %></li>
-		  <li><%= link_to "Gr45", blocMetaclasses_path(:blocMC => "Gr45"), class:"btn btn-warning" %></li>
-		  <li><%= link_to "Gr46", blocMetaclasses_path(:blocMC => "Gr46"), class:"btn btn-warning" %></li>
-		  <li><%= link_to "Gr47", blocMetaclasses_path(:blocMC => "Gr47"), class:"btn btn-warning" %></li>
-		  <li><%= link_to "Gr48", blocMetaclasses_path(:blocMC => "Gr48"), class:"btn btn-warning" %></li>
-		  <li><%= link_to "Gr49", blocMetaclasses_path(:blocMC => "Gr49"), class:"btn btn-warning" %></li>
-		</ul>
-	      </li>
-	      
-	      <li class="dropdown-submenu">
-		<a tabindex="-1" href="#" class="btn btn-warning" >S5</a>
-		<ul class="dropdown-menu">
-		  <li><%= link_to "Gr51", blocMetaclasses_path(:blocMC => "Gr51"), class:"btn btn-warning" %></li>
-		  <li><%= link_to "Gr52", blocMetaclasses_path(:blocMC => "Gr52"), class:"btn btn-warning" %></li>
-		  <li><%= link_to "Gr53", blocMetaclasses_path(:blocMC => "Gr53"), class:"btn btn-warning" %></li>
-		  <li><%= link_to "Gr54", blocMetaclasses_path(:blocMC => "Gr54"), class:"btn btn-warning" %></li>
-		  <li><%= link_to "Gr55", blocMetaclasses_path(:blocMC => "Gr55"), class:"btn btn-warning" %></li>
-		  <li><%= link_to "Gr56", blocMetaclasses_path(:blocMC => "Gr56"), class:"btn btn-warning" %></li>
-		  <li><%= link_to "Gr57", blocMetaclasses_path(:blocMC => "Gr57"), class:"btn btn-warning" %></li>
-		  <li><%= link_to "Gr58", blocMetaclasses_path(:blocMC => "Gr58"), class:"btn btn-warning" %></li>
-		  <li><%= link_to "Gr59", blocMetaclasses_path(:blocMC => "Gr59"), class:"btn btn-warning" %></li>
-		</ul>
-	      </li>
-	      
-	    </ul>
-	  </li>
-	  
-	  <li class="dropdown-submenu">
-	    <a tabindex="-1" href="#" class="btn btn-warning">COURS/ACTIVITÉS/MATIÈRES</a>
-	    <ul class="dropdown-menu">
-	      <li><%= link_to 'ANGlais', blocMetaclasses_path(:blocMC => "ANG"), class:"btn btn-warning" %></li>
-	      <li><%= link_to 'ARTs', blocMetaclasses_path(:blocMC => "ART"), class:"btn btn-warning" %></li>
-	      <li><%= link_to 'Education PhySique',blocMetaclasses_path(:blocMC => "EPS"), class:"btn btn-warning" %></li>
-	      <li><%= link_to 'Ethique Culture Religieuse',blocMetaclasses_path(:blocMC => "ECR"), class:"btn btn-warning" %></li>
-	      <li><%= link_to 'FRAnçais', blocMetaclasses_path(:blocMC => "FRA"), class:"btn btn-warning" %></li>
-	      <li><%= link_to 'MAThématique', blocMetaclasses_path(:blocMC => "MAT"), class:"btn btn-warning" %></li>
-	      <li><%= link_to 'SCiences Technologie',blocMetaclasses_path(:blocMC => "SCT"), class:"btn btn-warning" %></li>
-	      <li><%= link_to 'ESPagnol', blocMetaclasses_path(:blocMC => "ESP"), class:"btn btn-warning" %></li>
-	      <li class="divider"></li>
-	      <li><%= link_to 'CHImie', blocMetaclasses_path(:blocMC => "CHI"), class:"btn btn-warning"   %></li>
-	      <li><%= link_to 'PHYsique', blocMetaclasses_path(:blocMC => "PHY"), class:"btn btn-warning" %></li>
-	      <li><%= link_to 'Techni. Méthode Scient.',blocMetaclasses_path(:blocMC => "TMS"), class:"btn btn-warning" %></li>
-	      <li class="divider"></li>
-	      <li><%= link_to 'HIStoire',blocMetaclasses_path(:blocMC => "HIS"), class:"btn btn-warning"                %></li>
-	      <li><%= link_to 'GEOgraphie', blocMetaclasses_path(:blocMC => "GEO"), class:"btn btn-warning"              %></li>
-	    </ul>
-	  </li>
-      </div> <!-- FIN : btn:[METACLASSES] -->
-    
-    <%= link_to 'PRIORITÉS', fixerHoraire_path, class:"btn btn-warning"    %>
-    
-    <%= link_to 'CONTRAINTES', contraintes_path, class:"btn btn-warning "  %>
-
-
-      <div class="btn-group btn-group-info ">
-	<button class="btn btn-info" type="button">BASE DE DONNÉES</button>
-	<button data-toggle="dropdown" class="btn btn-info dropdown-toggle" type="button"><span class="caret"></span>
-	</button>
-	<ul class="dropdown-menu">
-	  <li><%= link_to 'METACLASSES', metaclasses_path, class:"btn btn-warning "                           %></li>
-	      <li class="divider"></li>
-	  <li><%= link_to 'ACTIVITÉS (CLASSES Coba)', activites_path, class:"btn btn-warning "                               %></li>
-	      <li class="divider"></li>
-	  <li><%= link_to 'REPLACER AUX DERNIERS CÉDULABLES', updateCedulables_path, class:"btn btn-warning " %></li>
-	      <li class="divider"></li>
-	  <li><%= link_to 'MISE À JOUR: BASE DE DONNÉES', updateMetaclasses_path, class:"btn btn-warning "         %></li>
-	      <li class="divider"></li>
-	  <li><%= link_to 'CRÉER: BASE DE DONNÉES', creerBaseDeDonnees_path, class:"btn btn-warning "        %></li>
-	</ul>
-      </div>
-      
-    <%= link_to 'DÉ-SÉLECTIONNER',deSelect_path(:status => "4-en_traitement", :blocMC => @blocMC), class:"btn btn-warning "  %>
-       
-    
+     
+     <!--
+    <div class="btn-group btn-group-info ">
+      <button class="btn btn-primary">DONNEES</button>
+      <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	<span class="caret"></span>
+	<span class="sr-only">Toggle Dropdown</span>
+      </button>
+      <ul class="dropdown-menu">
+//~ 	<%= link_to 'METACLASSES', metaclasses_path, class:"btn btn-warning "                           %></li>
+	    <li class="divider"></li>
+	<%= link_to 'ACTIVITES (CLASSES Coba)', activites_path, class:"btn btn-warning "                               %></li>
+	    <li class="divider"></li>
+	<%= link_to 'REPLACER AUX DERNIERS CEDULABLES', updateCedulables_path, class:"btn btn-warning " %></li>
+	    <li class="divider"></li>
+	<%= link_to 'MISE A JOUR: BASE DE DONNEES', updateMetaclasses_path, class:"btn btn-warning "         %></li>
+	    <li class="divider"></li>
+	<%= link_to 'CREER: BASE DE DONNEES', creerBaseDeDonnees_path, class:"btn btn-warning "        %></li>
+      </ul>
+    </div> -->
+        
+    <%= link_to 'DE-SELECT.',deSelect_path(:status => "4-en_traitement", :blocMC => @blocMC), class:"btn btn-warning "  %>
+     
     <div class="btn-group btn-group-primary">
       <button type="button" class="btn btn-primary">INFO</button>
       <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -166,26 +37,42 @@
 	<span class="sr-only">Toggle Dropdown</span>
       </button>
       <ul class="dropdown-menu multi-level">
-	<li><%= link_to 'info HORAIRE',    infoHoraire_path,    class:"btn btn-warning" %></li>
-	<li><%= link_to 'info CÉDULABLES', infoCedulables_path, class:"btn btn-warning" %></li>
-      </ul>
+	<%= link_to 'info HORAIRES',   infoHoraire_path,    class:"btn btn-warning" %></li>
+	<%= link_to 'info CEDULABLES', infoCedulables_path, class:"btn btn-warning" %></li>
+      </ul> 
     </div>
     
-  </div>
-
+    <%= link_to '...BACKBONE',blocMetaclasses_path(:blocMC => "backbone") %>
+    <%= link_to 'ANG',blocMetaclasses_path(:blocMC => "ANG") %>
+    <%= link_to 'ART',blocMetaclasses_path(:blocMC => "ART") %>
+    <%= link_to 'EPS',blocMetaclasses_path(:blocMC => "EPS") %>
+    <%= link_to 'ECR',blocMetaclasses_path(:blocMC => "ECR") %>
+    <%= link_to 'FRA',blocMetaclasses_path(:blocMC => "FRA") %>
+    <%= link_to 'MAT',blocMetaclasses_path(:blocMC => "MAT") %>
+    <%= link_to 'SCT',blocMetaclasses_path(:blocMC => "SCT") %>
+    <%= link_to 'ESP',blocMetaclasses_path(:blocMC => "ESP") %>
+    <%= link_to 'CHI',blocMetaclasses_path(:blocMC => "CHI") %>
+    <%= link_to 'PHY',blocMetaclasses_path(:blocMC => "PHY") %>
+    <%= link_to 'TMS',blocMetaclasses_path(:blocMC => "TMS") %>
+    <%= link_to 'HIS',blocMetaclasses_path(:blocMC => "HIS") %>
+    <%= link_to 'GEO',blocMetaclasses_path(:blocMC => "GEO") %>
+    
+    <%= link_to 'S1',blocMetaclasses_path(:blocMC => "nivS1") %>
+    <%= link_to 'S2',blocMetaclasses_path(:blocMC => "nivS2") %>
+    <%= link_to 'S3',blocMetaclasses_path(:blocMC => "nivS3") %>
+    <%= link_to 'S4',blocMetaclasses_path(:blocMC => "nivS4") %>
+    <%= link_to 'S5',blocMetaclasses_path(:blocMC => "nivS5") %>
+    
+    <% $listeFoyers.each do |fyr| %>               <!-- sauf foyers Primaire et foyers S5 -->
+    <%=    (link_to fyr, blocMetaclasses_path(:blocMC => fyr )) unless fyr[2]=="5" || fyr[0]=="P"%>
+    <% end %>
+    
   </div><!-- /.container-fluid -->
   
   </form>
+  
 </nav>
 
 <!-- BARRE DE NAVIGATION DU BAS DE PAGE -->
 <%= render 'layouts/nav_barBottom' %> 
 
-
-<!--
-<script>
-  function horaireJDLM() {
-    location.reload();
-  }
-</script>
--->

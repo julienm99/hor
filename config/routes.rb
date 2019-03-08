@@ -8,7 +8,8 @@ Rails.application.routes.draw do
   root 'hor#index'
   
   if true #~ routes: TOP nav_bar  ------------------------------------------
-    get 'blocMetaclasses',    to: 'hor#blocMetaclasses'
+    get 'blocMetaclasses',      to: 'hor#blocMetaclasses'
+    get 'changerEtatMetaclasse',to: 'hor#changerEtatMetaclasse'
     
     get 'updateMetaclasses',  to: 'hor#updateMetaclasses'
     get 'updateCedulables',   to: 'hor#updateCedulables'
@@ -23,13 +24,14 @@ Rails.application.routes.draw do
   end
   
   if true #~ routes: BOTTOM nav_bar  ---------------------------------------
-    get 'repartir',          to: 'hor#repartir'
-    get 'valider',           to: 'hor#valider'
-    get 'invalider',         to: 'hor#invalider'
-    get 'filtrer',           to: 'hor#filtrer'
-    get 'variance',          to: 'hor#variance'
-    get 'fixerCedulables',   to: 'hor#fixerCedulables'
-    get 'fixerHoraire',      to: 'hor#fixerHoraire'
+    get 'action',             to: 'hor#action'
+    get 'repartir',           to: 'hor#repartir'
+    get 'valider',            to: 'hor#valider'
+    get 'invalider',          to: 'hor#invalider'
+    get 'filtrer',            to: 'hor#filtrer'
+    get 'variance',           to: 'hor#variance'
+    get 'fixerCedulables',    to: 'hor#fixerCedulables'
+    get 'fixerHoraire',       to: 'hor#fixerHoraire'
   end    
 
 end

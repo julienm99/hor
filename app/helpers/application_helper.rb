@@ -24,51 +24,14 @@ require 'fileutils'
 
   def nbLignesFiliere(filiere)
     File.readlines(filiere).size
-  end
-
-
-  def obtenirToutesLesMetaclasses
-    Metaclass.all.order(:status, :nom) 
-  end
-
-
-  def obtenirToutesLesActivites
-    Activite.all.order(:nom) 
-  end
-
-
-  def metaclasses(sujet)
-    liste = []
-    obtenirToutesLesMetaclasses.each do |mc|
-      case sujet
-      when "backbone"
-	liste << mc if %w[EPS ART OPT ANG CHI PHY FM5 MON].include?(mc.nom[0,3])
-	liste << mc if %w[MAT4].include?(mc.nom)
-	
-      when /nivS/
-	liste << mc if mc.nom[3,1] == sujet[4,1]
-      
-      when "4-en_traitement", "3-cedulables"
-	liste << mc if mc.status == sujet
-
-      else 
-	liste << mc if mc.nom[0,3] == sujet
-
-      end
-      
-    end
-    return liste
-  end
-  
+  end 
 
   def valide
-    nbLignesFiliere(derniereFiliereDuDir(listHor13(@repCedulables))) > 0
+    nbLignesFiliere(derniereFiliereDuDir(listHor13($repCedulables))) > 0
   end
 
 
   def msgOperationValider(executionSansErreur)
-    #~ flash[:notice] = "ERREUR de fonctionnement " unless executionSansErreur
-    #~ flash[:notice] = "Execution de [VALIDER]: REUSSIE" if executionSansErreur
     executionSansErreur ? flash[:notice] = "Execution de [VALIDER]: REUSSIE" : flash[:notice] = "ERREUR de fonctionnement "
     flash[:notice] += " ---> CEDULABLES [ #{nbLignesDerniereFiliere(@repCedulables)}]" if executionSansErreur && valide
     flash[:notice] += " mais --->  PAS DE SOLUTION" if executionSansErreur && !valide
@@ -81,23 +44,18 @@ require 'fileutils'
 
 
   def changerStatus(mc,status)
-    mc.status = status
-    mc.save
+    $listeMetaclassesEtat[mc] = status
   end
 
 
   def deSelectionner(statut)    
-    Metaclass.all.order(:status, :nom).each do |mc|      
-      if mc.status == statut then
-	 mc.status = "inactif" ; mc.save  
-      end
-    end
+    $listeMetaclassesEtat.each{|mc,etat|$listeMetaclassesEtat[mc] = "inactif" if etat == statut}
   end
   
 
   def save_NomsMetaclasses(status)
     mcEnJeu = []
-    metaclasses(status).each{|mc| mcEnJeu << mc.nom }
+    metaclasses(status).each{|mc| mcEnJeu << mc }
     open("public/#{status}.txt", "w"){|f| f.puts "#{status}::#{mcEnJeu.join(",")}"}
   end
 
@@ -123,12 +81,12 @@ require 'fileutils'
 
 
   def mettreTousLesStatusInactif 
-    obtenirToutesLesMetaclasses.each{|mc| mc.status = "inactif"; mc.save }
+    $listeMetaclassesEtat.each{|mc, etat| $listeMetaclassesEtat[mc]= "inactif"}
   end
 
 
   def statusMetaclasse(mc)
-    case mc.status
+    case $listeMetaclassesEtat[mc]
     when "1-horaire_fixe"
       color = "blue"; bold="bold"; italic="italic"; back = "yellow"
       status = " checked disabled"
@@ -161,20 +119,20 @@ require 'fileutils'
 
 
   def group_string(niv,i)
-       i  > 9 ? ajout = "" : ajout = "0" 
+       i  > 9 ? ajout = "" : ajout = "0" # si condition ? vrai : faux
        niv == "S1" ? gr ="Gr#{niv[1,1] + ajout + i.to_s}" : gr ="Gr#{niv[1,1] + i.to_s}"
   end
 
 
-  def saveStatusMetaclassesParNom(mcNomEnJeu, status)
-    mcNomEnJeu.each{|nom| mc = Metaclass.find_by_nom(nom); mc.status = status; mc.save } if mcNomEnJeu[0]
+  def saveStatusMetaclassesParNom(mcEnJeu, status)
+    mcEnJeu.each{|mc| $listeMetaclassesEtat[mc]=status} if mcEnJeu[0]
   end
 
 
   def obtenirIntervalleDerniereFiliereValider(diviseur)
-    nbLignes = nbLignesFiliere(derniereFiliereDuDir(listHor13(@repCedulables)))
+    nbLignes = nbLignesFiliere(derniereFiliereDuDir(listHor13($repCedulables)))
     (nbLignes.to_i / diviseur).to_s
-end
+  end
 
 
   def filtrerMatiereChoisie(metaclasses, metaclassesChoisies = [], matiere)
@@ -183,68 +141,14 @@ end
 
 
   def matieresDesMetaclasses(metaclasses, matieres)
-      metaclasses.each{|mc| matieres << mc.nom[0,3] }
+      #~ metaclasses.each{|mc| matieres << mc.nom[0,3] }
+      metaclasses.each{|mc| matieres << mc[0,3] }
       matieres.uniq!
   end
 
-  def creerBaseDeDonnees
-    fname = "public/metaclasses.txt"
-    file = File.open(fname, "r:iso8859-1")
-    
-      while (line = file.gets)
-	type, reste = line.split("::")
-	
-	case type.strip
-	when "MetaClasse" 
-	  nom, listeActivites = reste.split("\t")
-	  listeActivites = listeActivites[14,listeActivites.length].strip
-	  niveau = "" ; status ="inactif"
-	  
-	  mc = Metaclass.create(
-	      nom: nom, 
-	      status: status, 
-	      niveau: niveau, 
-	      listeActivites: listeActivites
-	      )		    
-	when "Classe" 
-	  nom, reste = reste.split("\t")
-	  cours, groupe, periodes, periodesTache, semestre, prof, salle, list = reste.split(";")
-	  listeFoyers = list.strip
-	  
-	  activite = Activite.create(
-		    nom: nom, 
-		    identifiantmc: mc.nom, 
-		    cours: cours, 
-		    groupe: groupe, 
-		    periodes: periodes, 
-		    periodesTache: periodesTache, 
-		    semestre: semestre, 
-		    prof: prof, 
-		    salle: salle, 
-		    listeFoyers: listeFoyers,
-		    metaclass: mc
-		    )		    
-	  mc.niveau = "S" + listeFoyers[2,1]
-	  mc.save
-	else	    
-	end	  
-      end 
-    file.close	        
-  end
-
-
-  #~ def infoDesCedulables
-    #~ fname = derniereFiliereDuDir(listHor13(@repCedulables)) 
-    #~ file = File.open(fname, "r:iso8859-1")    
-      #~ line = file.gets       # prendre que la première ligne
-      #~ variance, horaireTemp = line.split("\t") if line.strip != nil
-    #~ file.close   
-    #~ return variance, horaireTemp
-  #~ end
-  
-  
+   
   def infoDesCedulables
-    fname = derniereFiliereDuDir(listHor13(@repCedulables)) 
+    fname = derniereFiliereDuDir(listHor13($repCedulables)) 
     nomMetaclasses = obtenirNomMetaclasses(fname)
   end
 
@@ -264,19 +168,6 @@ end
   end
 
 
-  def updateMetaClasses
-    src = dirHor13("init/metaclasses.txt") 
-    dst = "public/metaclasses.txt"
-    FileUtils.cp(src, dst)
-    
-    Activite.delete_all
-    Metaclass.delete_all
-    
-    creerBaseDeDonnees
-    updateStatusMetaclasses
-  end
-
-
   def updateStatusMetaclasses 
     updateCedulables      
     updateHoraires
@@ -284,16 +175,14 @@ end
 
 
   def updateCedulables
-    mc = obtenirToutesLesMetaclasses 
-    mc_cedulables = infoDesCedulables
+    mcCedulables = infoDesCedulables
     
-    mc.each do |metaclass|
-      unless metaclass.status == "inactif" || metaclass.status == "4-en_traitement" || mc_cedulables != "start" then
-	metaclass.status = "inactif" 
-	metaclass.save if mc_cedulables == "start"
+    $listeMetaclasses.each do |mc|
+      unless $listeMetaclassesEtat[mc]=="inactif" || $listeMetaclassesEtat[mc]=="4-en_traitement" then
+	$listeMetaclassesEtat[mc] = "inactif" 
       end
     end
-    saveStatusMetaClasses(mc_cedulables, "3-cedulables") if mc_cedulables != "start" 
+    saveStatusMetaClasses(mcCedulables, "3-cedulables") unless mcCedulables == "start" 
   end
 
 

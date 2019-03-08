@@ -1,4 +1,4 @@
-#-------- EPS: PRIMAIRE + ESPOIR: horaire fixe [2018]
+#-------- EPS: PRIMAIRE + ESPOIR: horaire fixe [2019]
 Horaire::EPS3A	B3;D6;G6
 Horaire::EPS4A	C6;F3;H6
 Horaire::EPS5A	A6;E6

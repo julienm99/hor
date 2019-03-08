@@ -6,6 +6,10 @@ echo "REPARTIR ------------------------"
 derniere=$(ls op/cedulables -rt | tail -n1)
 SOURCE="op/cedulables/"$derniere
 
+if [$SOURCE="start.txt"]
+then 
+  SOURCE=""
+fi
 
 #~ utile pour DEBUG
 echo "La source est la derniere filiere du repertoire."
