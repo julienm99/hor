@@ -1,55 +1,65 @@
 class HorController < ApplicationController
   
-    def index 
-      obtenirLesListes(	fname = "/home/julienm/hor13/init/metaclasses.txt",
-			$listeMetaclasses=[],
-			$listeActivites=[],
-			$listeFoyers=[],
-			$listeMetaclassesActivites={},
-			$listeActivitesDescription={},
-			$listeMetaclassesEtat={},
-			$listeMetaclassesFoyers={},
-			$listeFoyersMetaclasses={},
-			$niveauS1=[],$niveauS2=[],
-			$niveauS3=[],$niveauS4=[],$niveauS5=[]) 
-			
-      @mc = $listeMetaclasses  # variable équivalente
-      
-      $annee = "2019"
-      $repCedulables = "op/cedulables"
-    end
-    
+  def index        # les listes sont des variables globales: elles peuvent être utiles partout
+    obtenirLesListes( fname = "/home/julienm/hor13/init/metaclasses.txt",
+		      $listeMetaclasses=[],
+		      $listeActivites=[],
+		      $listeFoyers=[],
+		      $listeMetaclassesActivites={},
+		      $listeActivitesDescription={},
+		      $listeMetaclassesEtat={},
+		      $listeMetaclassesFoyers={},
+		      $listeFoyersMetaclasses={},
+		      $listeNiveauxFoyers={})
+
+#~ puts "$listeNiveauxFoyers(#{$listeNiveauxFoyers.class}) = #{$listeNiveauxFoyers}" 
+
+#~ puts "$listeNiveauxFoyers['S1'](#{$listeNiveauxFoyers['S1'].class}) = #{$listeNiveauxFoyers['S1']}" ; exit
+		      
+    @mc = $listeMetaclasses  # variable équivalente    
+    $annee = "2019"
+    $repCedulables = "op/cedulables"
+  end
+ 
+ 
   if true # TOP: boutons nav-bar du haut de page liant les pagesWeb
     def contraintes         ; end
-    def creerBaseDeDonnees  ; end    
     def updateMetaclasses   ; end    
     def updateCedulables    ; end    
     def infoHoraire         ; end
     def infoCedulables      ; end
-    
-    def deSelect    
-      @status = params[:status]
-      @blocMC = params[:blocMC]
-    end
-    
-    def changerEtatMetaclasse 
-      @mcTraitee = params[:mcTraitee]
-      if $listeMetaclassesEtat[@mcTraitee] == "4-en_traitement" then
-	 $listeMetaclassesEtat[@mcTraitee] = "inactif" 
-      else 
-	 $listeMetaclassesEtat[@mcTraitee] = "4-en_traitement"
-      end
-      blocMetaclasses
-    end
-    
-    def blocMetaclasses 
-      @blocMC = params[:blocMC]
-      @mc = metaclasses(@blocMC)
-      @mc = $listeMetaclasses unless @blocMC
-    end
-    
+  end  
+  
+  
+  def deSelect    
+    @status = params[:status]
+    @blocMC = params[:blocMC]
   end
-
+  
+  
+  def changerEtatMetaclasse 
+    @mcTraitee = params[:mcTraitee]
+    
+    case $listeMetaclassesEtat[@mcTraitee]
+    when "4-en_traitement"
+       $listeMetaclassesEtat[@mcTraitee] = "inactif" 
+       
+    when "3-cedulables","1-horaire_fixe"
+        
+    else 
+       $listeMetaclassesEtat[@mcTraitee] = "4-en_traitement"
+    end
+     
+    blocMetaclasses
+  end
+ 
+ 
+  def blocMetaclasses 
+    @blocMC = params[:blocMC]
+    @mc = metaclasses(@blocMC)
+    @mc = $listeMetaclasses unless @blocMC
+  end
+  
 
   if true # BOTTOM: boutons nav-bar du bas
     def action 
@@ -70,17 +80,20 @@ class HorController < ApplicationController
   
 #~ private
   def metaclasses(sujet)
-    liste = []
+    
+    liste = []    
     $listeMetaclasses.each do |mc|      
       case sujet
       when "backbone"
 	liste << mc if %w[EPS ART OPT ANG CHI PHY FM5].include?(mc[0,3])
 	liste << mc if %w[MAT4].include?(mc)
 	
-      when /nivS/
-	#~ liste << mc if mc[3,1] == sujet[7,1]
-	#~ liste << mc if $listeMetaclassesFoyers[mc][].include?(/Gr/)
-      
+      when /niveauS/
+	$listeNiveauxFoyers[sujet[6,2]].each do |gr|
+	    liste << mc if $listeMetaclassesFoyers[mc].include?(gr)
+	  end
+	liste.uniq!
+	  
       when /Gr/
 	liste << mc if $listeMetaclassesFoyers[mc].include?(sujet)
 
@@ -89,6 +102,9 @@ class HorController < ApplicationController
 
       when "SCT"
 	liste << mc if  %w[SCT CHI PHY TMS OPT].include?(mc[0,3]) 
+
+      when "toutesMC"
+	liste << mc  
 
       else 
 	liste << mc if mc[0,3] == sujet
@@ -110,8 +126,7 @@ class HorController < ApplicationController
 			listeMetaclassesEtat,
 			listeMetaclassesFoyers,
 			listeFoyersMetaclasses,
-			niveauS1,niveauS2,
-			niveauS3,niveauS4,niveauS5) 
+			listeNiveauxFoyers)
 
     file = File.open(fname, "r:iso8859-1")
     
@@ -145,13 +160,8 @@ class HorController < ApplicationController
     
     listeFoyers.flatten!.uniq!.sort!
     
-    listeFoyers.each do |gr|
-	      niveauS1 << gr if gr[2] == "1"  # exemple: dans Gr14 le 1( 3e lettre)signifie @niveauS1
-	      niveauS2 << gr if gr[2] == "2"
-	      niveauS3 << gr if gr[2] == "3"
-	      niveauS4 << gr if gr[2] == "4"
-	      niveauS5 << gr if gr[2] == "5"
-	    end
+    %w[1 2 3 4 5].each{|niv|listeNiveauxFoyers["S"+niv]=[]} # définir les éléments du hash comme array [] 
+    listeFoyers.each{|gr|listeNiveauxFoyers["S"+gr[2]]<< gr unless gr[0]=="P"}   # exemple: dans Gr14 le 1( 3e lettre)signifie @niveauS1
 	    
     listeMetaclassesFoyers.each do|mc,foyers|
       foyers.each do |gr|

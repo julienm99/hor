@@ -1,32 +1,17 @@
 <nav class="navbar navbar-default navbar-fixed-top">
 
   <form id="menuHaut">
+  <!--
   <div class="container-fluid">
+  -->
+  <div class="container">
   
     <!-- LOGO et redirection a la page d'acceuil regroupe -->
+     
     <div class="navbar-header">
-      <%= link_to "HORAIRE-JDLM\n #{$annee}", root_path, class:"navbar-brand", id:"logo" %>
+      <%= link_to "HORAIRE-JDLM\n #{$annee}", blocMetaclasses_path(:blocMC => "toutesMC"), class:"navbar-brand", id:"logo" %>
     </div>
      
-     <!--
-    <div class="btn-group btn-group-info ">
-      <button class="btn btn-primary">DONNEES</button>
-      <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	<span class="caret"></span>
-	<span class="sr-only">Toggle Dropdown</span>
-      </button>
-      <ul class="dropdown-menu">
-//~ 	<%= link_to 'METACLASSES', metaclasses_path, class:"btn btn-warning "                           %></li>
-	    <li class="divider"></li>
-	<%= link_to 'ACTIVITES (CLASSES Coba)', activites_path, class:"btn btn-warning "                               %></li>
-	    <li class="divider"></li>
-	<%= link_to 'REPLACER AUX DERNIERS CEDULABLES', updateCedulables_path, class:"btn btn-warning " %></li>
-	    <li class="divider"></li>
-	<%= link_to 'MISE A JOUR: BASE DE DONNEES', updateMetaclasses_path, class:"btn btn-warning "         %></li>
-	    <li class="divider"></li>
-	<%= link_to 'CREER: BASE DE DONNEES', creerBaseDeDonnees_path, class:"btn btn-warning "        %></li>
-      </ul>
-    </div> -->
         
     <%= link_to 'DE-SELECT.',deSelect_path(:status => "4-en_traitement", :blocMC => @blocMC), class:"btn btn-warning "  %>
      
@@ -41,32 +26,24 @@
 	<%= link_to 'info CEDULABLES', infoCedulables_path, class:"btn btn-warning" %></li>
       </ul> 
     </div>
-    
-    <%= link_to '...BACKBONE',blocMetaclasses_path(:blocMC => "backbone") %>
-    <%= link_to 'ANG',blocMetaclasses_path(:blocMC => "ANG") %>
-    <%= link_to 'ART',blocMetaclasses_path(:blocMC => "ART") %>
-    <%= link_to 'EPS',blocMetaclasses_path(:blocMC => "EPS") %>
-    <%= link_to 'ECR',blocMetaclasses_path(:blocMC => "ECR") %>
-    <%= link_to 'FRA',blocMetaclasses_path(:blocMC => "FRA") %>
-    <%= link_to 'MAT',blocMetaclasses_path(:blocMC => "MAT") %>
-    <%= link_to 'SCT',blocMetaclasses_path(:blocMC => "SCT") %>
-    <%= link_to 'ESP',blocMetaclasses_path(:blocMC => "ESP") %>
-    <%= link_to 'CHI',blocMetaclasses_path(:blocMC => "CHI") %>
-    <%= link_to 'PHY',blocMetaclasses_path(:blocMC => "PHY") %>
-    <%= link_to 'TMS',blocMetaclasses_path(:blocMC => "TMS") %>
-    <%= link_to 'HIS',blocMetaclasses_path(:blocMC => "HIS") %>
-    <%= link_to 'GEO',blocMetaclasses_path(:blocMC => "GEO") %>
-    
-    <%= link_to 'S1',blocMetaclasses_path(:blocMC => "nivS1") %>
-    <%= link_to 'S2',blocMetaclasses_path(:blocMC => "nivS2") %>
-    <%= link_to 'S3',blocMetaclasses_path(:blocMC => "nivS3") %>
-    <%= link_to 'S4',blocMetaclasses_path(:blocMC => "nivS4") %>
-    <%= link_to 'S5',blocMetaclasses_path(:blocMC => "nivS5") %>
+    ____
+    <%= link_to 'BACKBONE',blocMetaclasses_path(:blocMC => "backbone") %>
+    _____
+    <b>
+    <% %w[S1 S2 S3 S4 S5].each do |sujet| %>
+    <%=     link_to sujet,blocMetaclasses_path(:blocMC => "niveau"+sujet)  %>
+    <% end %>
+    </b>
+    _____
+    <% %w[ANG ART EPS ECR FRA MAT SCT ESP CHI PHY TMS HIS GEO].sort.each do |sujet| %>
+    <%=     link_to sujet,blocMetaclasses_path(:blocMC => sujet)  %>
+    <% end %>
+    </br>
     
     <% $listeFoyers.each do |fyr| %>               <!-- sauf foyers Primaire et foyers S5 -->
     <%=    (link_to fyr, blocMetaclasses_path(:blocMC => fyr )) unless fyr[2]=="5" || fyr[0]=="P"%>
     <% end %>
-    
+  
   </div><!-- /.container-fluid -->
   
   </form>

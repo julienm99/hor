@@ -1,11 +1,9 @@
 <body>
 
 
-  <h2>DÉ-SÉLECTIONNER MÉTACLASSES AVEC LE STATUT: <%= "[#{@status}]" %> </h2>
-
-    <% deSelectionner(@status) %>
-    
-    <% @blocMC = "index" unless @blocMC  %>
+  <% deSelectionner(@status) %>
+  
+  <% @blocMC = "index" unless @blocMC  %>
     
   <script> pageWeb("<%= @blocMC %>") </script>
    
