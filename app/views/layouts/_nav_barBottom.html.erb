@@ -10,7 +10,7 @@
       </div>
       
       <br>
-      <%= link_to 'RÉPARTIR',   repartir_path,        class:"btn btn-info"        %>
+      <%= link_to 'REPARTIR',   repartir_path,        class:"btn btn-info"        %>
       <%= link_to 'VALIDER',   action_path(:execute => "valider",:blocMC => @blocMC), class:"btn btn-warning"     %>
       <%= link_to 'INVALIDER',  invalider_path,       class:"btn btn-danger"      %>
       <%= link_to 'SAMPLE',     filtrer_path,         class:"btn btn-info"        %>
@@ -22,6 +22,19 @@
       <%= link_to 'DIAGO.',     root_path,            class:"btn btn-info"        %>
       <%= link_to 'FIX-HOR',    fixerHoraire_path,    class:"btn btn-success"     %>
       <%= link_to 'STOP',       fixerHoraire_path,    class:"btn btn-danger left" %>
+      
+      <div class="btn-group btn-group-primary">
+	<button type="button" class="btn btn-primary">INFO</button>
+	<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	  <span class="caret"></span>
+	  <span class="sr-only">Toggle Dropdown</span>
+	</button>
+	<ul class="dropdown-menu multi-level">
+	  <%= link_to 'info HORAIRES',   infoHoraire_path,    class:"btn btn-warning" %></li>
+	  <%= link_to 'info CEDULABLES', infoCedulables_path, class:"btn btn-warning" %></li>
+	</ul> 
+      </div>
+      
     </div>
     
   </form>

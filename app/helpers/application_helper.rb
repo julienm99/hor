@@ -53,10 +53,14 @@ require 'fileutils'
   end
   
 
-  def save_NomsMetaclasses(status)
-    mcEnJeu = []
-    metaclasses(status).each{|mc| mcEnJeu << mc }
-    open("public/#{status}.txt", "w"){|f| f.puts "#{status}::#{mcEnJeu.join(",")}"}
+  def save_MetaclassesEnTraitement
+    #~ mcEnJeu = []
+    mcEnJeu = ""
+    #~ $listeMetaclassesEtat.each{|mc,etat| mcEnJeu << mc if etat == "4-en_traitement" }
+    $listeMetaclassesEtat.each{|mc,etat| mcEnJeu +=  " " + mc if etat == "4-en_traitement" }
+    #~ open("public/4-en_traitement.txt", "w"){|f| f.puts "4-en_traitement::#{mcEnJeu.join(",")}"}
+    open("public/4-en_traitement.txt", "w"){|f| f.puts "4-en_traitement::"+mcEnJeu.strip!}
+    return mcEnJeu
   end
 
 
