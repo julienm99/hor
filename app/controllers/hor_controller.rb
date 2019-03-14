@@ -67,8 +67,8 @@ class HorController < ApplicationController
       @execute = params[:execute]
     end
 
-    def repartir        ; end
-    def valider         ; end
+    #~ def repartir        ; end
+    #~ def valider         ; end
     def invalider       ; end
     def filtrer         ; end
     def fixerHoraire    ; end

@@ -10,19 +10,20 @@
       </div>
       
       <br>
-      <%= link_to 'REPARTIR',   repartir_path,        class:"btn btn-info"        %>
-      <%= link_to 'VALIDER',   action_path(:execute => "valider",:blocMC => @blocMC), class:"btn btn-warning"     %>
-      <%= link_to 'INVALIDER',  invalider_path,       class:"btn btn-danger"      %>
-      <%= link_to 'SAMPLE',     filtrer_path,         class:"btn btn-info"        %>
-      <%= link_to 'VARIANCE',   variance_path,        class:"btn btn-info"        %>
-      <%= link_to 'FIX-CEDS',   fixerCedulables_path, class:"btn btn-info"        %>
-      <%= link_to 'CEDULER',    root_path,            class:"btn btn-info"        %>
-      <%= link_to 'VIABILISER', root_path,            class:"btn btn-info"        %>
-      <%= link_to 'COMPACTER',  root_path,            class:"btn btn-info"        %>
-      <%= link_to 'DIAGO.',     root_path,            class:"btn btn-info"        %>
-      <%= link_to 'FIX-HOR',    fixerHoraire_path,    class:"btn btn-success"     %>
-      <%= link_to 'STOP',       fixerHoraire_path,    class:"btn btn-danger left" %>
-      
+      <%= link_to 'REPARTIR',  action_path(:execute=>"repartir",  :blocMC => @blocMC),class:"btn btn-info"        %>
+      <%= link_to 'VALIDER',   action_path(:execute=>"valider",   :blocMC => @blocMC),class:"btn btn-warning"     %>
+      <%= link_to 'INVALIDER', action_path(:execute=>"invalider", :blocMC => @blocMC),class:"btn btn-danger"      %>
+      <%= link_to 'SAMPLE',    action_path(:execute=>"sample",    :blocMC => @blocMC),class:"btn btn-info"        %>
+      <%= link_to 'VARIANCE',  action_path(:execute=>"variance",  :blocMC => @blocMC),class:"btn btn-info"        %>
+      <%= link_to 'FIX-CEDS',  action_path(:execute=>"fix-ceds",  :blocMC => @blocMC),class:"btn btn-info"        %>
+      <%= link_to 'CEDULER',   action_path(:execute=>"ceduler",   :blocMC => @blocMC),class:"btn btn-info"        %>
+      <%= link_to 'VIABILISER',action_path(:execute=>"viabiliser",:blocMC => @blocMC),class:"btn btn-info"        %>
+      <%= link_to 'COMPACTER', action_path(:execute=>"compacter", :blocMC => @blocMC),class:"btn btn-info"        %>
+      <%= link_to 'DIAGO.',    action_path(:execute=>"diago",     :blocMC => @blocMC),class:"btn btn-info"        %>
+      <%= link_to 'FIX-HOR',   action_path(:execute=>"fix-hor",   :blocMC => @blocMC),class:"btn btn-success"     %>
+      <%= link_to 'STOP',      action_path(:execute=>"stop",      :blocMC => @blocMC),class:"btn btn-danger left" %>
+ 
+ 
       <div class="btn-group btn-group-primary">
 	<button type="button" class="btn btn-primary">INFO</button>
 	<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

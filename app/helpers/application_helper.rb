@@ -23,8 +23,10 @@ require 'fileutils'
 
 
   def nbLignesFiliere(filiere)
+    puts "file(#{filiere.class}) = #{filiere}"
     File.readlines(filiere).size
   end 
+
 
   def valide
     nbLignesFiliere(derniereFiliereDuDir(listHor13($repCedulables))) > 0
@@ -32,8 +34,11 @@ require 'fileutils'
 
 
   def msgOperationValider(executionSansErreur)
-    executionSansErreur ? flash[:notice] = "Execution de [VALIDER]: REUSSIE" : flash[:notice] = "ERREUR de fonctionnement "
-    flash[:notice] += " ---> CEDULABLES [ #{nbLignesDerniereFiliere(@repCedulables)}]" if executionSansErreur && valide
+    filiere = derniereFiliereDuDir(listHor13(@repCedulables))
+    nbLignes = filiere.size
+    
+    executionSansErreur ? flash[:notice] = "Execution [VALIDER]: REUSSIE" : flash[:notice] = "ERREUR de fonctionnement "
+    flash[:notice] += " ---> CEDULABLES [#{filiere}: #{nbLignes} lignes]" if executionSansErreur && valide
     flash[:notice] += " mais --->  PAS DE SOLUTION" if executionSansErreur && !valide
   end
 
@@ -54,22 +59,20 @@ require 'fileutils'
   
 
   def save_MetaclassesEnTraitement
-    #~ mcEnJeu = []
     mcEnJeu = ""
-    #~ $listeMetaclassesEtat.each{|mc,etat| mcEnJeu << mc if etat == "4-en_traitement" }
     $listeMetaclassesEtat.each{|mc,etat| mcEnJeu +=  " " + mc if etat == "4-en_traitement" }
-    #~ open("public/4-en_traitement.txt", "w"){|f| f.puts "4-en_traitement::#{mcEnJeu.join(",")}"}
     open("public/4-en_traitement.txt", "w"){|f| f.puts "4-en_traitement::"+mcEnJeu.strip!}
     return mcEnJeu
   end
 
 
-  def obtenirNomsMetaclasses(status)
-    file = File.open("public/#{status}.txt", "r:iso8859-1")
+  def obtenirMetaclassesEtat(etat)
+    file = File.open("public/#{etat}.txt", "r:iso8859-1")
       line = file.gets
-      type, nomsMetaclasses = line.split("::")
+      type, reste = line.split("::")
+      metaclasses = reste.split(" ")
     file.close
-    return nomsMetaclasses.strip
+    return metaclasses
   end
 
 
@@ -80,11 +83,11 @@ require 'fileutils'
 	mcNoms.strip! if mcNoms
 	mcNomEnJeu = mcNoms.split(",") if mcNoms
       file.close
-      saveStatusMetaclassesParNom(mcNomEnJeu, status)	  
+      save_MetaclassesEtat(mcNomEnJeu, status)	  
   end
 
 
-  def mettreTousLesStatusInactif 
+  def mettreMetaclassesEtat_inactif 
     $listeMetaclassesEtat.each{|mc, etat| $listeMetaclassesEtat[mc]= "inactif"}
   end
 
@@ -128,11 +131,6 @@ require 'fileutils'
   end
 
 
-  def saveStatusMetaclassesParNom(mcEnJeu, status)
-    mcEnJeu.each{|mc| $listeMetaclassesEtat[mc]=status} if mcEnJeu[0]
-  end
-
-
   def obtenirIntervalleDerniereFiliereValider(diviseur)
     nbLignes = nbLignesFiliere(derniereFiliereDuDir(listHor13($repCedulables)))
     (nbLignes.to_i / diviseur).to_s
@@ -145,75 +143,86 @@ require 'fileutils'
 
 
   def matieresDesMetaclasses(metaclasses, matieres)
-      #~ metaclasses.each{|mc| matieres << mc.nom[0,3] }
       metaclasses.each{|mc| matieres << mc[0,3] }
       matieres.uniq!
   end
 
    
-  def infoDesCedulables
-    fname = derniereFiliereDuDir(listHor13($repCedulables)) 
-    nomMetaclasses = obtenirNomMetaclasses(fname)
-  end
-
-
-  def infoEnTraitement
-    fname = "public/4-en_traitement.txt"
-    nomMetaclasses = obtenirNomMetaclasses(fname)
-  end
-
-
-  def obtenirNomMetaclasses(fname)
+  def obtenirMetaclasses(fname)
     file = File.open(fname, "r:iso8859-1")    
       line = file.gets       # prendre que la première ligne
-      variance, nomsMetaclasses = line.split("\t") if line.strip != nil || line.strip !="nil"
-    file.close   
-    return nomsMetaclasses
+      variance, metaclasses = line.split("\t") unless line.strip == nil || line.strip =="nil"
+    file.close  
+    return metaclasses
   end
 
 
-  def updateStatusMetaclasses 
+  def updateMetaclassesEtat
+    mettreMetaclassesEtat_inactif
+    
+    updateEnTraitement
     updateCedulables      
     updateHoraires
+  end
+
+  def updateEnTraitement
+    save_MetaclassesEtat(mcEnTraitement,"4-en_traitement") unless mcEnTraitement == NilClass 
   end
 
 
   def updateCedulables
     mcCedulables = infoDesCedulables
-    
-    $listeMetaclasses.each do |mc|
-      unless $listeMetaclassesEtat[mc]=="inactif" || $listeMetaclassesEtat[mc]=="4-en_traitement" then
-	$listeMetaclassesEtat[mc] = "inactif" 
-      end
-    end
-    saveStatusMetaClasses(mcCedulables, "3-cedulables") unless mcCedulables == "start" 
+    save_MetaclassesEtat(mcCedulables, "3-cedulables") if mcCedulables[0] 
   end
 
 
   def updateHoraires
-    mcNomEnJeu = []    
+    mcEnJeu = []    
     file = File.open(dirHor13("data/horaires.txt"), "r:iso8859-1")    
       while (line = file.gets)
 	type, reste = line.split("::")
 	if type.strip == "Horaire" then
 	  mcNom, horaire = reste.split("\t")
 	  mcNom.strip!
-	  mcNomEnJeu << mcNom unless mcNomEnJeu.include?(mcNom)
+	  mcEnJeu << mcNom unless mcEnJeu.include?(mcNom)
 	end
       end
     file.close
-    saveStatusMetaclassesParNom(mcNomEnJeu, "1-horaire_fixe")  
+    save_MetaclassesEtat(mcEnJeu, "1-horaire_fixe")  
   end
 
 
-  def saveStatusMetaClasses(nomMC, status)
-    if nomMC then
-      mcNomEnJeu = [] # Cédulables de la dernière filière et les mettre dans la base de données
-      nomMC.strip! ; a = nomMC.split(",") 
-      Hash[*a].each{|k,v| mcNomEnJeu << k} 
-      saveStatusMetaclassesParNom(mcNomEnJeu, status)
-    end    
+  def mcEnTraitement
+    obtenirMetaclassesEtat("4-en_traitement")
   end
 
 
-end
+  def infoDesCedulables
+    fname = derniereFiliereDuDir(listHor13($repCedulables)) 
+    obtenirMetaclassesCedulables(fname)
+  end
+
+
+  def obtenirMetaclassesCedulables(fname)
+    mcCedulables = metaclasses = []
+    
+    file = File.open(fname, "r:iso8859-1")    
+      line = file.gets       # prendre que la première ligne
+      variance, reste = line.split("\t") unless line.strip == nil || line.strip =="nil"
+      mcCedulables = reste.split(",")
+    file.close 
+    
+    #~ REM:  mcCedulables a la forme [ANG19,D1E3F5,MAT15,A1B2C3H6,...] on ne veut que les metaclasses
+    (0..mcCedulables.size).each{|x| metaclasses<< mcCedulables[x]if x.even?} if mcCedulables[0]
+    
+    return metaclasses
+  end
+
+
+  def save_MetaclassesEtat(mcEnJeu, etat)
+      mcEnJeu.each{|mc| $listeMetaclassesEtat[mc] = etat} if mcEnJeu[0]
+  end
+  
+
+
+end # Module ApplicationHelper

@@ -6,20 +6,18 @@
 
   <% case @execute  %>  
   <% when "repartir"  %>  
-      <% save_NomsMetaclasses("4-en_traitement")                       %>
-      <% mc_A_repartir = obtenirNomsMetaclasses("4-en_traitement")     %>
+      <% mc_A_valider = save_MetaclassesEnTraitement                     %>
       <h2> <%= mc_A_repartir %> </h2>
-      <% executionSansErreur = system "./repartir.sh #{mc_A_repartir}" %>
+      <% executionSansErreur = system "./repartir.sh '#{mc_A_repartir}'" %>
       <%= "ERREUR D'EXECUTION" unless executionSansErreur              %>
       
   <% when "valider"    %> 
-      <%= mc_A_valider = save_MetaclassesEnTraitement                     %>
-      <%puts "mc_A_valider = #{mc_A_valider}" ; exit%>
-      <h2> <%= mc_A_valider %> </h2>
-      <% executionSansErreur = system "./valider.sh #{mc_A_valider}"      %>
+      <% mc_A_valider = save_MetaclassesEnTraitement                     %>
+      <h3> <%= mc_A_valider %> </h3>
+      <% executionSansErreur = system "./valider.sh '#{mc_A_valider}'"    %>
       <% msgOperationValider(executionSansErreur)                         %>
-      <% effacer_DerniereFiliere("cedulables") unless executionSansErreur %>
-      <% updateCedulables                                                 %>
+      <% effacer_DerniereFiliere($repCedulables) unless executionSansErreur %>
+      <% updateMetaclassesEtat                                                 %>
 
 
   <% when "invalider"  %> 
