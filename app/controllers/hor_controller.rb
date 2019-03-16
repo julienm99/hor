@@ -1,6 +1,6 @@
 class HorController < ApplicationController
   
-  def index        # les listes sont des variables globales: elles peuvent être utiles partout
+  def index        # les listes sont des variables globales($): elles peuvent être utiles partout
     obtenirLesListes( fname = "/home/julienm/hor13/init/metaclasses.txt",
 		      $listeMetaclasses=[],
 		      $listeActivites=[],
@@ -12,44 +12,32 @@ class HorController < ApplicationController
 		      $listeFoyersMetaclasses={},
 		      $listeNiveauxFoyers={})
 
-#~ puts "$listeNiveauxFoyers(#{$listeNiveauxFoyers.class}) = #{$listeNiveauxFoyers}" 
-
-#~ puts "$listeNiveauxFoyers['S1'](#{$listeNiveauxFoyers['S1'].class}) = #{$listeNiveauxFoyers['S1']}" ; exit
-		      
     @mc = $listeMetaclasses  # variable équivalente    
     $annee = "2019"
-    $repCedulables = "op/cedulables"
+    $repCedulables = "op/cedulables" # rep = répertoire
   end
  
  
-  if true # TOP: boutons nav-bar du haut de page liant les pagesWeb
-    def contraintes         ; end
-    def updateMetaclasses   ; end    
-    def updateCedulables    ; end    
-    def infoHoraire         ; end
-    def infoCedulables      ; end
-  end  
+  #~ if true # TOP: boutons nav-bar du haut de page liant les pagesWeb
+    #~ def contraintes         ; end
+    #~ def updateMetaclasses   ; end    
+    #~ def updateCedulables    ; end    
+    #~ def infoHoraire         ; end
+    #~ def infoCedulables      ; end
+  #~ end  
   
   
   def deSelect    
-    @status = params[:status]
     @blocMC = params[:blocMC]
   end
   
   
-  def changerEtatMetaclasse 
+  def changerEtatMetaclasse # interchanger "inactif" <--> "4-en_traitement"
     @mcTraitee = params[:mcTraitee]
+    mc = $listeMetaclassesEtat
     
-    case $listeMetaclassesEtat[@mcTraitee]
-    when "4-en_traitement"
-       $listeMetaclassesEtat[@mcTraitee] = "inactif" 
-       
-    when "3-cedulables","1-horaire_fixe"
-        
-    else 
-       $listeMetaclassesEtat[@mcTraitee] = "4-en_traitement"
-    end
-     
+    mc[@mcTraitee]=="inactif" ? mc[@mcTraitee]="4-en_traitement" : mc[@mcTraitee]="inactif" 
+    
     blocMetaclasses
   end
  
@@ -67,17 +55,14 @@ class HorController < ApplicationController
       @execute = params[:execute]
     end
 
-    #~ def repartir        ; end
-    #~ def valider         ; end
-    def invalider       ; end
-    def filtrer         ; end
+    #~ def invalider       ; end
+    #~ def filtrer         ; end
     def fixerHoraire    ; end
     def variance        ; end
     def fixerCedulables ; end
   end
 
  
-  
 #~ private
   def metaclasses(sujet)
     
@@ -114,7 +99,6 @@ class HorController < ApplicationController
     end
     return liste
   end
-  
   
 
   def obtenirLesListes(	fname,

@@ -4,7 +4,7 @@
     <h1> <%= @execute  %></h1>
   </div>
 
-  <% case @execute  %>  
+  <% case @execute    %>    
   <% when "repartir"  %>  
       <% mc_A_valider = save_MetaclassesEnTraitement                     %>
       <h2> <%= mc_A_repartir %> </h2>
@@ -12,23 +12,54 @@
       <%= "ERREUR D'EXECUTION" unless executionSansErreur              %>
       
   <% when "valider"    %> 
-      <% mc_A_valider = save_MetaclassesEnTraitement                     %>
-      <h3> <%= mc_A_valider %> </h3>
-      <% executionSansErreur = system "./valider.sh '#{mc_A_valider}'"    %>
-      <% msgOperationValider(executionSansErreur)                         %>
-      <% effacer_DerniereFiliere($repCedulables) unless executionSansErreur %>
-      <% updateMetaclassesEtat                                                 %>
-
-
+      <% mc_A_valider = save_MetaclassesEnTraitement                              %>
+      <h4> <%= mc_A_valider %> </h4>
+      <% executionSansErreur = system "./valider.sh '#{mc_A_valider}'"            %>
+      <% repFiliere,nbLignes,nomFiliere = filiere($repCedulables)                 %> 
+      <% if executionSansErreur then                                              %>
+      <%   flash[:notice] =  "OPERATION [#{@execute}] REUSSIE "                   %>
+      <%   flash[:notice] += "--> CEDULABLES: [#{nomFiliere}: #{nbLignes} lignes]"%>
+      <%   flash[:notice] += " mais --->  PAS DE SOLUTION" unless valide          %>
+      <%   updateMetaclassesEtat                                                  %>
+      <% else                                                                     %>
+      <%   flash[:notice] = "ERREUR de fonctionnement "                           %>
+      <% end                                                                      %>
+    
   <% when "invalider"  %> 
-  <% when "sample"     %> 
-  <% when "variance"   %> 
+      <% repFiliere,nbLignes,nomFiliereEffacee = filiere($repCedulables)          %> 
+      <% executionSansErreur = system "./invalider.sh"                            %>
+      <% if executionSansErreur then                                              %>
+      <%   flash[:notice] =  "OPERATION [#{@execute}] REUSSIE:      -----> "      %>
+      <%   flash[:notice] += "[#{nomFiliereEffacee}]: filiere supprimee!"         %>
+      <%   updateMetaclassesEtat                                                  %>
+      <% else                                                                     %>
+      <%   flash[:notice] = "ERREUR de fonctionnement "                           %>
+      <% end                                                                      %>
+  
+  <% when "filtrer"     %> 
+      <% intervalle = obtenirIntervalle(diviseur = 20)                                    %> 
+      <% executionSansErreur = system "./filtrer.sh '#{intervalle}'"                      %>
+      <% repFiliere,nbLignes,nomFiliere = filiere($repCedulables)                         %> 
+      <% if executionSansErreur then                                                      %>
+      <%   flash[:notice] = "OPERATION [#{@execute}] REUSSIE: ----->  [0_#{nomFiliere}] " %>
+      <%   flash[:notice] += "FILTREE a #{intervalle} lignes d'intervalle"                %>
+      <%   flash[:notice] += "--> [#{nomFiliere}]: #{nbLignes} lignes de CEDULABLES"      %>
+      <% else                                                                             %>
+      <%   flash[:notice] = "ERREUR de fonctionnement "                                   %>
+      <% end                                                                              %>
+  
+  <% when "de-select"   %>
+      <% deSelectionner %> 
+  
+  
+  <% when "variance"   %>   
   <% when "fix-ceds"   %> 
   <% when "ceduler"    %> 
   <% when "viabiliser" %> 
   <% when "compacter"  %> 
   <% when "diago"      %> 
   <% when "fix-hor"    %>
+  <% when "data"       %>
   <% when "stop"       %>
   
   <% else              %> 

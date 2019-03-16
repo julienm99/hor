@@ -12,8 +12,8 @@ Rails.application.routes.draw do
     get 'changerEtatMetaclasse',to: 'hor#changerEtatMetaclasse'
     get 'deSelect',             to: 'hor#deSelect'
     
-    get 'updateCedulables',   to: 'hor#updateCedulables'    
-    get 'contraintes',        to: 'hor#contraintes'
+    #~ get 'updateCedulables',   to: 'hor#updateCedulables'    
+    #~ get 'contraintes',        to: 'hor#contraintes'
     
   end
  

@@ -23,7 +23,6 @@ require 'fileutils'
 
 
   def nbLignesFiliere(filiere)
-    puts "file(#{filiere.class}) = #{filiere}"
     File.readlines(filiere).size
   end 
 
@@ -33,13 +32,12 @@ require 'fileutils'
   end
 
 
-  def msgOperationValider(executionSansErreur)
-    filiere = derniereFiliereDuDir(listHor13(@repCedulables))
-    nbLignes = filiere.size
+  def filiere(repertoire)
+    repFiliere = derniereFiliereDuDir(listHor13(repertoire)) 	# chemin complet de la filière
+    nbLignes = nbLignesFiliere(repFiliere)			# nombre de lignes de la filière
+    nomFiliere = repFiliere.split("/").last			# nom de la filière sans son chemin
     
-    executionSansErreur ? flash[:notice] = "Execution [VALIDER]: REUSSIE" : flash[:notice] = "ERREUR de fonctionnement "
-    flash[:notice] += " ---> CEDULABLES [#{filiere}: #{nbLignes} lignes]" if executionSansErreur && valide
-    flash[:notice] += " mais --->  PAS DE SOLUTION" if executionSansErreur && !valide
+    return repFiliere,nbLignes,nomFiliere
   end
 
 
@@ -48,13 +46,13 @@ require 'fileutils'
   end
 
 
-  def changerStatus(mc,status)
-    $listeMetaclassesEtat[mc] = status
+  def changerMetaclasseEtat(mc,etat)
+    $listeMetaclassesEtat[mc] = etat
   end
 
 
-  def deSelectionner(statut)    
-    $listeMetaclassesEtat.each{|mc,etat|$listeMetaclassesEtat[mc] = "inactif" if etat == statut}
+  def deSelectionner    
+    $listeMetaclassesEtat.each{|mc,etat|$listeMetaclassesEtat[mc] = "inactif" if etat == "4-en_traitement"}
   end
   
 
@@ -73,17 +71,6 @@ require 'fileutils'
       metaclasses = reste.split(" ")
     file.close
     return metaclasses
-  end
-
-
-  def restaurerMetaclasses(status)
-      mcNomEnJeu = []
-      file = File.open("public/#{status}.txt", "r:iso8859-1")
-	type, mcNoms = file.gets.split("::")
-	mcNoms.strip! if mcNoms
-	mcNomEnJeu = mcNoms.split(",") if mcNoms
-      file.close
-      save_MetaclassesEtat(mcNomEnJeu, status)	  
   end
 
 
@@ -131,7 +118,7 @@ require 'fileutils'
   end
 
 
-  def obtenirIntervalleDerniereFiliereValider(diviseur)
+  def obtenirIntervalle(diviseur)
     nbLignes = nbLignesFiliere(derniereFiliereDuDir(listHor13($repCedulables)))
     (nbLignes.to_i / diviseur).to_s
   end
@@ -208,8 +195,10 @@ require 'fileutils'
     
     file = File.open(fname, "r:iso8859-1")    
       line = file.gets       # prendre que la première ligne
-      variance, reste = line.split("\t") unless line.strip == nil || line.strip =="nil"
-      mcCedulables = reste.split(",")
+      unless line.strip == nil || line.strip =="nil" then
+	variance, reste = line.split("\t") 
+	mcCedulables = reste.split(",")
+      end
     file.close 
     
     #~ REM:  mcCedulables a la forme [ANG19,D1E3F5,MAT15,A1B2C3H6,...] on ne veut que les metaclasses
