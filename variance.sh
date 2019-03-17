@@ -14,9 +14,9 @@ cp $SOURCE $TEMPORAIRE
 
 #~ echos pour DEBUG -------------------
 echo "VARIANCE ------------------------"
-echo "derniere:"$derniere
-echo "SOURCE:"$SOURCE" ---> trouver la variance de chacun des cedulables"
-echo "TEMPORAIRE:"$TEMPORAIRE" ---> sort:"
+echo "derniere:    "$derniere
+echo "SOURCE:      "$SOURCE" ---> trouver la variance de chacun des cedulables"
+echo "TEMPORAIRE:  "$TEMPORAIRE" ---> trier (sort):"
 echo "DESTINATION: "$DESTINATION
 echo "---------------------------------"
 

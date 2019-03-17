@@ -19,11 +19,8 @@ class HorController < ApplicationController
  
  
   #~ if true # TOP: boutons nav-bar du haut de page liant les pagesWeb
-    #~ def contraintes         ; end
-    #~ def updateMetaclasses   ; end    
-    #~ def updateCedulables    ; end    
-    #~ def infoHoraire         ; end
-    #~ def infoCedulables      ; end
+    def infoHoraire         ; end
+    def infoCedulables      ; end
   #~ end  
   
   
@@ -55,11 +52,11 @@ class HorController < ApplicationController
       @execute = params[:execute]
     end
 
-    #~ def invalider       ; end
-    #~ def filtrer         ; end
-    def fixerHoraire    ; end
-    def variance        ; end
-    def fixerCedulables ; end
+    #~ def invalider ; end
+    #~ def filtrer   ; end
+    #~ def fix-hor   ; end
+    #~ def variance  ; end
+    #~ def fix-ceds  ; end
   end
 
  

@@ -28,12 +28,15 @@ function pageWeb() {
     case "4-en_traitement" :
     case "infoHoraire" :
     case "infoCedulables" :
-    case "index":
     case "invalider":
     case "valider":
     case "index":
     case "BaseDeDonnees":
       window.location.replace("/");
+      break;
+    case "EPS":
+      var path = "/blocMetaclasses?blocMC="+arguments[0];
+      window.location.replace(path);
       break;
     default:
       var path = "/blocMetaclasses?blocMC="+arguments[0];

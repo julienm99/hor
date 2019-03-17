@@ -10,7 +10,8 @@
       <h2> <%= mc_A_repartir %> </h2>
       <% executionSansErreur = system "./repartir.sh '#{mc_A_repartir}'" %>
       <%= "ERREUR D'EXECUTION" unless executionSansErreur              %>
-      
+
+
   <% when "valider"    %> 
       <% mc_A_valider = save_MetaclassesEnTraitement                              %>
       <h4> <%= mc_A_valider %> </h4>
@@ -24,7 +25,8 @@
       <% else                                                                     %>
       <%   flash[:notice] = "ERREUR de fonctionnement "                           %>
       <% end                                                                      %>
-    
+
+
   <% when "invalider"  %> 
       <% repFiliere,nbLignes,nomFiliereEffacee = filiere($repCedulables)          %> 
       <% executionSansErreur = system "./invalider.sh"                            %>
@@ -35,7 +37,8 @@
       <% else                                                                     %>
       <%   flash[:notice] = "ERREUR de fonctionnement "                           %>
       <% end                                                                      %>
-  
+
+
   <% when "filtrer"     %> 
       <% intervalle = obtenirIntervalle(diviseur = 20)                                    %> 
       <% executionSansErreur = system "./filtrer.sh '#{intervalle}'"                      %>
@@ -47,19 +50,53 @@
       <% else                                                                             %>
       <%   flash[:notice] = "ERREUR de fonctionnement "                                   %>
       <% end                                                                              %>
-  
+
+
   <% when "de-select"   %>
       <% deSelectionner %> 
-  
-  
-  <% when "variance"   %>   
+      <% exit %> 
+
+
+  <% when "variance"   %> 
+      <% executionSansErreur = system "./variance.sh"                                %>
+      <% repFiliere,nbLignes,nomFiliere = filiere($repCedulables)                    %> 
+      <% if executionSansErreur then                                                 %>
+      <%   flash[:notice] = "OPERATION [#{@execute}] REUSSIE: ---> [#{nomFiliere}] " %>
+      <%   flash[:notice] += "est TRIEE selon l'ordre des meilleures repartitions"   %>
+      <% else                                                                        %>
+      <%   flash[:notice] = "ERREUR de fonctionnement "                              %>
+      <% end                                                                         %>
+ 
+ 
   <% when "fix-ceds"   %> 
+      <% horaireTemp = obtenirCedulablesHoraire                       %> 
+      <% repFiliere,nbLignes,nomFiliere = filiere($repCedulables)     %> 
+      <% executionSansErreur = system "./fix-ceds.sh #{horaireTemp}"  %>
+      <% if executionSansErreur then                                  %>
+      <%   flash[:notice] = "OPERATION [#{@execute}] REUSSIE:"        %>
+      <%   flash[:notice] += " ---> Horaires temporaires [hor13/info]"%>
+      <%   flash[:notice] += " = horaires deja fixes + horaires de la"%>
+      <%   flash[:notice] += " 1re ligne de la filiere: #{nomFiliere}"%>
+      <% else                                                         %>
+      <%   flash[:notice] = "ERREUR de fonctionnement "               %>
+      <% end                                                          %>
+
+
   <% when "ceduler"    %> 
   <% when "viabiliser" %> 
   <% when "compacter"  %> 
   <% when "diago"      %> 
   <% when "fix-hor"    %>
+  
   <% when "data"       %>
+      <% executionSansErreur = system "./data.sh"              %>
+      <% if executionSansErreur then                           %>
+      <%   flash[:notice] = "OPERATION [#{@execute}] REUSSIE:" %>
+      <%   flash[:notice] += " ---> Base de donnees a jour"    %>
+      <% else                                                  %>
+      <%   flash[:notice] = "ERREUR de fonctionnement "        %>
+      <% end                                                   %>
+
   <% when "stop"       %>
   
   <% else              %> 
@@ -68,7 +105,8 @@
   
 
   <% @blocMC = "index" unless @blocMC  %>
-
-  <script> pageWeb(@blocMC); </script>
+  
+  <%= link_to "AFFICHE: "+@blocMC,blocMetaclasses_path(:blocMC => @blocMC),class:"btn btn-info" %>
+  
  
 </body>

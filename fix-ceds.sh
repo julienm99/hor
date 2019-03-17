@@ -16,15 +16,16 @@ cp data/horaires.txt data/horairesTemp.txt
 echo "----------------------"
 
 
-echo "$1=metaclassesEnJeu: obtenues ->[rails_projects/hor/app/views/fixerCedulables.html.erb]"
-echo "Métaclasses ajoutées temporairement à l'horaire déjà fixé: ["$1"]"
+echo "Metaclasses ajoutees temporairement a l'horaire deja fixe: "
+echo "["$1"]"
 ruby script/format_horaire_string.rb $1 >> data/horaires.txt
+cp data/horaires.txt data/horairesTaches.txt
 echo "----------------------"
 
 
 derniere=$(ls op/cedulables -rt | tail -n1)
 
-echo "formation des filières [INFO_***.txt] selon la 1re ligne de la filière "$derniere
+echo "formation des filieres [INFO_***.txt] selon la 1re ligne de la filière "$derniere
 ./info.sh
 echo "----------------------"
 
@@ -34,5 +35,10 @@ cp data/horairesTemp.txt data/horaires.txt
 echo "----------------------"
 
 
+cat info/info_HORAIRE_Gr.txt
+
+
 cd
 cd rails_projects/hor
+
+

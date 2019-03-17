@@ -208,6 +208,20 @@ require 'fileutils'
   end
 
 
+  def obtenirCedulablesHoraire
+    fname = derniereFiliereDuDir(listHor13($repCedulables)) 
+    
+    file = File.open(fname, "r:iso8859-1")    
+      line = file.gets       # prendre que la première ligne
+      unless line.strip == nil || line.strip =="nil" then
+	variance, metaclasses = line.split("\t") 
+      end
+    file.close 
+    
+    return metaclasses
+  end
+
+
   def save_MetaclassesEtat(mcEnJeu, etat)
       mcEnJeu.each{|mc| $listeMetaclassesEtat[mc] = etat} if mcEnJeu[0]
   end
