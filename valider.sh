@@ -39,8 +39,12 @@ cat $SOURCE | ruby mapred/repartir.rb $1  | mapred/valider_01 > $DESTINATION
 #~ -n créer une filière $DESTINATION vide (0 byte) donc PAS DE SOLUTION
 #~ ------------------------------
 if [ -e $DESTINATION ] && [ -s $DESTINATION ]; 
-  then echo $DESTINATION" contient des CEDULABLES"; 
-  else echo -n > $DESTINATION ; echo "PAS DE SOLUTION"; 
+  then 
+    echo $DESTINATION" contient des CEDULABLES"; 
+  else
+    rm $DESTINATION
+    #~ echo -n > $DESTINATION  
+    echo "PAS DE SOLUTION" 
 fi
 #~ ------------------------------
 

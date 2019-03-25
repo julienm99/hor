@@ -194,7 +194,7 @@ require 'fileutils'
     mcCedulables = metaclasses = []
     
     file = File.open(fname, "r:iso8859-1")    
-      line = file.gets       # prendre que la première ligne
+      line = file.gets       # prendre que la premiere ligne
       unless line.strip == nil || line.strip =="nil" then
 	variance, reste = line.split("\t") 
 	mcCedulables = reste.split(",")

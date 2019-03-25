@@ -4,7 +4,7 @@
     <h1> <%= @execute  %></h1>
   </div>
 
-  <% case @execute    %>    
+  <% case @execute    %>   
   <% when "repartir"  %>  
       <% mc_A_valider = save_MetaclassesEnTraitement                     %>
       <h2> <%= mc_A_repartir %> </h2>
@@ -52,7 +52,7 @@
       <% end                                                                              %>
 
 
-  <% when "de-select"   %>
+  <% when "de-select" #ne fonctionne pas ici  %>
       <% deSelectionner %> 
       <% exit %> 
 
@@ -66,27 +66,31 @@
       <% else                                                                        %>
       <%   flash[:notice] = "ERREUR de fonctionnement "                              %>
       <% end                                                                         %>
+
  
- 
-  <% when "fix-ceds"   %> 
+  <% when "infoCeds"   %> 
       <% horaireTemp = obtenirCedulablesHoraire                       %> 
       <% repFiliere,nbLignes,nomFiliere = filiere($repCedulables)     %> 
-      <% executionSansErreur = system "./fix-ceds.sh #{horaireTemp}"  %>
+      <% executionSansErreur = system "./infoCeds.sh #{horaireTemp}"  %>
       <% if executionSansErreur then                                  %>
       <%   flash[:notice] = "OPERATION [#{@execute}] REUSSIE:"        %>
       <%   flash[:notice] += " ---> Horaires temporaires [hor13/info]"%>
       <%   flash[:notice] += " = horaires deja fixes + horaires de la"%>
-      <%   flash[:notice] += " 1re ligne de la filiere: #{nomFiliere}"%>
+      <%   flash[:notice] += " 1re ligne de: [ #{nomFiliere} ]"       %>
       <% else                                                         %>
       <%   flash[:notice] = "ERREUR de fonctionnement "               %>
       <% end                                                          %>
 
 
-  <% when "ceduler"    %> 
-  <% when "viabiliser" %> 
-  <% when "compacter"  %> 
-  <% when "diago"      %> 
-  <% when "fix-hor"    %>
+  <% when "infoHor"    %>
+      <% executionSansErreur = system "./infoHor.sh"          %>
+      <% if executionSansErreur then                          %>
+      <%   flash[:notice] = "OPERATION [#{@execute}] REUSSIE:"%>
+      <%   flash[:notice] += " = Info des horaires deja fixes"%>
+      <% else                                                 %>
+      <%   flash[:notice] = "ERREUR de fonctionnement "       %>
+      <% end                                                  %>
+
   
   <% when "data"       %>
       <% executionSansErreur = system "./data.sh"              %>
@@ -97,16 +101,40 @@
       <%   flash[:notice] = "ERREUR de fonctionnement "        %>
       <% end                                                   %>
 
+
+  <% when "fix-Reps"%> 
+  <% when "ceduler" %> 
+  <% when "viable"  %> 
+  <% when "compact" %>
+  <% when "diago"   %> 
+  <% when "flat?"   %> 
+  
+  
+  <% when "fix-hor"    # nefonctionne pas mais prg comme infoCeds%> 
+      <% #horaireTemp = obtenirDiagHoraire                       %> 
+      <% #repFiliere,nbLignes,nomFiliere = filiere($repDiag)     %> 
+      <% #executionSansErreur = system "./fic_hor.sh #{horaireTemp}"  %>
+      <% if executionSansErreur then                                  %>
+      <%   flash[:notice] = "OPERATION [#{@execute}] REUSSIE:"        %>
+      <%   flash[:notice] += " ---> Horaires [hor13/info]"%>
+      <%   flash[:notice] += " = horaires deja fixes + horaires de la"%>
+      <%   flash[:notice] += " 1re ligne de la filiere: #{nomFiliere}"%>
+      <% else                                                         %>
+      <%   flash[:notice] = "ERREUR de fonctionnement "               %>
+      <% end                                                          %>
+
+  
   <% when "stop"       %>
   
   <% else              %> 
       <h3> <%= "Aucune des actions programmees ne correpond a votre demande" %> </h3>
   <% end               %> 
   
+  
 
   <% @blocMC = "index" unless @blocMC  %>
   
-  <%= link_to "AFFICHE: "+@blocMC,blocMetaclasses_path(:blocMC => @blocMC),class:"btn btn-info" %>
+  <%= link_to "AFFICHER: "+@blocMC,blocMetaclasses_path(:blocMC => @blocMC),class:"btn btn-info" %>
   
  
 </body>

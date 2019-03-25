@@ -1,6 +1,7 @@
 echo
 echo "-------------------------------------------"
-echo "FIXER L'HORAIRE DES DERNIERS CÉDULABLES"
+echo "FIXER L'HORAIRE DES DERNIERS CEDULABLES"
+echo "POUR DES INFO EN FIXANT LA PREMIERE SOLUTION"
 echo "-------------------------------------------"
 
 

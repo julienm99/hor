@@ -1,29 +1,26 @@
 class HorController < ApplicationController
   
-  def index        # les listes sont des variables globales($): elles peuvent être utiles partout
+  def index        # les listes sont des variables globales($): elles servent de base de données
     obtenirLesListes( fname = "/home/julienm/hor13/init/metaclasses.txt",
-		      $listeMetaclasses=[],
+		      $listeMetaclasses=[],  # listeXxxxx = array
 		      $listeActivites=[],
 		      $listeFoyers=[],
-		      $listeMetaclassesActivites={},
+		      $listeMetaclassesActivites={},# listeXxxxYyyy = hash{Xxxx = key, Yyyy = value}
 		      $listeActivitesDescription={},
 		      $listeMetaclassesEtat={},
 		      $listeMetaclassesFoyers={},
+		      $listeMetaclassesProfs={},
 		      $listeFoyersMetaclasses={},
-		      $listeNiveauxFoyers={})
+		      $listeNiveauxFoyers={},
+		      $listeProfsFoyers={})
 
     @mc = $listeMetaclasses  # variable équivalente    
     $annee = "2019"
     $repCedulables = "op/cedulables" # rep = répertoire
+    $repHoraire = "data"
   end
  
- 
-  #~ if true # TOP: boutons nav-bar du haut de page liant les pagesWeb
-    def infoHoraire         ; end
-    def infoCedulables      ; end
-  #~ end  
-  
-  
+   
   def deSelect    
     @blocMC = params[:blocMC]
   end
@@ -52,11 +49,6 @@ class HorController < ApplicationController
       @execute = params[:execute]
     end
 
-    #~ def invalider ; end
-    #~ def filtrer   ; end
-    #~ def fix-hor   ; end
-    #~ def variance  ; end
-    #~ def fix-ceds  ; end
   end
 
  
@@ -85,7 +77,7 @@ class HorController < ApplicationController
       when "SCT"
 	liste << mc if  %w[SCT CHI PHY TMS OPT].include?(mc[0,3]) 
 
-      when "toutesMC"
+      when "index"
 	liste << mc  
 
       else 
@@ -106,8 +98,10 @@ class HorController < ApplicationController
 			listeActivitesDescription,
 			listeMetaclassesEtat,
 			listeMetaclassesFoyers,
+			listeMetaclassesProfs,
 			listeFoyersMetaclasses,
-			listeNiveauxFoyers)
+			listeNiveauxFoyers,
+			listeProfsFoyers)
 
     file = File.open(fname, "r:iso8859-1")
     
@@ -121,16 +115,29 @@ class HorController < ApplicationController
 	  listeMetaclassesActivites[mcNom] = activites[14,activites.length].strip
 	  listeMetaclassesEtat[mcNom] = "1- inactif" # au départ: toutes les metaclasses sont inactives
 	  listeMetaclassesFoyers[mcNom] = []
-	  	  
-	when "Classe" 
-	  nom, description = reste.split("\t")
-	  cours, groupe, periodes, periodesTache, semestre, prof, salle, list = reste.split(";")
+	  listeMetaclassesProfs[mcNom] = []
 	  
-	  listeActivitesDescription[nom] = description.strip
-	  listeActivites << nom
-	  listeFoyers << list.strip.split(",")	  
-	  listeMetaclassesFoyers[mcNom] << list.strip.split(",")
+	  
+	when "Classe" 
+	  nomActivite, description = reste.split("\t")
+	  cours, groupe, periodes, periodesTache, semestre, prof, salle, listFoyers = reste.split(";")
+	  
+	  listeActivitesDescription[nomActivite] = description.strip
+	  
+	  listeActivites << nomActivite
+	  
+	  listeFoyers << listFoyers.strip.split(",")
+	  
+	  listeMetaclassesFoyers[mcNom] << listFoyers.strip.split(",")
 	  listeMetaclassesFoyers[mcNom].flatten!.uniq!
+	  
+	  listeMetaclassesProfs[mcNom] << prof.strip
+	  listeMetaclassesProfs[mcNom].uniq!
+	  
+	  #~ listeProfsFoyers[prof] = [] if listeProfsFoyers[prof] == NilClass
+	  #~ listeProfsFoyers[prof] << listFoyers.strip.split(",")
+	  #~ listeProfsFoyers[prof].flatten!.uniq!
+	  
 	  
 	else	  
 	end
@@ -150,14 +157,17 @@ class HorController < ApplicationController
 	listeFoyersMetaclasses[gr] << mc	
       end
     end
-	    
+	puts listeProfsFoyers
+	
     listeMetaclasses.sort!
     listeActivites.sort!
     listeMetaclassesEtat.sort_by{|_key,value| _key} # classé par ordre aphabétique de metaclasses
     listeMetaclassesActivites.sort_by{|_key,value| _key} # classé par ordre aphabétique de metaclasses
     listeActivitesDescription.sort_by{|_key,value| _key} # classé par ordre aphabétique d'activité
     listeMetaclassesFoyers.sort_by{|_key,value| _key} # classé par ordre aphabétique métaclasses
+    listeMetaclassesProfs.sort_by{|_key,value| _key} # classé par ordre aphabétique métaclasses
     listeFoyersMetaclasses.sort_by{|_key,value| _key} # classé par ordre de foyers
+    listeProfsFoyers.sort_by{|_key,value| _key} # classé par ordre de foyers
   end
 
  

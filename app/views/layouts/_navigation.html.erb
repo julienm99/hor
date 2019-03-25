@@ -9,7 +9,7 @@
     <!-- LOGO et redirection a la page d'acceuil regroupe -->
      
     <div class="navbar-header">
-      <%= link_to "HORAIRE-JDLM #{$annee}", blocMetaclasses_path(:blocMC => "toutesMC"), class:"navbar-brand", id:"logo" %>
+      <%= link_to "HORAIRE-JDLM #{$annee}", blocMetaclasses_path(:blocMC => "index"), class:"navbar-brand", id:"logo" %>
     </div>
      
         
@@ -22,8 +22,8 @@
 	<span class="sr-only">Toggle Dropdown</span>
       </button>
       <ul class="dropdown-menu multi-level">
-	<%= link_to 'info HORAIRES',   infoHoraire_path,    class:"btn btn-warning" %></li>
-	<%= link_to 'info CEDULABLES', infoCedulables_path, class:"btn btn-warning" %></li>
+	<%= link_to 'info HORAIRES',  action_path(:execute=>"infoHor",:blocMC => @blocMC), class:"btn btn-warning"%></li>
+	<%= link_to 'info CEDULABLES',action_path(:execute=>"infoCeds",:blocMC => @blocMC),class:"btn btn-warning"%></li>
       </ul> 
     </div>
     ____
@@ -39,10 +39,13 @@
     <%=     link_to sujet,blocMetaclasses_path(:blocMC => sujet)  %>
     <% end %>
     </br>
-    
-    <% $listeFoyers.each do |fyr| %>               <!-- sauf foyers Primaire et foyers S5 -->
-    <%=    (link_to fyr, blocMetaclasses_path(:blocMC => fyr )) unless fyr[2]=="5" || fyr[0]=="P"%>
-    <% end %>
+  
+    <% nivPrecedent = "1"         %>               
+    <% $listeFoyers.each do |fyr| %>               <!-- sauf foyers du Primaire fyr[0] -->
+    <%=    "___" unless fyr[2] == nivPrecedent || fyr[0] == "P"                   %>
+    <%=    (link_to fyr, blocMetaclasses_path(:blocMC => fyr )) unless fyr[0]=="P"%>
+    <%     nivPrecedent = fyr[2]                                                  %>
+    <% end                        %>
   
   </div><!-- /.container-fluid -->
   
