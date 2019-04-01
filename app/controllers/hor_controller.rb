@@ -14,7 +14,8 @@ class HorController < ApplicationController
 		      $listeNiveauxFoyers={},
 		      $listeProfsFoyers={})
 
-    @mc = $listeMetaclasses  # variable équivalente    
+    @mc = $listeMetaclasses  # variable équivalente 
+    @blocMC = "index"
     $annee = "2019"
     $repCedulables = "op/cedulables" # rep = répertoire
     $repHoraire = "data"

@@ -42,7 +42,7 @@ if [ -e $DESTINATION ] && [ -s $DESTINATION ];
   then 
     echo $DESTINATION" contient des CEDULABLES"; 
   else
-    rm $DESTINATION
+    #~ rm $DESTINATION
     #~ echo -n > $DESTINATION  
     echo "PAS DE SOLUTION" 
 fi

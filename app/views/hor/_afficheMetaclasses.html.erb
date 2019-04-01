@@ -1,4 +1,10 @@
-    <div class="container" id="affiche">
+
+  <div class="container" id="affiche">
+    <% repFiliere,nbLignes,nomFiliere = filiere($repCedulables)                %> 
+    <b><h4>
+    <%   flash[:notice] = "--> CEDULABLES:  #{nomFiliere} [#{nbLignes} lignes]"%>
+    <%   flash[:notice] +=".......................................[#{@blocMC}]"%>
+    </b></h4>
       <div class="row">    
 	<% x = 0 ; y = 0 ; %>
 	<% until x > @mc.size do %>
@@ -17,4 +23,4 @@
 	<% end %> 
 	
       </div>
-    </div>
+  </div>

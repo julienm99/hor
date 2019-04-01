@@ -1,6 +1,6 @@
 echo
 echo "------------------------------------------------------------"
-echo "FORMATION DES FILIERES: INFO_XX.txt et TRANSFERT dans TACHES"
+echo "FORMATION DES FILIERES: INFO_XX.txt et TRANSFERT dans PAS"
 echo "------------------------------------------------------------"
 
 cd

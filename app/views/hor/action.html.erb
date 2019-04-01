@@ -40,7 +40,7 @@
 
 
   <% when "filtrer"     %> 
-      <% intervalle = obtenirIntervalle(diviseur = 20)                                    %> 
+      <% intervalle = obtenirIntervalle(diviseur = 30)                                    %> 
       <% executionSansErreur = system "./filtrer.sh '#{intervalle}'"                      %>
       <% repFiliere,nbLignes,nomFiliere = filiere($repCedulables)                         %> 
       <% if executionSansErreur then                                                      %>
@@ -69,17 +69,17 @@
 
  
   <% when "infoCeds"   %> 
-      <% horaireTemp = obtenirCedulablesHoraire                       %> 
-      <% repFiliere,nbLignes,nomFiliere = filiere($repCedulables)     %> 
-      <% executionSansErreur = system "./infoCeds.sh #{horaireTemp}"  %>
-      <% if executionSansErreur then                                  %>
-      <%   flash[:notice] = "OPERATION [#{@execute}] REUSSIE:"        %>
-      <%   flash[:notice] += " ---> Horaires temporaires [hor13/info]"%>
-      <%   flash[:notice] += " = horaires deja fixes + horaires de la"%>
-      <%   flash[:notice] += " 1re ligne de: [ #{nomFiliere} ]"       %>
-      <% else                                                         %>
-      <%   flash[:notice] = "ERREUR de fonctionnement "               %>
-      <% end                                                          %>
+      <% horaireTemp = obtenirCedulablesHoraire                      %> 
+      <% repFiliere,nbLignes,nomFiliere = filiere($repCedulables)    %> 
+      <%= executionSansErreur = system "./infoCeds.sh #{horaireTemp}"%>
+      <% if executionSansErreur then                                 %>
+      <%   flash[:notice] = "OPERATION [#{@execute}] REUSSIE:"       %>
+      <%   flash[:notice] += " ---> Horaire temporaire [hor13/info] "%>
+      <%   flash[:notice] += " = horaire deja fixe + horaire de la " %>
+      <%   flash[:notice] += " 1re ligne de: [ #{nomFiliere} ]"      %>
+      <% else                                                        %>
+      <%   flash[:notice] = "ERREUR de fonctionnement "              %>
+      <% end                                                         %>
 
 
   <% when "infoHor"    %>
@@ -96,7 +96,7 @@
       <% executionSansErreur = system "./data.sh"              %>
       <% if executionSansErreur then                           %>
       <%   flash[:notice] = "OPERATION [#{@execute}] REUSSIE:" %>
-      <%   flash[:notice] += " ---> Base de donnees a jour"    %>
+      <%   flash[:notice] += " ---> Base de donnees mise a jour"    %>
       <% else                                                  %>
       <%   flash[:notice] = "ERREUR de fonctionnement "        %>
       <% end                                                   %>
