@@ -69,17 +69,23 @@
 
  
   <% when "infoCeds"   %> 
-      <% horaireTemp = obtenirCedulablesHoraire                      %> 
-      <% repFiliere,nbLignes,nomFiliere = filiere($repCedulables)    %> 
-      <%= executionSansErreur = system "./infoCeds.sh #{horaireTemp}"%>
-      <% if executionSansErreur then                                 %>
-      <%   flash[:notice] = "OPERATION [#{@execute}] REUSSIE:"       %>
-      <%   flash[:notice] += " ---> Horaire temporaire [hor13/info] "%>
-      <%   flash[:notice] += " = horaire deja fixe + horaire de la " %>
-      <%   flash[:notice] += " 1re ligne de: [ #{nomFiliere} ]"      %>
-      <% else                                                        %>
-      <%   flash[:notice] = "ERREUR de fonctionnement "              %>
-      <% end                                                         %>
+      <% horaireTemp = obtenirCedulablesHoraire                        %> 
+      <% repFiliere,nbLignes,nomFiliere = filiere($repCedulables)      %> 
+      <% $pid = fork do                                                %>
+      <%    puts "$pid = #{$pid}"%>
+      <%    executionSansErreur = system "./infoCeds.sh #{horaireTemp}"%>
+      <%    if executionSansErreur then                                %>
+      <%      flash[:notice] = "OPERATION [#{@execute}] REUSSIE:"      %>
+      <%      flash[:notice] += " ---> Tous les horaires temporaires " %>
+      <%      flash[:notice] += " cf: [hor13/info] ................."  %>
+      <%      flash[:notice] += "----> TRANFERE aussi dans le PAS "    %>
+      <%      flash[:notice] += " (pid =#{$pid})"                      %>
+      <%    else                                                       %>
+      <%    flash[:notice] = "ERREUR de fonctionnement "               %>
+      <%   end                                                         %>
+      <%   flash[:notice] = "OPERATION [#{@execute}] en cours:"        %>
+      <% end                                                           %>
+
 
 
   <% when "infoHor"    %>
@@ -125,6 +131,9 @@
 
   
   <% when "stop"       %>
+      <% puts "kill -9 #{$pid}" %>
+      <% executionSansErreur = system "./stop.sh #{$pid}" %>
+      
   
   <% else              %> 
       <h3> <%= "Aucune des actions programmees ne correpond a votre demande" %> </h3>

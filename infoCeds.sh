@@ -35,7 +35,7 @@ echo "TRANSFERER l'horaire [temporaire] dans le PAS (Programmation de l'Annee Sc
 ruby mapred/http.rb
 echo "----------------------"
 echo "FORMER Les filieres [INFO_***.txt] selon la 1re ligne de la filiere ["$derniere"]"
-./info.sh
+./info.sh 
 echo "----------------------"
 echo "RAPPEL de l'horaire en cours: horairesTemp.txt ---> horaires.txt"
 cp data/horairesTemp.txt data/horaires.txt
