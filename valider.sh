@@ -27,6 +27,7 @@ echo "---------------------------------"
 #~ cat $SOURCE | ruby mapred/repartir.rb $1  | mapred/valider_01 > $DESTINATION | tail -f $DESTINATION
 
 cat $SOURCE | ruby mapred/repartir.rb $1  | mapred/valider_01 > $DESTINATION 
+#~ cat $SOURCE | ruby mapred/repartir.rb $1  | bin/cedulable > $DESTINATION 
 
 #~ Si repartir.rb ne fonctionne pas, cedulable2.rb devrait mais est beaucoup plus lent (décommenter)
 #~ cat $SOURCE | ruby mapred/repartir.rb $1  | ruby mapred/cedulable2.rb > $DESTINATION
