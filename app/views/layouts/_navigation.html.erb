@@ -12,7 +12,6 @@
       <%= link_to "HORAIRE-JDLM #{$annee}", blocMetaclasses_path(:blocMC => "index"), class:"navbar-brand", id:"logo" %>
     </div>
      
-        
     <%= link_to 'DE-SELECT.',deSelect_path(:blocMC => @blocMC), class:"btn btn-warning "  %>
      
     <div class="btn-group btn-group-primary">
@@ -38,15 +37,18 @@
     <% %w[ANG ART EPS ECR FRA MAT SCT ESP CHI PHY TMS HIS GEO].sort.each do |sujet| %>
     <%=     link_to sujet,blocMetaclasses_path(:blocMC => sujet)  %>
     <% end %>
-    </br>
-  
+    </br>  
     <% nivPrecedent = "1"         %>               
     <% $listeFoyers.each do |fyr| %>               <!-- sauf foyers du Primaire fyr[0] -->
     <%=    "___" unless fyr[2] == nivPrecedent || fyr[0] == "P"                   %>
     <%=    (link_to fyr, blocMetaclasses_path(:blocMC => fyr )) unless fyr[0]=="P"%>
     <%     nivPrecedent = fyr[2]                                                  %>
     <% end                        %>
-  
+    __
+    <%= link_to 'Chevauche',blocMetaclasses_path(:execute => "chevauche",:blocMC => @blocMC) %>    
+    __
+    <%= link_to 'Fin-tache',blocMetaclasses_path(:execute => "fin_tache",:blocMC => @blocMC) %>
+    
   </div><!-- /.container-fluid -->
   
   </form>

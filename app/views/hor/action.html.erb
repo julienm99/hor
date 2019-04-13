@@ -1,7 +1,8 @@
 <body>
 
   <div class="jumbotron">
-    <h1> <%= @execute  %></h1>
+    <h1> <%= @execute         %></h1>
+    	 <% flash[:notice]="" %>
   </div>
 
   <% case @execute    %>   
@@ -11,29 +12,32 @@
       <%  $pid = fork do                                                     %>
       <%       system "./repartir.sh '#{mc_A_repartir}'" %>
       <%     end                                                             %>
-      <%     sleep 5                                                         %>
       <h4><br><br><font color="red"><bold>
       <%= " OPERATION [ #{@execute} ] en cours (pid: #{$pid}).............." %>
       <br>
       <%= "--> BUT: VOIR les repartitions a l'ecran du terminal rails"       %>
-      <%   ProcessProcess        %>
       </h4></font></bold>
 
-  <% when "valider"    %> 
+  <% when "valider"  %> 
+      <%  repFiliere,nbLignes,nomFiliere = filiere($repCedulables)           %> 
       <% mc_A_valider = save_MetaclassesEnTraitement                         %>
       <h4> <%= mc_A_valider %></h4> 
       <%  $pid = fork do                                                     %>
+      <%       Signal.trap("HUP"){puts "Ouch!" ; exit}                       %>
       <%       executionSansErreur = system "./valider.sh '#{mc_A_valider}'" %>
       <%     end                                                             %>
-      <%     sleep 5                                                         %>
+      <%  sleep 3                                                            %>
       <h4><br><br><font color="red"><bold>
-      <%  repFiliere,nbLignes,nomFiliere = filiere($repCedulables)           %> 
       <%= " OPERATION [ #{@execute} ] en cours (pid: #{$pid}).............." %>
+      <br><br><font color="blue"><bold>
+      <%= "--> BUT: TROUVER des cedulables a partir [hor/op/cedulables]"     %>
       <br>
-      <%= "--> BUT: VOIR les repartitions a l'ecran du terminal rails"        %>
+      <%= "         SOURCE:         [ #{nomFiliere} ]"                       %>
       <br>
       <%  repFiliere,nbLignes,nomFiliere = filiere($repCedulables)           %> 
-      <%= "--> Les CEDULABLES se trouvent dans: [ #{nomFiliere} ]"           %>
+      <%= "         DESTINATION:    [ #{nomFiliere} ]"                       %>
+      <br>
+      <%= "         Rafraichir [ #{nomFiliere} ] Editeur de fichiers CTRL-R "%>
       </h4></font></bold>
 
 
@@ -55,42 +59,36 @@
   <% when "filtrer"     %> 
       <% intervalle = obtenirIntervalle(diviseur = 30)             %> 
       <% repFiliere,nbLignes,nomFiliere = filiere($repCedulables)  %> 
-      <% $pid = fork do                                            %>
       <%       system "./filtrer.sh '#{intervalle}'"               %>
-      <%     end                                                   %>
-      <%     sleep 5                                               %>
       <h4><br><br><font color="red"><bold>
       <%= " OPERATION [ #{@execute} ] en cours (pid: #{$pid}).............."      %>
       <br>
-      <%= "--> RENOMMER: filiere originale [op/cedulables/0_#{nomFiliere}]_"       %>
+      <%= "--> RENOMMER: filiere originale [op/cedulables/0_#{nomFiliere}]_"      %>
       <br>
       <%= "--> BUT: FILTRER a #{intervalle} lignes d'intervalle [ #{nomFiliere} ]"%>
       </h4></font></bold>
 
 
-  <% when "variance"   %> 
+  <% when "variance" %> 
       <% repFiliere,nbLignes,nomFiliere = filiere($repCedulables)  %> 
       <% $pid = fork do                                            %>
       <%    system "./variance.sh"                                 %>
       <%     end                                                   %>
-      <%     sleep 5                                               %>
       <h4><br><br><font color="red"><bold>
       <%= " OPERATION [ #{@execute} ] en cours (pid: #{$pid})....."%>
       <br>
       <%= "--> BUT: TRIER selon la VARIANCE de [ #{nomFiliere} ]"  %>
       <br>
       <%= "--> RAPPEL: Variances basses = meilleures repartitions]"%>
-      </h4></font></bold>
+      </h4></font></bold>      
       
       
-      
-  <% when "infoCeds"   %> 
+  <% when "infoCeds" %> 
       <% horaireTemp = obtenirCedulablesHoraire                               %> 
       <% repFiliere,nbLignes,nomFiliere = filiere($repCedulables)             %> 
       <% $pid = fork do                                                       %>
       <%       system "./infoCeds.sh #{horaireTemp}"                          %>
       <%     end                                                              %>
-      <%     sleep 5                                                          %>
       <h4><br><br><font color="red"><bold>
       <%= " OPERATION [ #{@execute} ] en cours (pid: #{$pid}).............."  %>
       <br>
@@ -104,11 +102,10 @@
       </h4></font></bold>
 
 
-  <% when "infoHor"    %>
+  <% when "infoHor" %>
       <% $pid = fork do                %>
       <%       system "./infoHor.sh"   %>
       <%     end                       %>
-      <% sleep 5                       %>
       <h4><br><br><font color="red"><bold>
       <%= " OPERATION [ #{@execute} ] en cours (pid: #{$pid}).............."%>
       <br>
@@ -120,11 +117,10 @@
       </h4></font></bold>
 
   
-  <% when "data"       %>
+  <% when "data"  %>
       <% $pid = fork do            %>
       <%       system "./data.sh"  %>
       <%     end                   %>
-      <% sleep 5                   %>
       <h4><br><br><font color="red"><bold>
       <%= " OPERATION [ #{@execute} ] en cours (pid: #{$pid}).............."     %>
       <br>
@@ -148,23 +144,35 @@
       <h3> <%= "PROGRAMME EN CONSTRUCTION" %> </h3>
   
   
-  <% when "fix-hor"    # nefonctionne pas mais prg comme infoCeds%> 
+  <% when "fix-hor" %> 
       <% #horaireTemp = obtenirDiagHoraire                       %> 
       <% #repFiliere,nbLignes,nomFiliere = filiere($repDiag)     %> 
-      <% #executionSansErreur = system "./fix_hor.sh #{horaireTemp}"  %>
-      <% if executionSansErreur then                                  %>
-      <%   flash[:notice] = "OPERATION [#{@execute}] REUSSIE:"        %>
-      <%   flash[:notice] += " ---> Horaires [hor13/info]"%>
-      <%   flash[:notice] += " = horaires deja fixes + horaires de la"%>
-      <%   flash[:notice] += " 1re ligne de la filiere: #{nomFiliere}"%>
-      <% else                                                         %>
-      <%   flash[:notice] = "ERREUR de fonctionnement "               %>
-      <% end                                                          %>
+      <% $pid = fork do                                                       %>
+      <%       system "./fix_hor.sh #{horaireTemp}"                           %>
+      <%     end                                                              %>
+      <h4><br><br><font color="red"><bold>
+      <%= " OPERATION [ #{@execute} ] en cours (pid: #{$pid}).............."  %>
+      <br>
+      <%= "--> Les CEDULABLES DIAGONALISES de [ #{nomFiliere} ] seront fixes" %>
+      <br>
+      <%= "--> BUT: Obtenir [hor13/info/] selon 1re ligne [ #{nomFiliere} ]  "%>
+      <br>
+      <%= "         Fixer ces horaires dans le PAS (Planif. Annee Scolaire)  "%>
+      <br>
+      <%= "--> ETAT FINAL:[ data/horaires.txt ] contient l'horaire diagonalise"%>
+      </h4></font></bold>
 
   
-  <% when "stop"       %>
-      <% puts "kill -9 #{$pid}" %>
-      <% executionSansErreur = system "./stop.sh #{$pid}" %>
+  <% when "stop"  %>
+      <%= "Process.kill('HUP', $pid)" %>
+      <% Process.kill("HUP", $pid) %>
+	<h4><br><br><font color="red"><bold>
+	<%= " OPERATION [ #{@execute} ] en cours (pid: #{$pid}).............." %>
+	<br>
+        <%= "--> BUT: STOPPER le processus (pid: #{$pid}) "%>
+	<br>
+      </h4></font></bold>
+
       
   
   <% else              %> 
@@ -175,7 +183,7 @@
 
   <% @blocMC = "index" unless @blocMC  %>
   <br>
-  <%= link_to "AFFICHER: "+@blocMC,blocMetaclasses_path(:blocMC => @blocMC),class:"btn btn-info" %>
+  <%= link_to "AFFICHER: "+@blocMC,blocMetaclasses_path(:execute => @execute, :blocMC => @blocMC),class:"btn btn-info" %>
   
  
 </body>

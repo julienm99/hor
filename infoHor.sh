@@ -18,7 +18,7 @@ echo "----------------------"
 echo "TRANSFERER l'horaire [officiel] dans le PAS (Programmation de l'Annee Scolaire) WEB"
 ruby mapred/http.rb
 echo "----------------------"
-echo "FORMER Les filieres [hor13/info/...] selon [data/horaires.txt] officiel"
+echo "FORMER: Les filieres [hor13/info/...] selon [data/horaires.txt] officiel"
 ./info.sh 
 echo "----------------------"
 echo "AFFICHER l'horaire des Foyers (groupes) a titre d'exemple"

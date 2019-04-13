@@ -1,12 +1,41 @@
 
   <div class="container" id="affiche">
-    <% repFiliere,nbLignes,nomFiliere = filiere($repCedulables)                %> 
-    <b><h4>
-    <%   flash[:notice] = "--> CEDULABLES:  #{nomFiliere} [#{nbLignes} lignes]"%>
-    <%   flash[:notice] +=".......................................[#{@blocMC}]"%>
-    </b></h4>
+    <% repFiliere,nbLignes,nomFiliere = filiere($repCedulables)  %> 
+    <b>
+    <h4>
+    <% case @execute    %>   
+    <% when "repartir"  %>  
+	<% flash[:notice] =" OPERATION [ #{@execute} ] REUSSIE!" %>
+
+    <% when "valider"    %> 
+	<% flash[:notice] =" OPERATION [ #{@execute} ] REUSSIE!" %>
+	<% updateMetaclassesEtat                                 %> 
+      
+    <% when "invalider"    %> 
+	<% flash[:notice] =" OPERATION [ #{@execute} ] REUSSIE!" %>
+	<% updateMetaclassesEtat                                 %> 
+      
+    <% when "data"    %> 
+	<% flash[:notice] =" BASE DE DONNEES mise a JOUR! "      %>
+      
+    <% when "chevauche"    %>
+	<% $listeChevauchent.size.times{|i|$listeChevauchent[i]=$listeChevauchent[i].capitalize}%>
+	<% flash[:notice] = $listeChevauchent.join(",")                                         %>
+      
+    <% else              %> 
+	<% flash[:notice]="" %>
+    <% end               %> 
+    </b>
+    </h4>
+    
+    
+    
+    <% flash[:notice] = "" unless flash[:notice]                                 %>
+    <% flash[:notice] += "------> CEDULABLES: #{nomFiliere} [#{nbLignes} lignes]"%>
+    <% flash[:notice] +=" ........AFFICHAGE ACTUEL: [ #{@blocMC} ]"              %>
+
       <div class="row">    
-	<% x = 0 ; y = 0 ; %>
+	<% x = 0 ; y = 0 ;       %>
 	<% until x > @mc.size do %>
 	
 	  <% until y == 5  do %>
