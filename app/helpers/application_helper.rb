@@ -124,6 +124,23 @@ require 'fileutils'
   end
 
 
+  def obtenirListeProfsFinTache
+    profsFinTache = [] ; profsEnjeu = [] ; mcEnjeu = []
+    
+    $listeMetaclassesEtat.each do |mc,etat|
+	if etat=="1-horaire_fixe" || etat=="3-cedulables" then
+	    mcEnjeu << mc
+	    profsEnjeu << $listeMetaclassesProfs[mc]
+	    profsEnjeu.flatten!.uniq!
+	end
+      end
+    
+    $listeProfsMetaclasses.each{|prof,mc| profsFinTache << prof unless (mc-mcEnjeu).any?}
+    
+    return profsFinTache
+  end
+
+
   def filtrerMatiereChoisie(metaclasses, metaclassesChoisies = [], matiere)
       metaclasses.each{|mc| metaclassesChoisies << mc if mc[0,3] == matiere; puts mc }
   end
@@ -201,9 +218,10 @@ require 'fileutils'
       end
     file.close 
     
-    #~ REM:  mcCedulables a la forme [ANG19,D1E3F5,MAT15,A1B2C3H6,...] on ne veut que les metaclasses
+    #~ mcCedulables a la forme [ANG19,D1E3F5,MAT15,A1B2C3H6,...] on ne veut que les metaclasses
     (0..mcCedulables.size).each{|x| metaclasses<< mcCedulables[x]if x.even?} if mcCedulables[0]
     
+    metaclasses.delete_at(metaclasses.size-1) # Dernier element n'est pas une metaclasse
     return metaclasses
   end
 

@@ -22,6 +22,10 @@
 	<% $listeChevauchent.size.times{|i|$listeChevauchent[i]=$listeChevauchent[i].capitalize}%>
 	<% flash[:notice] = $listeChevauchent.join(",")                                         %>
       
+    <% when "fin-tache"    %>
+	<% profsFinTache = obtenirListeProfsFinTache  %>
+	<% flash[:notice] = profsFinTache.join(",")   %>
+      
     <% else              %> 
 	<% flash[:notice]="" %>
     <% end               %> 

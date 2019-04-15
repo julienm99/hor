@@ -12,15 +12,19 @@ class HorController < ApplicationController
 		      $listeMetaclassesEtat={},
 		      $listeMetaclassesFoyers={},
 		      $listeMetaclassesProfs={},
+		      $listeMetaclassesPeriodes={},
 		      $listeFoyersMetaclasses={},
 		      $listeNiveauxFoyers={},
 		      $listeProfsFoyers={},
-		      $listeProfsCycle={}
+		      $listeProfsCycle={},
+		      $listeProfsPeriodes={},
+		      $listeProfsMetaclasses={}
 		    )
 		    
     $listeMetaclassesProfs.each{|mc,prof| $listeChevauchent -= prof if mc[0,3] == "EPS"}
 		      
-    #~ puts "$listeProfsFoyers(#{$listeProfsFoyers.class}) = #{$listeProfsFoyers}"
+    #~ puts "$listeProfsMetaclasses(#{$listeProfsMetaclasses.class}) = #{$listeProfsMetaclasses}"
+    #~ puts "$listeMetaclassesPeriodes(#{$listeMetaclassesPeriodes.class}) = #{$listeMetaclassesPeriodes}"
     #~ puts "$listeChevauchent(#{$listeChevauchent.class}) = #{$listeChevauchent}"
     #~ exit
     
@@ -114,10 +118,13 @@ class HorController < ApplicationController
 			listeMetaclassesEtat,
 			listeMetaclassesFoyers,
 			listeMetaclassesProfs,
+			listeMetaclassesPeriodes,
 			listeFoyersMetaclasses,
 			listeNiveauxFoyers,
 			listeProfsFoyers,
-			listeProfsCycle
+			listeProfsCycle,
+			listeProfsPeriodes,
+			listeProfsMetaclasses
 		      )
 
     file = File.open(fname, "r:iso8859-1")
@@ -133,7 +140,7 @@ class HorController < ApplicationController
 	  listeMetaclassesEtat[mcNom] = "inactif" # au départ: toutes les metaclasses sont inactives
 	  listeMetaclassesFoyers[mcNom] = []
 	  listeMetaclassesProfs[mcNom] = []
-
+	  listeMetaclassesPeriodes[mcNom] = []
 	  
 	when "Classe" 
 	  nomActivite, description = reste.split("\t")
@@ -157,6 +164,14 @@ class HorController < ApplicationController
 	  listeProfsFoyers[prof] << listFoyers.strip.split(",")
 	  listeProfsFoyers[prof].flatten!.uniq!
 	  
+	  listeProfsPeriodes[prof] = 0 unless listeProfsPeriodes[prof]
+	  listeProfsPeriodes[prof] += periodes.to_i
+	  
+	  listeProfsMetaclasses[prof] = [] unless listeProfsMetaclasses[prof]
+	  listeProfsMetaclasses[prof] << mcNom
+	  listeProfsMetaclasses[prof].uniq!
+	  
+	  listeMetaclassesPeriodes[mcNom] = periodes.to_i
 	
 	else	  
 	end
@@ -184,11 +199,7 @@ class HorController < ApplicationController
 #~ ---------------------------------------------
     #~ liste_PROFS_QUI_CHEVAUCHENT sans[EPS] ProfsCycle = "0" (0 prof qui enseigne aux 2 cycles) - EPS       
     listeProfs.uniq!.sort!
-#~ puts "AVANT listeChevauchent(#{listeChevauchent.class}) = #{listeChevauchent}"
     listeProfs.each{|prof| listeChevauchent << prof if listeProfsCycle[prof] == "0"}
-    #~ listeMetaclassesProfs.each{|mc,prof| listeChevauchent -= prof if mc[0,3] == "EPS"}    
-#~ puts "APRES: listeChevauchent(#{listeChevauchent.class}) = #{listeChevauchent}"
-#~ exit 
 	
     %w[1 2 3 4 5].each{|niv|listeNiveauxFoyers["S"+niv]=[]} # définir les éléments du hash comme array [] 
     listeFoyers.each{|gr|listeNiveauxFoyers["S"+gr[2]]<< gr unless gr[0]=="P"}   # exemple: dans Gr14 le 1( 3e lettre)signifie @niveauS1
@@ -205,11 +216,12 @@ class HorController < ApplicationController
     listeMetaclassesEtat.sort_by{|_key,value| _key} # classé par ordre aphabétique de metaclasses
     listeMetaclassesActivites.sort_by{|_key,value| _key} # classé par ordre aphabétique de metaclasses
     listeActivitesDescription.sort_by{|_key,value| _key} # classé par ordre aphabétique d'activité
-    listeMetaclassesFoyers.sort_by{|_key,value| _key} # classé par ordre aphabétique métaclasses
-    listeMetaclassesProfs.sort_by{|_key,value| _key} # classé par ordre aphabétique métaclasses
+    listeMetaclassesFoyers.sort_by{|_key,value| _key} # classé par ordre aphabétique metaclasses
+    listeMetaclassesProfs.sort_by{|_key,value| _key} # classé par ordre aphabétique metaclasses
+    listeMetaclassesPeriodes.sort_by{|_key,value| _key} # classé par ordre aphabétique metaclasses
     listeFoyersMetaclasses.sort_by{|_key,value| _key} # classé par ordre de foyers
     listeProfsFoyers.sort_by{|_key,value| _key} # classé par ordre de foyers
-    listeChevauchent
+    listeProfsPeriodes.sort_by{|_key,value| _key} # classé par ordre de profs
   end
 
  
