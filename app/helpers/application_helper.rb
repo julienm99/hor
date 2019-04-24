@@ -127,15 +127,16 @@ require 'fileutils'
   def obtenirListeProfsFinTache
     profsFinTache = [] ; profsEnjeu = [] ; mcEnjeu = []
     
-    $listeMetaclassesEtat.each do |mc,etat|
-	if etat=="1-horaire_fixe" || etat=="3-cedulables" then
-	    mcEnjeu << mc
-	    profsEnjeu << $listeMetaclassesProfs[mc]
-	    profsEnjeu.flatten!.uniq!
-	end
-      end
-    
-    $listeProfsMetaclasses.each{|prof,mc| profsFinTache << prof unless (mc-mcEnjeu).any?}
+      $listeMetaclassesEtat.each do |mc,etat|
+	    mcEnjeu << mc if etat=="1-horaire_fixe" || etat=="3-cedulables"
+	  end
+	    
+      $listeMetaclassesEtat.each do |mc,etat|
+	    profsEnjeu << $listeMetaclassesProfs[mc] if etat=="3-cedulables"
+	  end    
+      profsEnjeu.flatten!.uniq!
+      
+      $listeProfsMetaclasses.each{|prof,mc| profsFinTache << prof unless (mc-mcEnjeu).any?}
     
     return profsFinTache
   end

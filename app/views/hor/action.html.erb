@@ -5,7 +5,7 @@
     	 <% flash[:notice]="" %>
   </div>
 
-  <% case @execute    %>   
+  <% case @execute    %>    
   <% when "repartir"  %>  
       <% mc_A_repartir = save_MetaclassesEnTraitement  %>
       <h4> <%= mc_A_repartir %></h4> 
@@ -30,14 +30,14 @@
       <h4><br><br><font color="red"><bold>
       <%= " OPERATION [ #{@execute} ] en cours (pid: #{$pid}).............." %>
       <br><br><font color="blue"><bold>
-      <%= "--> BUT: TROUVER des cedulables a partir [hor/op/cedulables]"     %>
-      <br>
-      <%= "         SOURCE:         [ #{nomFiliere} ]"                       %>
+      <%= "BUT: TROUVER des cedulables a partir [op/cedulables/#{nomFiliere}]"%>
+      <br><br>
+      <%= "SOURCE:    [ #{nomFiliere} ]"                                     %>
       <br>
       <%  repFiliere,nbLignes,nomFiliere = filiere($repCedulables)           %> 
-      <%= "         DESTINATION:    [ #{nomFiliere} ]"                       %>
-      <br>
-      <%= "         Rafraichir [ #{nomFiliere} ] Editeur de fichiers CTRL-R "%>
+      <%= "->DESTIN:    [ #{nomFiliere} ]"                                   %>
+      <br><br>
+      <%= "Rafraichir [ #{nomFiliere} ]---> Editeur de fichiers CTRL-R "     %>
       </h4></font></bold>
 
 
@@ -79,7 +79,7 @@
       <br>
       <%= "--> BUT: TRIER selon la VARIANCE de [ #{nomFiliere} ]"  %>
       <br>
-      <%= "--> RAPPEL: Variances basses = meilleures repartitions]"%>
+      <%= "--> RAPPEL: Variances basses = meilleures repartitions "%>
       </h4></font></bold>      
       
       
@@ -124,17 +124,17 @@
       <h4><br><br><font color="red"><bold>
       <%= " OPERATION [ #{@execute} ] en cours (pid: #{$pid}).............."     %>
       <br>
-      <%= "--> BUT: BASE DE DONNEES mise a JOUR                                 "%>
-      <br>
+      <%= "--> BUT: Mettre la BASE DE DONNEES a JOUR                            "%>
+      <br><br>
       <%= "--> SOURCE: PAS (Planif. Annee Scolaire) sur le Web"                  %>
       <br>
       <%= "--> DESTINATION: [hor13/init/] (metaclasses, classes, metas, profs, locaux) "%>
-      <br>
-      <%= "--> VOIR le transfert a l'ecran du terminal rails"                     %>
+      <br><br>
+      <%= "--> VOIR le transfert directement a l'ecran du terminal rails"        %>
       </h4></font></bold>
 
 
-  <% when "de-select" #ne fonctionne pas avec action.html.erb%>
+  <% when "deselect" #ne fonctionne pas avec action.html.erb%>
   <% when "fix-Reps"%> 
   <% when "ceduler" %> 
   <% when "viable"  %> 

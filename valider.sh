@@ -15,9 +15,11 @@ DESTINATION="op/cedulables/"$suivante
 
 
 #~ utile pour DEBUG
-echo "SOURCE:      "$SOURCE
-echo "DESTINATION: "$DESTINATION
-echo "Argument de repartition: "$1
+echo "SOURCE : "$SOURCE
+echo "DESTIN.: "$DESTINATION
+echo "------------------------------"
+echo "Metaclasses: "$1
+echo "------------------------------"
 
 #~ $1 est la variable qui contient les metaclasses à valider (deviendront cedulables s'il y a des solutions)
 

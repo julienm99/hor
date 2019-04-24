@@ -1,10 +1,9 @@
 <body>
 
+  <% @blocMC = "index" unless @blocMC %>
 
-  <% deSelectionner %>
-  
-  <% @blocMC = "index" unless @blocMC  %>
+  <% deSelectionner                   %>
     
-  <script> pageWeb("<%= @blocMC %>") </script>
+  <%= render 'hor/afficheMetaclasses' %> 
  
 </body>

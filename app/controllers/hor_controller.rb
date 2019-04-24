@@ -39,6 +39,7 @@ class HorController < ApplicationController
    
   def deSelect    
     @blocMC = params[:blocMC]
+    @mc = @blocMC
   end
   
   
@@ -183,7 +184,6 @@ class HorController < ApplicationController
         #~ puts "$listeProfsFoyers(#{$listeProfsFoyers.class}) = #{$listeProfsFoyers.class}"
     #~ exit
 #~ ---------------------------------------------
-    #~ liste_PROFS => CYCLE  "1", "2" ou "0" (0 prof qui enseigne aux 2 cycles)
     listeFoyers.flatten!.uniq!.sort!
     listeProfsFoyers.each do |prof,foyers|
 	cycle = []
