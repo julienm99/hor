@@ -28,12 +28,12 @@ class HorController < ApplicationController
     #~ puts "$listeChevauchent(#{$listeChevauchent.class}) = #{$listeChevauchent}"
     #~ exit
     
-    @mc = $listeMetaclasses  # variable équivalente 
+    @mc = $listeMetaclasses  # variables équivalentes 
     @blocMC = "index"
     $annee = "2019"
-    $repCedulables = "op/cedulables" # rep = répertoire
-    $repDiag = "op/diag" # rep = répertoire
-    $repHoraire = "data"
+    $dirCedulables = "op/cedulables" # dir = directory (répertoire)
+    $dirDiag = "op/diag" 
+    $dirHoraire = "data"
   end
  
    

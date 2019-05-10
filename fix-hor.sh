@@ -14,17 +14,20 @@ echo "POSITIONNER: repertoire ---> hor13"
 cd
 cd hor13
 echo "----------------------"
-echo "SAUVEGARDER l'horaire en cours: horaires.txt ---> horairesTemp.txt"
+derniere=$(ls op/cedulables -rt | tail -n1)
+echo "TROUVER: la derniere filiere des cedulables:---> "$derniere
+echo "----------------------"
+echo "SAUVEGARDER: l'horaire en cours: horaires.txt ---> horairesTemp.txt"
 cp data/horaires.txt data/horairesTemp.txt
 echo "----------------------"
 echo "AJOUTER: Les metaclasses suivantes a l'horaire deja fixe: "
 echo "["$1"]"
 ruby script/format_horaire_string.rb $1 >> data/horaires.txt
 echo "----------------------"
-echo "SAUVEGARDER l'horaire diagonalise: horaires.txt ---> horairesCeds2pas.txt"
+echo "SAUVEGARDER l'horaire: horaires.txt ---> horairesCeds2pas.txt"
 cp data/horaires.txt data/horairesCeds2pas.txt
 echo "----------------------"
-echo "TRANSFERER l'horaire [diagonalise] dans le PAS (Programmation de l'Annee Scolaire) WEB"
+echo "TRANSFERER l'horaire dans le PAS (Programmation de l'Annee Scolaire) WEB"
 ruby mapred/http.rb
 echo "----------------------"
 echo "FORMER Les filieres [INFO_***.txt] selon la filiere [data/horaires.txt]"

@@ -13,7 +13,7 @@ cd hor13
 echo "-----------------------------------------------------"
 #~ La filière SOURCE est la plus recente (ex.: 102.txt) dans le répertoire [hor13/op/cedulables/]
 derniere=$(ls op/cedulables -rt | tail -n1)
-d="op/cedulables/"
+dirCeds="op/cedulables/"
 
 SOURCE=$dirCeds$derniere
 DESTINATION=$SOURCE

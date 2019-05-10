@@ -17,9 +17,11 @@ echo "      TEMPORAIREMENT LA PREMIERE SOLUTION"
 echo "-----------------------------------------------------"
 echo
 echo "POSITIONNER: repertoire ---> hor13"
-derniere=$(ls op/cedulables -rt | tail -n1)
 cd
 cd hor13
+echo "----------------------"
+derniere=$(ls op/cedulables -rt | tail -n1)
+echo "TROUVER: la derniere filiere des cedulables:---> "$derniere
 echo "----------------------"
 echo "SAUVEGARDER: l'horaire en cours: horaires.txt ---> horairesTemp.txt"
 cp data/horaires.txt data/horairesTemp.txt

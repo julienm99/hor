@@ -28,7 +28,7 @@ require 'fileutils'
 
 
   def valide
-    nbLignesFiliere(derniereFiliereDuDir(listHor13($repCedulables))) > 0
+    nbLignesFiliere(derniereFiliereDuDir(listHor13($dirCedulables))) > 0
   end
 
 
@@ -119,7 +119,7 @@ require 'fileutils'
 
 
   def obtenirIntervalle(diviseur)
-    nbLignes = nbLignesFiliere(derniereFiliereDuDir(listHor13($repCedulables)))
+    nbLignes = nbLignesFiliere(derniereFiliereDuDir(listHor13($dirCedulables)))
     (nbLignes.to_i / diviseur).to_s
   end
 
@@ -136,7 +136,7 @@ require 'fileutils'
 	  end    
       profsEnjeu.flatten!.uniq!
       
-      $listeProfsMetaclasses.each{|prof,mc| profsFinTache << prof unless (mc-mcEnjeu).any?}
+      $listeProfsMetaclasses.each{|prof,mc| profsFinTache << prof.capitalize unless (mc-mcEnjeu).any?}
     
     return profsFinTache
   end
@@ -203,7 +203,7 @@ require 'fileutils'
 
 
   def infoDesCedulables
-    fname = derniereFiliereDuDir(listHor13($repCedulables)) 
+    fname = derniereFiliereDuDir(listHor13($dirCedulables)) 
     obtenirMetaclassesCedulables(fname)
   end
 
@@ -228,7 +228,7 @@ require 'fileutils'
 
 
   def obtenirCedulablesHoraire
-    fname = derniereFiliereDuDir(listHor13($repCedulables)) 
+    fname = derniereFiliereDuDir(listHor13($dirCedulables)) 
     
     file = File.open(fname, "r:iso8859-1")    
       line = file.gets       # prendre que la première ligne

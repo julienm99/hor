@@ -33,11 +33,11 @@ echo "------------------------------"
 #~ action="VALIDER a l'ecran"
 #~ cat $SOURCE | ruby mapred/repartir.rb $1  | mapred/valider_01 > $DESTINATION | tail -f $DESTINATION
 
-action="VALIDER"
-cat $SOURCE | ruby mapred/repartir.rb $1  | mapred/valider_01 > $DESTINATION 
+#~ action="VALIDER"
+#~ cat $SOURCE | ruby mapred/repartir.rb $1  | mapred/valider_01 > $DESTINATION 
 
-#~ action="CEDULABLE"
-#~ cat $SOURCE | ruby mapred/repartir.rb $1  | bin/cedulable > $DESTINATION 
+action="CEDULABLE"
+cat $SOURCE | ruby mapred/repartir.rb $1  | bin/cedulable > $DESTINATION 
 
 echo "---------------------------------"
 echo "Action : "$action
