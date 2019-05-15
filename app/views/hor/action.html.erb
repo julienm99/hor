@@ -1,11 +1,26 @@
 <body>
 
   <div class="jumbotron">
-    <h1> <%= @execute         %></h1>
-    	 <% flash[:notice]="" %>
+    <h1> <%= @execute        %></h1>
+    	 <% flash[:notice]=""%>
   </div>
 
   <% case @execute    %>    
+  <% when "diago"   %> 
+      <% metaclasses = obtenirCompact(@niv,"A")                    %> 
+      <% $pid = fork do                                            %>
+      <%    system "./diago.sh #{metaclasses}"                   %>
+      <%   end                                                     %>
+      <h4><br><br><font color="red"><bold>
+      <%= " OPERATION [ #{@execute} #{@niv} ] en cours (pid: #{$pid}).............."  %>
+      <br><br><font color="blue">
+      <%= "BUT: "%><br>
+      <%= "FORMER: les filieres diagonalisees  [ op/sols/#{@niv}_diag.jX ]"   %><br>
+      <br><br><br>
+      <%= "ETAT FINAL: Des horaires diagonalises sont fixes!           "%>
+      </h4></font></bold>
+      
+      
   <% when "repartir"  %>  
       <% mc_A_repartir = save_MetaclassesEnTraitement  %>
       <h4> <%= mc_A_repartir %></h4> 
@@ -88,7 +103,7 @@
       </h4></font></bold>      
       
       
-  <% when "fix-diag" %> 
+  <% when "fixJour" %> 
       <% horaireTemp = obtenirCedulablesHoraire                  %> 
       <% repFiliere,nbLignes,nomFiliere = filiere($dirCedulables)%> 
       <% $pid = fork do                                          %>
@@ -158,10 +173,10 @@
   <% when "deselect" #ne fonctionne pas avec action.html.erb mais deSelect.html.erb%>
   
   
-  <% when "fix-reps"%> 
+  <% when "fixCeds"%> 
       <% horaireTemp = obtenirCedulablesHoraire                    %> 
       <% repFiliere,nbLignes,nomFiliere = filiere($dirCedulables)  %> 
-      <% system "./fix-reps.sh #{horaireTemp}"                     %>
+      <% system "./fixCeds.sh #{horaireTemp}"                     %>
       <h4><br><br><font color="red"><bold>
       <%= " OPERATION [ #{@execute} ] en cours (pid: #{$pid}).............."  %>
       <br><br><font color="blue">
@@ -190,9 +205,8 @@
       </h4></font></bold>
       
       
-  <% when "viable"  %> 
-  <% when "compact" %>
-  <% when "diago"   %> 
+  <% when "viableCompact"  %> 
+      <h3> <%= "PROGRAMME EN CONSTRUCTION" %> </h3>
   <% when "flat?"   %> 
       <h3> <%= "PROGRAMME EN CONSTRUCTION" %> </h3>
   

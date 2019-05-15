@@ -15,15 +15,25 @@
       <%= link_to 'INVALIDER',action_path(:execute=>"invalider",:blocMC => @blocMC),class:"btn btn-danger"      %>
       <%= link_to 'FILTRER',  action_path(:execute=>"filtrer",  :blocMC => @blocMC),class:"btn btn-info"        %>
       <%= link_to 'VARIANCE', action_path(:execute=>"variance", :blocMC => @blocMC),class:"btn btn-info"        %>
-      <%= link_to 'FIX-REPS', action_path(:execute=>"fix-reps", :blocMC => @blocMC),class:"btn btn-info"        %>
+      <%= link_to 'FIX-CEDS', action_path(:execute=>"fixCeds",  :blocMC => @blocMC),class:"btn btn-info"        %>
       <%= link_to 'CEDULER',  action_path(:execute=>"ceduler",  :blocMC => @blocMC),class:"btn btn-info"        %>
-      <%= link_to 'VIABLE',   action_path(:execute=>"viable",   :blocMC => @blocMC),class:"btn btn-info"        %>
-      <%= link_to 'COMPACT',  action_path(:execute=>"compact",  :blocMC => @blocMC),class:"btn btn-info"        %>
-      <%= link_to 'DIAGO',    action_path(:execute=>"diago",    :blocMC => @blocMC),class:"btn btn-info"        %>
-      <%= link_to 'FIX-DIAG', action_path(:execute=>"fix-diag", :blocMC => @blocMC),class:"btn btn-success"     %>
+      <%= link_to 'VIABLEcompact',action_path(:execute=>"viableCompact",:blocMC => @blocMC),class:"btn btn-info"        %>
+      <div class="btn-group dropup">
+	<button type="button" class="btn btn-primary">DIAGO</button>
+	<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	  <span class="caret"></span>
+	  <span class="sr-only">Toggle Dropdown</span>
+	</button>
+	<ul class="dropdown-menu multi-level">
+	<%= link_to 'S1',action_path(:execute=>"diago",:blocMC => @blocMC,:niv=>"S1")%>
+	<%= link_to 'S2',action_path(:execute=>"diago",:blocMC => @blocMC,:niv=>"S2")%>
+	<%= link_to 'S3',action_path(:execute=>"diago",:blocMC => @blocMC,:niv=>"S3")%>
+	<%= link_to 'S4',action_path(:execute=>"diago",:blocMC => @blocMC,:niv=>"S4")%>
+	<%= link_to 'S5',action_path(:execute=>"diago",:blocMC => @blocMC,:niv=>"S5")%>
+	</ul> 
+      </div>
+      <%= link_to 'FIX-JOUR', action_path(:execute=>"fixJour",  :blocMC => @blocMC),class:"btn btn-success"     %>
       <%= link_to 'DATA',     action_path(:execute=>"data",     :blocMC => @blocMC),class:"btn btn-warning"     %>
-      <%= link_to 'FLAT?',    action_path(:execute=>"flat?",    :blocMC => @blocMC),class:"btn btn-info"        %>
-      <%= link_to 'STOP',     action_path(:execute=>"stop",     :blocMC => @blocMC),class:"btn btn-danger left" %>
        
     </div>
     

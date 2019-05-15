@@ -65,6 +65,7 @@ class HorController < ApplicationController
     def action 
       @blocMC  = params[:blocMC]
       @execute = params[:execute]
+      @niv = params[:niv]
     end
 
   end

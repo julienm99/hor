@@ -2,42 +2,42 @@ cd
 cd hor13
 
 echo "------------------------------"
-#~ La filière SOURCE est la dernière (ex.: 102.txt) dans le répertoire [hor13/op/cedulables/]
+#~ # La filière SOURCE est la dernière (ex.: 102.txt) dans le répertoire [hor13/op/cedulables/]
 derniere=$(ls op/cedulables -rt | tail -n1)
 SOURCE="op/cedulables/"$derniere
 
 
-#~ DESTINATION (=$SOURCE+1) deviendra la dernière [ex.103.txt] dans le répertoire [hor13/op/cedulables/]
+#~ # DESTINATION (=$SOURCE+1) deviendra la dernière [ex.103.txt] dans le répertoire [hor13/op/cedulables/]
 suivante=`expr substr $derniere 1 3`
 suivante="$((suivante += 1))" 
 suivante=$suivante".ceds"
 DESTINATION="op/cedulables/"$suivante
 
 
-#~ utile pour DEBUG
+#~ # utile pour DEBUG
 echo "SOURCE : "$SOURCE
 echo "DESTIN.: "$DESTINATION
 echo "------------------------------"
 echo "Metaclasses: "$1
 echo "------------------------------"
 
-#~ $1 est la variable qui contient les metaclasses à valider (deviendront cedulables s'il y a des solutions)
+#~ # $1 est la variable qui contient les metaclasses à valider (deviendront cedulables s'il y a des solutions)
 
 #~ COMMENTER OU DECOMMENTER------------------- l'action employe regulierement
 
-#~ Si valider_01.rb ne fonctionne pas, cedulable2.rb devrait mais est beaucoup plus lent (décommenter)
+#~ # Si valider_01.rb ne fonctionne pas, cedulable2.rb devrait mais est beaucoup plus lent.
 #~ action="CEDULABLE2"
 #~ cat $SOURCE | ruby mapred/repartir.rb $1  | ruby mapred/cedulable2.rb > $DESTINATION
 
-#~ Cette ligne donne immédiatement à l'écran du terminal les solutions pendant la recherche
+#~ # Cette ligne donne immédiatement à l'écran du terminal les solutions pendant la recherche
 #~ action="VALIDER a l'ecran"
 #~ cat $SOURCE | ruby mapred/repartir.rb $1  | mapred/valider_01 > $DESTINATION | tail -f $DESTINATION
 
-#~ action="VALIDER"
-#~ cat $SOURCE | ruby mapred/repartir.rb $1  | mapred/valider_01 > $DESTINATION 
+action="VALIDER"
+cat $SOURCE | ruby mapred/repartir.rb $1  | mapred/valider_01 > $DESTINATION 
 
-action="CEDULABLE"
-cat $SOURCE | ruby mapred/repartir.rb $1  | bin/cedulable > $DESTINATION 
+#~ action="CEDULABLE"
+#~ cat $SOURCE | ruby mapred/repartir.rb $1  | bin/cedulable > $DESTINATION 
 
 echo "---------------------------------"
 echo "Action : "$action
