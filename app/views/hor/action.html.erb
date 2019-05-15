@@ -9,7 +9,8 @@
   <% when "diago"   %> 
       <% metaclasses = obtenirCompact(@niv,"A")                    %> 
       <% $pid = fork do                                            %>
-      <%    system "./diago.sh #{metaclasses}"                   %>
+      <%    jour = "A"                   %>
+      <%    system "./diago.sh #{@niv} #{jour} #{metaclasses}"                   %>
       <%   end                                                     %>
       <h4><br><br><font color="red"><bold>
       <%= " OPERATION [ #{@execute} #{@niv} ] en cours (pid: #{$pid}).............."  %>

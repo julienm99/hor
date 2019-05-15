@@ -239,6 +239,23 @@ require 'fileutils'
     
     return metaclasses
   end
+  
+  
+  def obtenirFileLigne_1(fname)
+    file = File.open(fname, "r:iso8859-1")    
+      line = file.gets       # prendre que la première ligne
+      unless line.strip == nil || line.strip =="nil" then
+	variance, metaclasses = line.split("\t") 
+      end
+    file.close 
+    return metaclasses
+  end
+
+
+  def obtenirCompact(niv,jour)
+    fname = dirHor13("op/compact/#{niv}_compact.j#{jour}")         
+    return obtenirFileLigne_1(fname)
+  end  
 
 
   def save_MetaclassesEtat(mcEnJeu, etat)

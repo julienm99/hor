@@ -9,24 +9,28 @@ echo "POSITIONNER: repertoire ---> hor13"
 cd
 cd hor13
 echo "------------------------------"
-echo "metaClasses: "$1
+echo "args0 ="$0
 echo "------------------------------"
-metaClasses=$1
-niv=$2
+echo "args1 ="$1
+echo "------------------------------"
+echo "args2 ="$2
+echo "------------------------------"
+echo "args3 ="$3
+echo "------------------------------"
+echo "numbers of args. (#) are"$#
+echo "------------------------------"
+
+
+niv=$1
+metaClasses=$2
 dirCompact="op/compact/"
-
-jour=$3
-
-echo "jour = "$jour
-echo "niv = "$niv
-
-#~ source=$dirCompact$niv"_compact.j"$jour
-#~ destin=$dirDiag$niv"_diag.j"$jour
+dirDiag="op/diag/"
+source=$dirCompact$niv"_compact.j"
+destin=$dirDiag$niv"_diag.j"
 	
-	#~ action="jour "$jour": diagonalisation :\n"$source" ---> "$destin ; afficher
 	
-	#~ cat $source | ruby mapred/diagonaliser.rb $metaClasses | sort > $destin
-
+#~ jour="B";cat $source$jour | ruby mapred/diagonaliser.rb $metaClasses | sort > $destin$jour
+	#~ $metaClasses=$metaclasses
 
 
 #~ echo "----------------------"
@@ -38,6 +42,6 @@ echo "niv = "$niv
 #~ echo \$LOAD_PATH "<< \"~/hor13\""             >> $dirConfec"horaire.rb"
 #~ echo "MetaClasse.fixer_repartitions(\""$1"\")" >> $dirConfec"horaire.rb"
 #~ echo "----------------------"
-#~ echo "POSITIONNER: repertoire ---> rails_projects/hor"
-#~ cd
-#~ cd rails_projects/hor
+echo "POSITIONNER: repertoire ---> rails_projects/hor"
+cd
+cd rails_projects/hor
