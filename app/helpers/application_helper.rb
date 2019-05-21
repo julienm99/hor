@@ -248,12 +248,18 @@ require 'fileutils'
 	variance, metaclasses = line.split("\t") 
       end
     file.close 
-    return metaclasses
+    return metaclasses.strip
   end
 
 
   def obtenirCompact(niv,jour)
     fname = dirHor13("op/compact/#{niv}_compact.j#{jour}")         
+    return obtenirFileLigne_1(fname)
+  end  
+
+
+  def obtenirDiag(niv,jour)
+    fname = dirHor13("op/diag/#{niv}_diag.j#{jour}")         
     return obtenirFileLigne_1(fname)
   end  
 

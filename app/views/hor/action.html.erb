@@ -7,11 +7,15 @@
 
   <% case @execute    %>    
   <% when "diago"   %> 
-      <% metaclasses = obtenirCompact(@niv,"A")                    %> 
-      <% $pid = fork do                                            %>
-      <%    jour = "A"                   %>
-      <%    system "./diago.sh #{@niv} #{jour} #{metaclasses}"                   %>
-      <%   end                                                     %>
+      <%  $pid = fork do                         %>
+      <%     metaclasses = obtenirCompact(@niv,jour="A") %> 
+      <%     %w[B C D E F G H O].each do |jour|                      %>
+      <%=       "jour = #{jour}"                     %>
+      <%    	system "./diago.sh #{@niv} #{jour} #{metaclasses}" %>
+      <%        metaclasses += obtenirDiag(@niv,jour) unless jour=="O"  %>
+      <%     puts "metaclasses.j#{jour} = #{metaclasses}"                              %>
+      <%     end                                    %>
+      <%  end                                         %>
       <h4><br><br><font color="red"><bold>
       <%= " OPERATION [ #{@execute} #{@niv} ] en cours (pid: #{$pid}).............."  %>
       <br><br><font color="blue">
