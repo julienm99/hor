@@ -34,9 +34,9 @@ then
   echo "D --> Ceduler: prochain niveau avec une filiere [nil]"
   echo "-----------------------------------------------------"
 else
-  echo "-------------*----*-----------------------------"
-  echo "DIAGONALISER | j"$jour" | [op/"$niv"_compact.j"$jour"]"
-  echo "-------------*----*-----------------------------"
+  echo "-------------*----*---------------------------------------"
+  echo "DIAGONALISER | j"$jour" | [op/"$niv"_compact.j"$jour"] -> [op/"$niv"_diag.j"$jour"]"
+  echo "-------------*----*---------------------------------------"
   cat $source$jour | ruby mapred/diagonaliser.rb $metaClasses | sort > $destin$jour
 fi
 
