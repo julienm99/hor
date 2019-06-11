@@ -23,15 +23,15 @@ echo
 	
 if [ $jour = $dernierJour ]
 then
-  ruby script/format_horaire_TACHES.rb $metaClasses >> data/horaires.txt
+  ruby script/format_horaire_TACHES.rb $metaClasses | sort >> data/horaires.txt
   cp confection/horaire_vide.rb confection/horaire.rb 
   echo "-----------------------------------------------------"
   echo "DIAGONALISATION TERMINEE:"
   echo
   echo "A --> [data/horaires.txt]: mis a jour au"$niv
   echo "B --> [confection/horaire.rb]:vide pour niveau suivant"
-  echo "C --> Copier/coller: metaClassesJ0 dans le run.sh"
-  echo "D --> Ceduler: prochain niveau avec une filiere [nil]"
+  echo "C --> ARCHIVER: Copier/coller: metaClassesJ0 dans le run.sh"
+  echo "D --> CEDULER: prochain niveau -> DÉPART: filiere [nil]"
   echo "-----------------------------------------------------"
 else
   echo "-------------*----*---------------------------------------"
