@@ -61,6 +61,7 @@
 .btn-group-primary .dropdown-menu .dropdown-submenu {
   background-color: #3784c5 !important;
 }
+
 .btn-group-primary .dropdown-menu .dropdown-submenu li > a:hover,
 .btn-group-primary .dropdown-menu .dropdown-submenu li > a:focus {
   background-color: "white" !important;
@@ -70,6 +71,7 @@
 .btn-group-success .dropdown-menu {
   background-color: #51b351 !important;
 }
+
 .btn-group-success .dropdown-menu li > a:hover,
 .btn-group-success .dropdown-menu li > a:focus {
   background-color: #5cb85c !important;
@@ -80,6 +82,7 @@
   font-weight: bold;
   background-color: #4ebbdb !important;
 }
+
 .btn-group-info .dropdown-menu li > a:hover,
 .btn-group-info .dropdown-menu li > a:focus {
   background-color: #5bc0de !important;
@@ -98,6 +101,7 @@
 .btn-group-danger .dropdown-menu {
   background-color: #d64742 !important;
 }
+
 .btn-group-danger .dropdown-menu li > a:hover,
 .btn-group-danger .dropdown-menu li > a:focus {
   background-color: #d9534f !important;

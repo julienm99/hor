@@ -12,6 +12,11 @@ require 'fileutils'
   end
 
 
+  def listHor13Alpha(repertoire)
+    Dir[listHor13(repertoire)].sort {|a,b| a <=> b}
+  end
+
+
   def derniereFiliereDuDir(repertoire)   #dernière filière modifiée
     Dir.glob(repertoire).sort {|a,b| File.mtime(a) <=> File.mtime(b)}.last
   end
@@ -100,7 +105,6 @@ require 'fileutils'
     when "inactif"
       color = "gray"; bold="normal"; italic="normal"; back = "white"
       status = ""
-      
     else
     end
     
@@ -109,6 +113,27 @@ require 'fileutils'
     style += "border-radius:5px;"
     
     return style, status
+  end
+
+
+  def styleMatiereEtat(etat)
+    case etat
+    when "actif"
+      color = "white"; bold="bold"; italic="italic"; back = "red"
+      
+    when "inactif"
+      color = "gray"; bold="normal"; italic="normal"; back = "white"
+      
+    when "boutonDiago"
+      color = "white"; bold="bold"; italic="italic"; back = "Green"
+    else
+    end
+    
+    style  = "line-height: 25px; background-color: #{back}; color: #{color};"
+    style += "font-size:20px; font-weight:#{bold}; font-style:#{italic};"
+    style += "border-radius:5px;"
+    
+    return style
   end
 
 
@@ -252,9 +277,58 @@ require 'fileutils'
   end
 
 
+  def obtenir_OrdreSize(repertoire)
+     Dir.glob(listHor13(repertoire)).sort{|a,b| File.size(a) <=> File.size(b)} 
+  end
+ 
+ 
+  def obtenir_OrdreSizeNiv(niv,f_ordreSize)
+    f_ordreSizeNiv = []
+    f_ordreSize.each{|fname| f_ordreSizeNiv << fname if fname[fname.size-13,2] == niv}
+    return f_ordreSizeNiv
+  end
+ 
+ 
+  def ordonner_FileJoursDiagoSelonSize(f_ordreSizeNiv)
+    ordreJoursDiago = []
+    f_ordreSizeNiv.each{|fname| ordreJoursDiago << fname[fname.size-1,1]}
+    jourDepart = ordreJoursDiago[0]		# jour de la filière la plus petite
+    ordreJoursDiago << "Z"  			# marque du dernier jour (avant le Z)
+    ordreJoursDiago = ordreJoursDiago.drop(1) 	# ordre des jours à diagonaliser
+    
+    return jourDepart, ordreJoursDiago
+  end
+ 
+ 
+  def obtenirOrdreDesJours(niv)
+    f_ordreSize    = obtenir_OrdreSize("op/compact")
+    f_ordreSizeNiv = obtenir_OrdreSizeNiv(niv,f_ordreSize)
+    jourDepart, ordreJoursDiago = ordonner_FileJoursDiagoSelonSize(f_ordreSizeNiv)
+    
+    return jourDepart, ordreJoursDiago
+  end
+  
+
   def obtenirCompact(niv,jour)
     fname = dirHor13("op/compact/#{niv}_compact.j#{jour}")         
     return obtenirFileLigne_1(fname)
+  end  
+
+
+  def obtenir_MatieresNiveau(niv)
+    matieresNiv = mc = [] 
+    %w[A B C D E F G H].each do |jour| 
+      mc = obtenirCompact(niv,jour).strip.split(",")
+      (0..mc.size-1).each{|x| matieresNiv << mc[x][0,3] if x.even?} 
+    end
+    return matieresNiv.uniq! 
+  end  
+
+
+  def obtenir_matieresFiltre(matieresEtat)
+    matieresFiltre = []
+    matieresEtat.each {|m,etat| matieresFiltre << m if matieresEtat[m] == "actif" }
+    return matieresFiltre.join(",") 
   end  
 
 

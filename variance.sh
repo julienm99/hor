@@ -11,7 +11,7 @@ echo "ALLER au repertoire ---> [hor13]"
 cd
 cd hor13
 echo "-----------------------------------------------------"
-#~ La filière SOURCE est la plus recente (ex.: 102.txt) dans le répertoire [hor13/op/cedulables/]
+#~ La filière SOURCE est la plus recente (ex.: 102.ceds) dans le répertoire [hor13/op/cedulables/]
 derniere=$(ls op/cedulables -rt | tail -n1)
 dirCeds="op/cedulables/"
 

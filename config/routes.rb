@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   
   root 'hor#index'
   
-  if true #~ routes: TOP nav_bar  ------------------------------------------
+  if true #~ routes: _navigation (nav_BarTOP)  ------------------------------------------
     get 'blocMetaclasses',      to: 'hor#blocMetaclasses'
     get 'changerEtatMetaclasse',to: 'hor#changerEtatMetaclasse'
     get 'deSelect',             to: 'hor#deSelect'
@@ -13,8 +13,9 @@ Rails.application.routes.draw do
   end
  
  
-  if true #~ routes: BOTTOM nav_bar  ---------------------------------------
-    get 'action', to: 'hor#action' #action= repartir,valider,invalider,filtrer,variance,infoCeds,fixHor
+  if true #~ routes: _nav_BarBOTTOM  ---------------------------------------
+    get 'action',             to: 'hor#action' # action= repartir,valider,invalider,filtrer,variance,infoCeds,fixHor
+    get 'parade',             to: 'hor#parade' # action= documents
   end    
 
 end

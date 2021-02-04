@@ -1,43 +1,102 @@
 <body>
 
-  <div class="jumbotron">
-    <h1> <%= @execute        %></h1>
-    	 <% flash[:notice]=""%>
+  <div>
+    <h1> <%= @execute + (" " + @niv) if @niv  %></h1>
+    	 <%= flash[:notice] = "" %>
   </div>
 
-  <% case @execute    %>    
-  <% when "diago"   %> 
-      <%  $pid = fork do                         %>
-      <%     metaclasses = obtenirCompact(@niv,jour="A") %> 
-      <%     %w[B C D E F G H O].each do |jour|                      %>
-      <%=       "jour = #{jour}"                     %>
-      <%    	system "./diago.sh #{@niv} #{jour} #{metaclasses}" %>
-      <%        metaclasses += obtenirDiag(@niv,jour) unless jour=="O"  %>
-      <%     puts "metaclasses.j#{jour} = #{metaclasses}"                              %>
-      <%     end                                    %>
-      <%  end                                         %>
+  <% case @execute    %>   
+  <% when "vide"      %> 
+  
+  
+  <% when "parade"      %> 
+	  <%= link_to parade, parade_path  %><br>
+	  
+	  
+  <% when "documents"  %> 
+      <%  $pid = fork do           %>
+      <%       system "./email.sh" %>
+      <%     end                   %>
       <h4><br><br><font color="red"><bold>
-      <%= " OPERATION [ #{@execute} #{@niv} ] en cours (pid: #{$pid}).............."  %>
+      <%= " OPERATION [ #{@execute} ] en cours (pid: #{$pid}).............." %>
+      <br><br><font color="blue"><bold>
+      <%= "BUT: " %><br>
+      <%= "Produire les documents de VERIFICATION de la Parade"              %>
+      </h4></font></bold>
+      
+      
+  <% when "afficheFILE"   %>
+      <% nb_lignes = File.foreach(@fname).count.to_s %>     
+      <style> textarea {font-family: "Courrier New", Courrier, monospace;}  </style>
+      <label for="comment">  <%= @fname[30,@fname.length] %> </label>       
+      <textarea class="form-control" rows="<%= nb_lignes %>" style="font-size:17px;" >
+	<% file = File.open(@fname, "r:iso8859-1")%>    
+	    <% while (ligne = file.gets) %>
+		<% ligne = ligne.strip   %>
+		<%= ligne[0,85]          %>
+	    <% end                       %>
+	<% file.close %>
+      </textarea>
+      
+  	
+  <% when "matieresNiveau"   %>
+	<% unless @matieresEtat then %>
+	    <% @matieresEtat = {} %>
+	    <% obtenir_MatieresNiveau(@niv).sort.each do |m| %>
+		  <% @matieresEtat[m] = "inactif" %>
+	    <% end %>
+	<% end %>
+	
+	<% (@matieresEtat[@matiere] == "actif" ?  @matieresEtat[@matiere] = "inactif" :  @matieresEtat[@matiere] = "actif") if @matiere %>	
+	<% @matieresEtat.each do |m,etat|%>
+	    <% style = styleMatiereEtat(etat) if m %>
+	    <%= link_to m, action_path(:execute=>"matieresNiveau",:blocMC=>@blocMC,:niv=>@niv,:matieresEtat=>@matieresEtat,:matiere=>m),style: style %>
+	    <br>
+	<% end %>
+	<br><br>	
+	<% style = styleMatiereEtat("boutonDiago") %>
+	<%= link_to 'DIAGONALISER: '+@niv, action_path(:execute=>"diago",:blocMC=>@blocMC,:niv=>@niv,:matieresEtat=>@matieresEtat), style: style %>
+
+      
+  <% when "diago"   %> 
+      <%  matieresFiltre = obtenir_matieresFiltre(@matieresEtat)%>
+      <%  jourDepart, ordreDesJours = obtenirOrdreDesJours(@niv)  %>
+      <%  metaclasses = obtenirCompact(@niv,jourDepart) %> 
+      <%  $pid = fork do   %>
+      <%     ordreDesJours.each do |jour|  %>
+      <%    	system "./diago.sh #{@niv} #{jour} #{metaclasses} #{matieresFiltre} #{jourDepart}"    %>
+      <%        metaclasses += obtenirDiag(@niv,jour) unless jour=="Z" %>
+      <%     end %>
+      <%  end %>
+      <h4><br><br><font color="red"><bold>
+      <%= "OPERATION [ #{@execute} #{@niv} ] en cours (pid: #{$pid}).............."  %>
       <br><br><font color="blue">
       <%= "BUT: "%><br>
-      <%= "FORMER: les filieres diagonalisees  [ op/sols/#{@niv}_diag.jX ]"   %><br>
+      <%= "..DIAGONALISER selon les matieres: #{matieresFiltre}"%><br><br>
+      <%= "PROCEDURES: (suivre dans le terminal)"%><br>
+      <%= "..ORDONNER: filieres compactes par taille [hor/op/compact/]"%><br>
+      <%= "..FIXER: la 1re ligne de la plus petite filiere compacte: [#{@niv}_compact.j#{jourDepart}]." %><br>
+      <%= "..DIAGONALISER: les autres filieres traitees, un jour a la fois, selon l'ordre: #{ordreDesJours-["Z"]}"%><br>
+      <%= "..TRIER: selon la variance minimum les filieres diagonalisees --> [op/sols/#{@niv}_diag.jX]"%><br>
+      <%= "..INSERER: le premier horaire de chacun des jours diagonalises dans l'horaire [data/horaire.txt]"%><br>
       <br><br><br>
-      <%= "ETAT FINAL: Des horaires diagonalises sont fixes!           "%>
+      <%= "  ETAT FINAL: Les horaires du #{@niv} diagonalises sont fixes!           "%>
       </h4></font></bold>
       
       
   <% when "repartir"  %>  
       <% mc_A_repartir = save_MetaclassesEnTraitement  %>
       <h4> <%= mc_A_repartir %></h4> 
-      <%  $pid = fork do                                                     %>
+      <%  $pid = fork do %>
       <%       system "./repartir.sh '#{mc_A_repartir}'" %>
-      <%     end                                                             %>
+      <%     end  %>
       <h4><br><br><font color="red"><bold>
       <%= " OPERATION [ #{@execute} ] en cours (pid: #{$pid}).............." %>
       <br><br><font color="blue"><bold>
       <%= "BUT: " %><br>
       <%= "VOIR les repartitions a l'ecran du terminal rails"       %>
       </h4></font></bold>
+
 
   <% when "valider"  %> 
       <%  repFiliere,nbLignes,nomFiliere = filiere($dirCedulables)           %> 
@@ -78,7 +137,7 @@
 
 
   <% when "filtrer"     %> 
-      <% intervalle = obtenirIntervalle(diviseur = 30)             %> 
+      <% intervalle = obtenirIntervalle(diviseur = @sizeFile.to_i)      %> 
       <% repFiliere,nbLignes,nomFiliere = filiere($dirCedulables)  %> 
       <%       system "./filtrer.sh '#{intervalle}'"               %>
       <h4><br><br><font color="red"><bold>
@@ -95,9 +154,9 @@
 
   <% when "variance" %> 
       <% repFiliere,nbLignes,nomFiliere = filiere($dirCedulables)  %> 
-      <% $pid = fork do                                            %>
-      <%    system "./variance.sh"                                 %>
-      <%     end                                                   %>
+      <% $pid = fork do             %>
+      <%    system "./variance.sh"  %>
+      <%  end  %>
       <h4><br><br><font color="red"><bold>
       <%= " OPERATION [ #{@execute} ] en cours (pid: #{$pid})....."%>
       <br><br><font color="blue">
@@ -124,37 +183,46 @@
       <br><br><br>
       <%= "ETAT FINAL: [data/horaires.txt] selon 1re ligne [#{nomFiliere}]     "%>
       </h4></font></bold>
-
-   <% when "infoCeds" %> 
-      <% horaireTemp = obtenirCedulablesHoraire                               %> 
-      <% repFiliere,nbLignes,nomFiliere = filiere($dirCedulables)             %> 
-      <% $pid = fork do                                                       %>
-      <%       system "./infoCeds.sh #{horaireTemp}"                          %>
-      <%     end                                                              %>
-      <h4><br><br><font color="red"><bold>
-      <%= " OPERATION [ #{@execute} ] en cours (pid: #{$pid}).............."  %>
-      <br><br><font color="blue">
-      <%= "BUT: "%><br>
-      <%= "OBTENIR: les hor13/info/ selon 1re ligne [ #{nomFiliere} ]"         %><br>
-      <%= "CEDULABLES [ #{nomFiliere} ] temporairement fixes"                  %><br>
-      <%= "FIXER: ces horaires dans le PAS (Planification Annee Scolaire[web])"%>
-      <br><br><br>
-      <%= "ETAT FINAL: [ data/horaires.txt ] remis au statut precedent        "%>
-      </h4></font></bold>
+  
+  
+  <% when "info"      %> 
+      <h3>
+      <% listHor13Alpha("info").each do |fileName| %>
+	  <%= link_to fileName[30,fileName.length], action_path(:execute => "afficheFILE", :blocMC => @blocMC, :fname => fileName) %><br>
+      <% end %>
+      </h3>
 
 
   <% when "infoHor" %>
-      <% $pid = fork do                %>
-      <%       system "./infoHor.sh"   %>
-      <%     end                       %>
+      <% $pid = fork do  %>
+      <%       system "./infoHor.sh #{@transfert_PAS}"   %>
+      <%     end         %>
       <h4><br><br><font color="red"><bold>
       <%= " OPERATION [ #{@execute} ] en cours (pid: #{$pid}).............."%>
       <br><br><font color="blue">
       <%= "BUT:"%>
-      <%= "METTRE A JOUR: [hor13/info/...] avec l'horaire officiel     "%><br>
-      <%= "TRANSFERER ces horaires dans le PAS (Planif. Annee Scolaire)"%>
+      <%= "METTRE A JOUR LES INFO: [hor13/info/...] avec l'horaire fixe                       " %><br>
+      <%= "TRANSFERER ces horaires dans le www.PAS (Planif. Annee Scolaire)" if @transfert_PAS %>
       <br><br><br>
-      <%= "ETAT FINAL: [hor13/info/..] a partir de [ data/horaires.txt ]"%>
+      <%= "ETAT FINAL: Les INFO [hor13/info/..] a partir de [ data/horaires.txt ]"%>
+      </h4></font></bold>
+
+
+   <% when "infoCeds" %> 
+      <% horaireTemp = obtenirCedulablesHoraire                         %> 
+      <% repFiliere,nbLignes,nomFiliere = filiere($dirCedulables)       %> 
+      <% $pid = fork do  %>
+      <%       system "./infoCeds.sh #{@transfert_PAS} '#{horaireTemp}'"  %>
+      <%     end     %>
+      <h4><br><br><font color="red"><bold>
+      <%= " OPERATION [ #{@execute} ] en cours (pid: #{$pid}).............."  %>
+      <br><br><font color="blue">
+      <%= "BUT: "%><br>
+      <%= "OBTENIR: les INFO [hor13/info/...] selon la 1re ligne de [#{nomFiliere}]"            %><br>
+      <%= "CEDULABLES [ #{nomFiliere} ] temporairement fixes"                                   %><br>
+      <%= "FIXER: les cedulables dans le www.PAS (Planification Annee Scolaire)" if @transfert_PAS %><br>
+      <br><br><br>
+      <%= "ETAT FINAL: la filiere [data/horaires.txt] est remise au statut precedent (sans les cedulables)"%>
       </h4></font></bold>
 
   
@@ -236,7 +304,9 @@
 
   <% @blocMC = "index" unless @blocMC  %>
   <br>
-  <%= link_to "AFFICHER: "+@blocMC,blocMetaclasses_path(:execute => @execute, :blocMC => @blocMC),class:"btn btn-info" %>
+  <% unless @execute == "matieresNiveau" then %>
+      <%= link_to "AFFICHER: "+@blocMC,blocMetaclasses_path(:execute => @execute, :blocMC => @blocMC),class:"btn btn-info"%>
+  <% end %>
   
  
 </body>

@@ -6,49 +6,50 @@
   -->
   <div class="container">
   
-    <!-- LOGO et redirection a la page d'acceuil regroupe -->
+    <!-- LOGO et redirection a la page d'acceuil regroupe 
      
-    <div class="navbar-header">
-      <%= link_to "HORAIRE-JDLM #{$annee}", blocMetaclasses_path(:blocMC => "index"), class:"navbar-brand", id:"logo" %>
-    </div>
+    <div class="navbar-header">                                        class:"navbar-brand"   -->
+      <%= link_to "HORAIRE-JDLM #{$annee}", blocMetaclasses_path(:blocMC => "index"),  id:"logo" %>
+    <!--   </div>  -->
      
-    <%= link_to 'DESELECT.',deSelect_path(:blocMC => @blocMC), class:"btn btn-warning "  %>
+      <%= link_to 'DESELECT.',deSelect_path(:blocMC => @blocMC), class:"btn btn-warning "  %>
      
     <div class="btn-group btn-group-primary">
       <button type="button" class="btn btn-primary">INFO</button>
       <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 	<span class="caret"></span>
-	<span class="sr-only">Toggle Dropdown</span>
       </button>
       <ul class="dropdown-menu multi-level">
-	<%= link_to 'info HORAIRES',  action_path(:execute=>"infoHor",:blocMC => @blocMC), class:"btn btn-warning"%></li>
-	<%= link_to 'info CEDULABLES',action_path(:execute=>"infoCeds",:blocMC => @blocMC),class:"btn btn-warning"%></li>
-      </ul> 
+	<%= link_to 'AFFICHER: filieres des INFO',action_path(:execute=>"info",:blocMC => @blocMC),class:"btn btn-warning"%></li>
+	<%= link_to 'MISE A JOUR:filieres INFO des HORAIRES fixes',action_path(:execute=>"infoHor", :blocMC=>@blocMC,:transfert_PAS=>"non"),class:"btn btn-warning"%></li>
+	<%= link_to 'MISE A JOUR: filieres INFO des CEDULABLES',action_path(:execute=>"infoCeds",:blocMC=>@blocMC,:transfert_PAS=>"non"),class:"btn btn-warning"%></li>
+	<%= link_to 'Mise a jour: horaires fixes + TRANSFERT ---> www.PAS',action_path(:execute=>"infoHor", :blocMC=>@blocMC,:transfert_PAS=>"oui"),class:"btn btn-warning"%></li>
+	<%= link_to 'Mise a jour: cedulables     + TRANSFERT ---> www.PAS',action_path(:execute=>"infoCeds",:blocMC=>@blocMC,:transfert_PAS=>"oui"),class:"btn btn-warning"%></li>
+      </ul>
+      
     </div>
     ____
     <%= link_to 'BACKBONE',blocMetaclasses_path(:blocMC => "backbone") %>
-    _____
+    ____
     <b>
     <% %w[S1 S2 S3 S4 S5].each do |sujet| %>
     <%=     link_to sujet,blocMetaclasses_path(:blocMC => "niveau"+sujet)  %>
     <% end %>
-    </b>
-    _____
-    <% %w[ANG ART EPS ECR FRA MAT SCT ESP CHI PHY TMS HIS GEO].sort.each do |sujet| %>
+    ____
+    <% matieresDesMetaclasses($listeMetaclasses, []).sort.each do |sujet| %>
     <%=     link_to sujet,blocMetaclasses_path(:blocMC => sujet)  %>
     <% end %>
-    </br>  
+    </b>___ 
     <% nivPrecedent = "1"         %>               
     <% $listeFoyers.each do |fyr| %>               <!-- sauf foyers du Primaire fyr[0] -->
     <%=    "___" unless fyr[2] == nivPrecedent || fyr[0] == "P"                   %>
     <%=    (link_to fyr, blocMetaclasses_path(:blocMC => fyr )) unless fyr[0]=="P"%>
     <%     nivPrecedent = fyr[2]                                                  %>
     <% end                        %>
-    __
-    <%= link_to 'Chevauche',blocMetaclasses_path(:execute => "chevauche",:blocMC => @blocMC) %>    
-    __
-    <%= link_to 'Fin-tache',blocMetaclasses_path(:execute => "fin-tache",:blocMC => @blocMC) %>
-    
+
+    ___
+    <%= link_to 'AFFICHIER_fileInfo', action_path(:execute => "info", :blocMC => @blocMC) %>
+
   </div><!-- /.container-fluid -->
   
   </form>

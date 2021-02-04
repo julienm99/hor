@@ -1,6 +1,9 @@
 class HorController < ApplicationController
   
   def index        # les listes sont des variables globales($): elles servent de base de données
+    
+    paramsAutorises
+
     obtenirLesListes( fname = "/home/julienm/hor13/init/metaclasses.txt",
 		      $listeMetaclasses=[],  # listeXxxxx = array
 		      $listeActivites=[],
@@ -30,7 +33,7 @@ class HorController < ApplicationController
     
     @mc = $listeMetaclasses  # variables équivalentes 
     @blocMC = "index"
-    $annee = "2019"
+    $annee = "2020"
     $dirCedulables = "op/cedulables" # dir = directory (répertoire)
     $dirDiag = "op/diag" 
     $dirHoraire = "data"
@@ -40,6 +43,12 @@ class HorController < ApplicationController
   def deSelect    
     @blocMC = params[:blocMC]
     @mc = @blocMC
+  end
+  
+  
+  def parade    
+    @blocMC  = params[:blocMC]
+    @execute = params[:execute]
   end
   
   
@@ -59,16 +68,28 @@ class HorController < ApplicationController
     @mc = metaclasses(@blocMC)
     @mc = $listeMetaclasses unless @blocMC
   end
-  
 
-  if true # BOTTOM: boutons nav-bar du bas
-    def action 
-      @blocMC  = params[:blocMC]
-      @execute = params[:execute]
-      @niv = params[:niv]
-    end
 
+  def paramsAutorises
+    params = ActionController::Parameters.new
+    ActionController::Parameters.permit_all_parameters = true
   end
+
+
+  def action 
+    @blocMC         = params[:blocMC]
+    @execute        = params[:execute]
+    @niv            = params[:niv]
+    @fname          = params[:fname]
+    @matieresEtat   = params[:matieresEtat]
+    @matieresFiltre = params[:matieresFiltre]
+    @matiere        = params[:matiere]
+    @etat 	    = params[:etat]
+    @sizeFile 	    = params[:sizeFile]
+    @transfert_PAS  = params[:transfert_PAS]  # PAS : site web "Planification Année Scolaire"
+  end
+
+
 
  
 #~ private
@@ -89,6 +110,9 @@ class HorController < ApplicationController
 	  
       when /Gr/
 	liste << mc if $listeMetaclassesFoyers[mc].include?(sujet)
+
+      when "MON"
+	liste << mc unless /MON/.match(mc) == nil
 
       when "4-en_traitement"
 	liste << mc if $listeMetaclassesEtat[mc] == sujet

@@ -4,6 +4,9 @@
      #~ TRANSFERER les horaires dans le PAS (Programmation de l'Annee Scolaire) dans le web
      #~ FOMER les filieres INFO_XXX.txt dans le repertoire [hor13/op/info/...]
      #~ AFFICHER les horaires des groupes (a titre d'exemple dans le terminal)
+     
+transfert_PAS=$1
+
 echo "-----------------------------------------------------"
 echo "TRANSFERER LES HORAIRES DANS LE PAS (Programmation de l'Annee Scolaire) Web"
 echo "     FORMER LES FILIERES [hor13/info/...] des horaires officiels"
@@ -15,9 +18,14 @@ echo "----------------------"
 echo "SAUVEGARDER par prudencce [data/horaires.txt] dans [data/horairesTemp.txt]"
 cp data/horaires.txt data/horairesTemp.txt
 echo "----------------------"
-echo "TRANSFERER l'horaire [officiel] dans le PAS (Programmation de l'Annee Scolaire) WEB"
-ruby mapred/http.rb
-echo "----------------------"
+
+if [ $transfert_PAS = "oui" ]
+then
+      echo "TRANSFERER l'horaire [officiel] dans le PAS (Planification Annee Scolaire) WEB"
+      ruby mapred/http.rb
+      echo "----------------------"
+fi
+
 echo "FORMER: Les filieres [hor13/info/...] selon [data/horaires.txt] officiel"
 ./info.sh 
 echo "----------------------"
