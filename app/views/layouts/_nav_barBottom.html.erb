@@ -1,85 +1,119 @@
-<!-- --BOTTOM: nav-bar ----------------------->
+<!-- --BOTTOM: nav-bar  [BOUTONS] --------------------- -->
+
+	<% repFiliere,nbLignes,nomFiliere = filiere($dirCedulables)  %>
+	<% @segment = nomFiliere[0,3] %> 
+	<% next_segment = (@segment.to_i+1).to_s %>
+
 <nav class="navbar navbar-default navbar-fixed-bottom">
+	<form id="menuBas">
 
-  <form id="menuBas">
-  
-    <div class="container-fluid center" >
+		<div class="container-fluid center" >
 
-      <div class="metaclassesChoisies" >
-	<text id="choixMetaclasses" color="white">  </text>
-      </div>
-      
-      <br>
-      <%= link_to 'REPARTIR', action_path(:execute=>"repartir", :blocMC => @blocMC),class:"btn btn-info"    %>
-      <%= link_to 'VALIDER',  action_path(:execute=>"valider",  :blocMC => @blocMC),class:"btn btn-warning" %>
-      <%= link_to 'INVALIDER',action_path(:execute=>"invalider",:blocMC => @blocMC),class:"btn btn-danger"  %>
- 
- 
-      <div class="btn-group dropup">
-	<button type="button" class="btn btn-primary">FILTRER</button>
-	<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	  <span class="caret"></span>
-	</button>
-	<ul class="dropdown-menu multi-level">
-	  <label>NOMBRE DE LIGNES DE LA FILIERE RESULTANTE (sizeFile)</label>
-	      <li class="dropdown-submenu">
-		  <% %w[5 10 15 20 25 30 35 40].each do |sizeFile| %>
-		      <li><%= link_to sizeFile, action_path(:execute=>"filtrer",:blocMC=>@blocMC,:sizeFile=>sizeFile)%></li>
-		  <% end %>
-	      </li>
-	</ul> 
-      </div>
-      
-      
-      <%= link_to 'VARIANCE', action_path(:execute=>"variance",:blocMC=>@blocMC),class:"btn btn-info"    %>
+			<div class="metaclassesChoisies" >
+				<text id="choixMetaclasses" color="white">  </text></div><br>
 
+			<!-- INIT -->
+				<div class="btn-group dropup">
+					<button type="button" class="btn btn-primary">INIT</button>
+						<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu multi-level">
+							<label>____INITIALISATION</label>
+							<li class="dropdown-submenu">
+								<% %w[S1 S2 S3 S4 S5].each do |niv| %>
+									<% seg = "#{niv[1,1]}00" %>
+									<% fname = "#{seg}.ceds" %>
+									<li><%= link_to "#{niv}- #{fname}<-nil",action_path(:execute=>"init",:fname=>fname,:segment=>seg)%></li>
+								<% end %>
+							</li>
+						</ul>
+				</div>
 
-      <div class="btn-group dropup">
-	<button type="button" class="btn btn-primary">FIX-CEDS</button>
-	<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	  <span class="caret"></span>
-	</button>
-	<ul class="dropdown-menu multi-level">
-	  <label>NIVEAUX</label>
-	      <li class="dropdown-submenu">
-		  <% %w[S1 S2 S3 S4 S5 DERNIER_CEDS].each do |niv| %>
-		      <li><%= link_to niv,action_path(:execute=>"fixCeds",:blocMC => @blocMC,:niv=>niv)%></li>
-		  <% end %>
-	      </li>
-	</ul> 
-      </div>
- 
- 
-      <%= link_to 'CEDULER', action_path(:execute=>"ceduler",:blocMC => @blocMC),class:"btn btn-info"  %>
-      
-	
-      <div class="btn-group dropup">
-	<button type="button" class="btn btn-primary">DIAGO</button>
-	<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	  <span class="caret"></span>
-	  <span class="sr-only">Toggle Dropdown</span>
-	</button>	
-	<ul class="dropdown-menu multi-level">
-	  <label>NIVEAUX</label>
-	  <li role="separator" class="divider"></li>
-		<li class="dropdown-submenu">
-		    <% %w[S1 S2 S3 S4 S5].each do |niv| %>
-			<li><%= link_to niv, action_path(:execute=>"matieresNiveau", :blocMC=>@blocMC, :niv => niv)%></li>
-		    <% end %>
-		</li>
-	</ul> 	
-      </div>
-      
-      
-      <%= link_to 'DATA', action_path(:execute=>"data",:blocMC => @blocMC),class:"btn btn-warning"     %>
-      
-      
-      <%= link_to 'PARADE',parade_path,class:"btn btn-warning"     %>
+			<!-- UTILS -->
+			  	<div class="btn-group dropup">
+					<button type="button" class="btn btn-primary">UTILS</button>
+					<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu multi-level">
+						<label>______UTILITAIRES_____</label>
+						<li class="dropdown-submenu">
+							<li><%= link_to "[-d] debug gobit4.rb", action_path(:execute=>"debug",:segment=>@segment,:blocMC=>@blocMC) %></li>
+							<li>-------------</li>
+							<li><%= link_to "[-m] former---> segment #{@segment}", action_path(:execute=>"metas",:segment=>@segment,:blocMC=>@blocMC) %></li>
+							<li><%= link_to "[-s] contraintesR segment:#{@segment}", action_path(:execute=>"stats",:segment=>@segment,:blocMC=>@blocMC) %></li>
+							<li><%= link_to "[-x] répartir--> segment #{@segment}", action_path(:execute=>"repartir",:segment=>@segment,:blocMC=>@blocMC) %></li>
+							<li>-------------</li>
+							<li><%= link_to "[-m] former---> segment #{next_segment}", action_path(:execute=>"metas",:segment=>next_segment,:blocMC=>@blocMC) %></li>
+							<li><%= link_to "[-s] contraintesR segment:#{next_segment}", action_path(:execute=>"stats",:segment=>next_segment,:blocMC=>@blocMC) %></li>
+							<li><%= link_to "[-x] répartir--> segment #{next_segment}", action_path(:execute=>"repartir",:segment=>next_segment,:blocMC=>@blocMC) %></li>
+							<li>-------------</li>
+						</li>
+					</ul>
+				</div>
 
+			<!-- GO HORAIRE -->
+				<div class="btn-group dropup">
+				  <button type="button" class="btn btn-primary">GO HORAIRE</button>
+				  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					  <span class="caret"></span>
+				  </button>
+				  <ul class="dropdown-menu multi-level">
+					  <label>_GO: VALIDER HORAIRE_</label>
+					  <li class="dropdown-submenu">
+						  <li><%= link_to "AJOUTER À #{@segment}.ceds", action_path(:execute=>"go_add",:segment=>@segment,:blocMC => @blocMC) %></li>
+						  <li>-------------</li>
+						  <li><%= link_to "REFAIRE-> #{@segment}.ceds", action_path(:execute=>"go",:segment=>@segment,:blocMC => @blocMC) %></li>
+						  <li>-------------</li>
+						  <li><%= link_to "TROUVER-> #{next_segment}.ceds", action_path(:execute=>"go",:segment=>next_segment,:blocMC=>@blocMC) %></li>
+						  <li>-------------</li>
+					  </li>
+				  </ul>
+			  </div>
+		  			
+			<!-- VARIANCE -->
+				<%= link_to 'VARIANCE', action_path(:execute=>"variance",:blocMC=>@blocMC),class:"btn btn-info" %>
+			<!-- FIX-CEDS -->
+				<div class="btn-group dropup">
+					<button type="button" class="btn btn-primary">FIX-CEDS</button>
+						<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu multi-level">
+							<label>NIVEAUX</label>
+							<li class="dropdown-submenu">
+								<% %w[S1 S2 S3 S4 S5 DERNIER_CEDS].each do |niv| %>
+									<li><%= link_to niv,action_path(:execute=>"fixCeds",:blocMC => @blocMC,:niv=>niv)%></li>
+								<% end %>
+							</li>
+						</ul>
+				</div>
 
-      <%= link_to 'EMAIL',parade_path,class:"btn btn-warning"     %>
+			<!-- CEDULER -->
+				<%= link_to 'CEDULER', action_path(:execute=>"ceduler",:blocMC => @blocMC),class:"btn btn-info"  %>
+			<!-- DIAGO -->
+				<div class="btn-group dropup">
+					<button type="button" class="btn btn-primary">DIAGO</button>
+						<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<span class="caret"></span>
+							<span class="sr-only">Toggle Dropdown</span>
+						</button>
+						<ul class="dropdown-menu multi-level">
+							<label>NIVEAUX</label>
+							<li role="separator" class="divider"></li>
+							<li class="dropdown-submenu">
+								<% %w[S1 S2 S3 S4 S5].each do |niv| %>
+									<li><%= link_to niv, action_path(:execute=>"matieresNiveau", :blocMC=>@blocMC, :niv => niv)%></li>
+								<% end %>
+							</li>
+						</ul>
+				</div>
 
-
-    </div>    
-  </form>
+			<!-- DATA -->
+				<%= link_to 'DATA', action_path(:execute=>"data",:blocMC => @blocMC),class:"btn btn-danger" %>
+			<%#= link_to 'PARADE',parade_path,class:"btn btn-warning" %>
+			<%#= link_to 'EMAIL',parade_path,class:"btn btn-warning" %>
+		</div>
+  	</form>
 </nav>

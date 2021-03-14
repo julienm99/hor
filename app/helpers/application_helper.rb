@@ -17,7 +17,7 @@ require 'fileutils'
   end
 
 
-  def derniereFiliereDuDir(repertoire)   #dernière filière modifiée
+  def derniereFiliereDuDir(repertoire)   #derniï¿½re filiï¿½re modifiï¿½e
     Dir.glob(repertoire).sort {|a,b| File.mtime(a) <=> File.mtime(b)}.last
   end
 
@@ -38,9 +38,9 @@ require 'fileutils'
 
 
   def filiere(repertoire)
-    repFiliere = derniereFiliereDuDir(listHor13(repertoire)) 	# chemin complet de la filière
-    nbLignes = nbLignesFiliere(repFiliere)			# nombre de lignes de la filière
-    nomFiliere = repFiliere.split("/").last			# nom de la filière sans son chemin
+    repFiliere = derniereFiliereDuDir(listHor13(repertoire)) 	# chemin complet de la filiï¿½re
+    nbLignes = nbLignesFiliere(repFiliere)			# nombre de lignes de la filiï¿½re
+    nomFiliere = repFiliere.split("/").last			# nom de la filiï¿½re sans son chemin
     
     return repFiliere,nbLignes,nomFiliere
   end
@@ -62,18 +62,24 @@ require 'fileutils'
   
 
   def save_MetaclassesEnTraitement
-    mcEnJeu = ""
-    $listeMetaclassesEtat.each{|mc,etat| mcEnJeu +=  " " + mc if etat == "4-en_traitement" }
-    open("public/4-en_traitement.txt", "w"){|f| f.puts "4-en_traitement::"+mcEnJeu.strip!}
+    mcEnJeu = "4-en_traitement::"
+    $listeMetaclassesEtat.each{|mc,etat| (mcEnJeu +=  " " + mc) if etat == "4-en_traitement" }
+    file = File.open("public/4-en_traitement.txt", "w")
+      file.puts mcEnJeu.strip
+    file.close
     return mcEnJeu
   end
 
 
   def obtenirMetaclassesEtat(etat)
-    file = File.open("public/#{etat}.txt", "r:iso8859-1")
-      line = file.gets
-      type, reste = line.split("::")
-      metaclasses = reste.split(" ")
+    file = File.open("public/#{etat}.txt", "r:iso8859-1") 
+      line = file.gets 
+      if line.length > 19 then # file n'est pas vide
+        type, reste = line.split("::")
+        metaclasses = reste.split(" ")
+      else
+        metaclasses=""
+      end
     file.close
     return metaclasses
   end
@@ -180,7 +186,7 @@ require 'fileutils'
    
   def obtenirMetaclasses(fname)
     file = File.open(fname, "r:iso8859-1")    
-      line = file.gets       # prendre que la première ligne
+      line = file.gets       # prendre que la premiï¿½re ligne
       variance, metaclasses = line.split("\t") unless line.strip == nil || line.strip =="nil"
     file.close  
     return metaclasses
@@ -238,16 +244,22 @@ require 'fileutils'
     
     file = File.open(fname, "r:iso8859-1")    
       line = file.gets       # prendre que la premiere ligne
-      unless line.strip == nil || line.strip =="nil" then
-	variance, reste = line.split("\t") 
-	mcCedulables = reste.split(",")
+    file.close 
+    if line == nil then      #filiÃ¨re (ex.504.ceds) vide? si oui effacer et prendre la prÃ©cÃ©dente (503.ceds)
+      File.delete(fname)
+      fname[-7,2].to_i < 11 ? (fname[-7,2]="0"+(fname[-7,2].to_i-1).to_s) : (fname[-7,2]=(fname[-7,2].to_i-1).to_s)
+    end
+
+    file = File.open(fname, "r:iso8859-1")    
+      line = file.gets                # prendre que la premiere ligne
+      unless line.strip =="nil" then  # "nil" filiÃ¨re de dÃ©part sans mÃ©taclasses
+        variance, reste = line.split("\t") 
+        mcCedulables = reste.split(",")
+        #~ mcCedulables a la forme [ANG19,D1E3F5,MAT15,A1B2C3H6,...] on ne veut que les metaclasses
+        (0..mcCedulables.size).each{|x| metaclasses<< mcCedulables[x]if x.even?} if mcCedulables[0]
+        metaclasses.delete_at(metaclasses.size-1) # Dernier element n'est pas une metaclasse
       end
     file.close 
-    
-    #~ mcCedulables a la forme [ANG19,D1E3F5,MAT15,A1B2C3H6,...] on ne veut que les metaclasses
-    (0..mcCedulables.size).each{|x| metaclasses<< mcCedulables[x]if x.even?} if mcCedulables[0]
-    
-    metaclasses.delete_at(metaclasses.size-1) # Dernier element n'est pas une metaclasse
     return metaclasses
   end
 
@@ -256,9 +268,9 @@ require 'fileutils'
     fname = derniereFiliereDuDir(listHor13($dirCedulables)) 
     
     file = File.open(fname, "r:iso8859-1")    
-      line = file.gets       # prendre que la première ligne
+      line = file.gets       # prendre que la premiï¿½re ligne
       unless line.strip == nil || line.strip =="nil" then
-	variance, metaclasses = line.split("\t") 
+	      variance, metaclasses = line.split("\t") 
       end
     file.close 
     
@@ -268,9 +280,9 @@ require 'fileutils'
   
   def obtenirFileLigne_1(fname)
     file = File.open(fname, "r:iso8859-1")    
-      line = file.gets       # prendre que la première ligne
+      line = file.gets       # prendre que la premiï¿½re ligne
       unless line.strip == nil || line.strip =="nil" then
-	variance, metaclasses = line.split("\t") 
+	      variance, metaclasses = line.split("\t") 
       end
     file.close 
     return metaclasses.strip
@@ -292,9 +304,9 @@ require 'fileutils'
   def ordonner_FileJoursDiagoSelonSize(f_ordreSizeNiv)
     ordreJoursDiago = []
     f_ordreSizeNiv.each{|fname| ordreJoursDiago << fname[fname.size-1,1]}
-    jourDepart = ordreJoursDiago[0]		# jour de la filière la plus petite
+    jourDepart = ordreJoursDiago[0]		# jour de la filiï¿½re la plus petite
     ordreJoursDiago << "Z"  			# marque du dernier jour (avant le Z)
-    ordreJoursDiago = ordreJoursDiago.drop(1) 	# ordre des jours à diagonaliser
+    ordreJoursDiago = ordreJoursDiago.drop(1) 	# ordre des jours ï¿½ diagonaliser
     
     return jourDepart, ordreJoursDiago
   end

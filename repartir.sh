@@ -10,26 +10,30 @@ echo "        [hor13/op/cedulables/?.ceds]"
 echo "-----------------------------------------------------"
 echo
 echo "ALLER au repertoire ---> [hor13]"
-derniere=$(ls op/cedulables -rt | tail -n1)
 cd
 cd hor13
 echo "-----------------------------------------------------"
 
-#~ La filière SOURCE est la dernière (ex.: 102.txt) dans le répertoire [hor13/op/cedulables/]
+#~ La filiï¿½re SOURCE est la derniï¿½re (ex.: 102.txt) dans le rï¿½pertoire [hor13/op/cedulables/]
 derniere=$(ls op/cedulables -rt | tail -n1)
-SOURCE="op/cedulables/"$derniere
-
+suivante=`expr substr $derniere 1 3`
+SEGMENT="$((suivante += 1))"
+SOURCE="/hor13/op/cedulables/"$derniere
+option=" -x"
 
 #~ utile pour DEBUG
 echo "La source est la derniere filiere du repertoire."
-echo "SOURCE:"$SOURCE
+echo "SOURCE:             "$SOURCE
+echo "SEGMENT:            "$SEGMENT
+echo "OPTION:             "$option
 echo "METACLASSES EN JEU: "$1
-echo "Action: REPARTIR.rb (Afficher a l'ecran)"
+echo "Action: REPARTIR (Afficher a l'ecran seulement)"
 echo "-----------------------------------------------------"
 
-
-#~ $1 est la variable qui contient les metaclasses à répartir
-cat $SOURCE | ruby mapred/repartir.rb $1
+cd
+cd go/src/github.com/myrer/gobit
+#~ $1 est la variable qui contient les metaclasses ï¿½ rï¿½partir
+cat $SOURCE | ruby rbf/gobit4.rb $SEGMENT $option
 
 echo "---------------------------------"
 echo "RETOUR au repertoire [rails_projects/hor]"
