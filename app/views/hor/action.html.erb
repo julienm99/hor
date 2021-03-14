@@ -1,10 +1,12 @@
 <body>
-
-    <div><%#  INITIALISATION + BUTS DES OPÉRATIONS À AFFICHER À L'ÉCRAN %>
-        <h1> <%= @execute + (" " + @niv) if @niv  %></h1>
+    <%# INITIALISATION  %>
+        <% operation = @execute %>
+        <% operation = "#{@execute}  #{@niv}" if @niv %>
+        <% operation = "#{@execute}  #{@niv} jour#{@jour}" if (@niv && @jour) %>
+        <h1> <%= operation %></h1>
         <%= flash[:notice] = "" %>
 
-        <%# REMARQUES: BUTS DES OPÉRATIONS %>
+    <%# REMARQUES: BUTS DES OPÉRATIONS %>
         <% rem="INITIALISATION de la filière #{@fname} dans le répertoire [~/op/cedulables]" if @execute=="init" %>
         <% rem="CONTRAINTES-R (R=répartitions) du segment #{@segment} mis à la fin de [~/init/contraintesR.txt]" if @execute=="stats"%>
         <% rem="LISTE des METACLASSES placées à la fin de [~/init/segments.txt]" if @execute=="metas"%>
@@ -18,7 +20,7 @@
         <% rem="rem à faire" if @execute=="horaire-a"%>
         <% rem="rem à faire" if @execute=="effacer"%>
         <% rem="rem à faire" if @execute=="reset_cedul"%>
-    </div>
+    
 
     <% case @execute %>   
         <% when "vide" %> 
@@ -296,28 +298,22 @@
             </h4></font></bold>
 
 
-        <% when "deselect" #ne fonctionne pas avec action.html.erb mais deSelect.html.erb%> 
+        <% when "deselect" #ne fonctionne pas avec action.html.erb mais deSelect.html.erb %> 
         <% when "fixCeds" %> 
             <% horaireTemp = obtenirCedulablesHoraire                    %> 
             <% repFiliere,nbLignes,nomFiliere = filiere($dirCedulables)  %> 
-            <% system "./fixCeds.sh #{horaireTemp}"                     %>
-            <h4><br><br><font color="red"><bold>
-            <%= " OPERATION [ #{@execute} ] en cours (pid: #{$pid}).............."  %>
-            <br><br><font color="blue">
-            <%= "BUT: "%><br>
-            <%= "FORMER: la filiere  [confection/horaire.rb]"                %><br>
-            <%= "OBTENIR: les metaclasses selon 1re ligne de [#{nomFiliere}]"%><br>
-            <br><br><br>
-            <%= "ETAT FINAL: [confection/horaire.rb] aux repartitions du dernier cedulables        "%>
-            </h4></font></bold>
+            <% system "./fixCeds.sh '#{horaireTemp}' '#{nomFiliere}'"                     %>
+            <% rem  = "FORMER: la filiere  [confection/horaire.rb]\n" %>
+            <% rem += "OBTENIR: les metaclasses selon 1re ligne de [#{nomFiliere}]\n\n" %>
+            <% rem += "ETAT FINAL: [confection/horaire.rb] aux repartitions du dernier cedulables        "%>
             
-            
-        <% when "ceduler_bis" %> 
+        <% when "ceduler" %>
+            <% puts "#{niv} #{jour}" ; exit %>
             <% metaclasses = obtenirCedulablesHoraire                    %> 
             <% repFiliere,nbLignes,nomFiliere = filiere($dirCedulables)  %> 
             <% $pid = fork do                                            %>
-            <%    system "./ceduler.sh #{metaclasses}"                   %>
-            <%   end                                                     %>
+                <% system "./ceduler.sh '#{metaclasses}' '#{niv}' '#{jour}' "%>
+            <% end %>
             <h4><br><br><font color="red"><bold>
             <%= " OPERATION [ #{@execute} ] en cours (pid: #{$pid}).............."  %>
             <br><br><font color="blue">
@@ -344,9 +340,6 @@
                 <%= "--> BUT: STOPPER le processus (pid: #{$pid}) "%>
             <br>
             </h4></font></bold>
-
-            
-        
         <% else  %> 
             <h3> <%= "Aucune des actions programmees ne correpond a votre demande" %> </h3>
     <% end %> 

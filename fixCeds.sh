@@ -1,25 +1,28 @@
-#~ -----------------------------------------------------------
-#~ Filiere script d'une sous-routine appele par le programme Rails: [rails_projects/hor] (HORAIRE-JDLM)
-#~ BUT: 
-    #~ FORMER LA FILIERE [confection/horaire.rb] avec la repartition de la derniere filiere des cedulables
-    #~ (Cette sous-routine re�oit la r�partition dans la variable $1)
-echo "-----------------------------------------------------"
-echo "FORMER LA FILIERE [confection/horaire.rb] AVEC"
-echo "LA PREMI�RE R�PARTITION DE LA DERNIERE FILIERE DES CEDULABLES"
-echo "-----------------------------------------------------"
-echo
-echo "POSITIONNER: repertoire ---> hor13"
+    echo "-----------------------------------------------------"
+    echo "fixCeds.sh: sous-routine appelée par le programme [action.html.erb]" 
+    echo "BUT:" 
+    echo "  FORMER LA FILIÈRE [confection/horaire.rb] AVEC"
+    echo "  LA 1re RÉPARTITION DE LA DERNIÈRE FILIÈRE DES CEDULABLES: "$2
+    echo
+    echo "  RÉPARTITIONS:"
+    echo $1
 cd
 cd hor13
-echo "----------------------"
-echo "DEFINIR la variable dirConfec = hor13/confection/"
-dirConfec="confection/"
-echo "----------------------"
-echo "FORMER LA FILIERE [confection/horaire.rb] avec la repartition de la derniere filiere des cedulables"
-echo "# encoding: UTF-8"                   >  $dirConfec"horaire.rb"
-echo \$LOAD_PATH "<< \"~/hor13\""             >> $dirConfec"horaire.rb"
-echo "MetaClasse.fixer_repartitions(\""$1"\")" >> $dirConfec"horaire.rb"
-echo "----------------------"
-echo "POSITIONNER: repertoire ---> rails_projects/hor"
+    echo
+    echo "  RÉPERTOIRE -> "$(pwd)
+    echo
+dirConfec="confection/horaire.rb"
+    echo "  CRÉER [confection/horaire.rb] avec la 1re repartition de [op/cedulables/"$2"]"
+
+echo "# encoding: UTF-8"                                  >  $dirConfec
+echo "# Répartition venant de [hor13/op/cedulables/"$2"]" >> $dirConfec
+echo \$LOAD_PATH "<< \"~/hor13\""                         >> $dirConfec
+echo                                                      >> $dirConfec
+echo "MetaClasse.fixer_repartitions(\""$1"\")"            >> $dirConfec
+
 cd
 cd rails_projects/hor
+     echo
+     echo "  La filière [confection/horaire.rb] a été créée avec succès."
+     echo "  RÉPERTOIRE -> "$(pwd)
+     echo "-----------------------------------------------------"

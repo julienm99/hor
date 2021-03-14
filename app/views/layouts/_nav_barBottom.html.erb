@@ -77,21 +77,41 @@
 			<!-- FIX-CEDS -->
 				<div class="btn-group dropup">
 					<button type="button" class="btn btn-primary">FIX-CEDS</button>
-						<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							<span class="caret"></span>
-						</button>
-						<ul class="dropdown-menu multi-level">
-							<label>NIVEAUX</label>
-							<li class="dropdown-submenu">
-								<% %w[S1 S2 S3 S4 S5 DERNIER_CEDS].each do |niv| %>
-									<li><%= link_to niv,action_path(:execute=>"fixCeds",:blocMC => @blocMC,:niv=>niv)%></li>
-								<% end %>
-							</li>
-						</ul>
+					<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu multi-level">
+						<label>_____NIVEAUX</label>
+						<li class="dropdown-submenu">
+							<% %w[S1 S2 S3 S4 S5 DERNIER_CEDS].each do |niv| %>
+								<li><%= link_to niv,action_path(:execute=>"fixCeds",:blocMC => @blocMC,:niv=>niv)%></li>
+							<% end %>
+						</li>
+					</ul>
 				</div>
 
 			<!-- CEDULER -->
-				<%= link_to 'CEDULER', action_path(:execute=>"ceduler",:blocMC => @blocMC),class:"btn btn-info"  %>
+				<div class="btn-group dropup">
+					<button type="button" class="btn btn-primary">CEDULER</button>
+					<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu multi-level">
+						<label>NIVEAUX</label>
+						<li class="dropdown-submenu">
+							<% %w[S1 S2 S3 S4 S5].each do |niv| %>
+								<li><a class="dropdown-item"><%= niv %><span class="caret"></span></a></li>
+								<ul class="dropdown-menu multi-level">
+									<li class="dropdown-submenu">
+									<label>JOUR</label>	
+									<% %w[A B C D E F G H TOUS].each do |jour| %>
+										<li><%= link_to jour, action_path(:execute=>"ceduler",:niv=>niv,:jour=>jour,:blocMC => @blocMC) %></li>
+									<% end %>
+								</ul>
+							<% end %>
+						</li>
+					</ul>
+				</div>
 			<!-- DIAGO -->
 				<div class="btn-group dropup">
 					<button type="button" class="btn btn-primary">DIAGO</button>
