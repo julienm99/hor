@@ -25,9 +25,8 @@ rem=$7
      # Variables [$1...$7] reçues de la filière [~/rails_projects/hor/app/views/hor/action.html.erb]
 choix=$6
 if [ $choix = "init" ] ; then SEGMENT=$1; switch=$2; fname=$3; fi
-if [ $choix = "segment" ] ; then SEGMENT=$1; switch=$2; metas=$5; fi
-if [ $choix = "choix-m" ] ; then SEGMENT=$1; switch=$2; metas=$3; fi
-if [ $choix = "action" ]; then ACTION=$1; niveau=$2; nb_sols=$3; jour=$4; fi
+if [ $choix = "segment" || $choix = "segMetas" ] ; then SEGMENT=$1; switch=$2; metas=$5; fi
+if [ $choix = "ceduler" ]; then ACTION=$1; niveau=$2; nb_sols=$3; jour=$4; fi
 if [ $choix = "horaire-a" ]; then ACTION=$1; niveau=$2; switch=$3; fi
 
      echo "CHOIX:     "$choix
@@ -43,11 +42,10 @@ if [ $choix = "horaire-a" ]; then ACTION=$1; niveau=$2; switch=$3; fi
                echo "5-METAS:    "$metas
                if [ $switch = "-o" ]  ; then cp $dirRailsPublic"4-en_traitement.txt" $dirRailsPublic"temp_traitement.txt"; fi
                if [ $switch = "-oa" ] ; then cp $dirRailsPublic"temp_traitement.txt" $dirRailsPublic"4-en_traitement.txt"; fi ;;
-          action)
+          ceduler)
                echo "1-ACTION  "$ACTION
                echo "2-NIVEAU  "$niveau
                echo "3-NB_SOLS "$nb_sols
-               echo "3-SWITCH  "$switch
                echo "4-JOUR:   "$jour;;
           horaire-a)
                echo "1-ACTION  "$ACTION
@@ -55,10 +53,10 @@ if [ $choix = "horaire-a" ]; then ACTION=$1; niveau=$2; switch=$3; fi
                echo "3-NB_SOLS "$nb_sols
                echo "3-SWITCH  "$switch
                echo "4-JOUR:   "$jour;;
-          choix-m)
+          segMetas)
                echo "1-SEGMENT "$SEGMENT
                echo "2-SWITCH  "$switch
-               echo "3-METAS:  "$metas;;
+               echo "5-METAS:  "$metas;;
           * ) ;;
      esac
      echo "-----------------------------------------------------"

@@ -20,6 +20,7 @@
 						</button>
 						<ul class="dropdown-menu multi-level">
 							<label>____INITIALISATION</label>
+							<li role="separator" class="divider"></li>
 							<li class="dropdown-submenu">
 								<% %w[S1 S2 S3 S4 S5].each do |niv| %>
 									<% seg = "#{niv[1,1]}00" %>
@@ -38,14 +39,15 @@
 					</button>
 					<ul class="dropdown-menu multi-level">
 						<label>______UTILITAIRES_____</label>
+						<li role="separator" class="divider"></li>
 						<li class="dropdown-submenu">
 							<li><%= link_to "[-d] debug gobit4.rb", action_path(:execute=>"debug",:segment=>@segment,:blocMC=>@blocMC) %></li>
 							<li>-------------</li>
-							<li><%= link_to "[-m] former---> segment #{@segment}", action_path(:execute=>"metas",:segment=>@segment,:blocMC=>@blocMC) %></li>
+							<li><%= link_to "[-m] former---> segment #{@segment}", action_path(:execute=>"segMetas",:segment=>@segment,:blocMC=>@blocMC) %></li>
 							<li><%= link_to "[-s] contraintesR segment:#{@segment}", action_path(:execute=>"stats",:segment=>@segment,:blocMC=>@blocMC) %></li>
 							<li><%= link_to "[-x] répartir--> segment #{@segment}", action_path(:execute=>"repartir",:segment=>@segment,:blocMC=>@blocMC) %></li>
 							<li>-------------</li>
-							<li><%= link_to "[-m] former---> segment #{next_segment}", action_path(:execute=>"metas",:segment=>next_segment,:blocMC=>@blocMC) %></li>
+							<li><%= link_to "[-m] former---> segment #{next_segment}", action_path(:execute=>"segMetas",:segment=>next_segment,:blocMC=>@blocMC) %></li>
 							<li><%= link_to "[-s] contraintesR segment:#{next_segment}", action_path(:execute=>"stats",:segment=>next_segment,:blocMC=>@blocMC) %></li>
 							<li><%= link_to "[-x] répartir--> segment #{next_segment}", action_path(:execute=>"repartir",:segment=>next_segment,:blocMC=>@blocMC) %></li>
 							<li>-------------</li>
@@ -61,6 +63,7 @@
 				  </button>
 				  <ul class="dropdown-menu multi-level">
 					  <label>_GO: VALIDER HORAIRE_</label>
+					  <li role="separator" class="divider"></li>
 					  <li class="dropdown-submenu">
 						  <li><%= link_to "AJOUTER À #{@segment}.ceds", action_path(:execute=>"go_add",:segment=>@segment,:blocMC => @blocMC) %></li>
 						  <li>-------------</li>
@@ -81,12 +84,9 @@
 						<span class="caret"></span>
 					</button>
 					<ul class="dropdown-menu multi-level">
-						<label>_____NIVEAUX</label>
-						<li class="dropdown-submenu">
-							<% %w[S1 S2 S3 S4 S5 DERNIER_CEDS].each do |niv| %>
-								<li><%= link_to niv,action_path(:execute=>"fixCeds",:blocMC => @blocMC,:niv=>niv)%></li>
-							<% end %>
-						</li>
+						<label>_DERNIÈRE FILIÈRE_</label>
+						<li role="separator" class="divider"></li>
+						<li><%= link_to nomFiliere,action_path(:execute=>"fixCeds",:blocMC => @blocMC,:niv=>"S"+nomFiliere[0,1])%></li>
 					</ul>
 				</div>
 
@@ -97,21 +97,16 @@
 						<span class="caret"></span>
 					</button>
 					<ul class="dropdown-menu multi-level">
-						<label>NIVEAUX</label>
+						<label>_CHOISIR un NIVEAU_</label>
+						<li role="separator" class="divider"></li>
 						<li class="dropdown-submenu">
-							<% %w[S1 S2 S3 S4 S5].each do |niv| %>
-								<li><a class="dropdown-item"><%= niv %><span class="caret"></span></a></li>
-								<ul class="dropdown-menu multi-level">
-									<li class="dropdown-submenu">
-									<label>JOUR</label>	
-									<% %w[A B C D E F G H TOUS].each do |jour| %>
-										<li><%= link_to jour, action_path(:execute=>"ceduler",:niv=>niv,:jour=>jour,:blocMC => @blocMC) %></li>
-									<% end %>
-								</ul>
+							<% %w[S1 S2 S3 S4 S5 S5+S4].each do |niv| %>
+								<li><%= link_to niv, action_path(:execute=>"ceduler",:segment=>@segment,:niv=>niv[0,2],:blocMC => @blocMC) %></li>
 							<% end %>
 						</li>
 					</ul>
 				</div>
+
 			<!-- DIAGO -->
 				<div class="btn-group dropup">
 					<button type="button" class="btn btn-primary">DIAGO</button>
@@ -120,7 +115,7 @@
 							<span class="sr-only">Toggle Dropdown</span>
 						</button>
 						<ul class="dropdown-menu multi-level">
-							<label>NIVEAUX</label>
+							<label>_CHOISIR un NIVEAU_</label>
 							<li role="separator" class="divider"></li>
 							<li class="dropdown-submenu">
 								<% %w[S1 S2 S3 S4 S5].each do |niv| %>

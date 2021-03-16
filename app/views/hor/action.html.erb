@@ -8,13 +8,13 @@
 
     <%# REMARQUES: BUTS DES OPÉRATIONS %>
         <% rem="INITIALISATION de la filière #{@fname} dans le répertoire [~/op/cedulables]" if @execute=="init" %>
-        <% rem="CONTRAINTES-R (R=répartitions) du segment #{@segment} mis à la fin de [~/init/contraintesR.txt]" if @execute=="stats"%>
+        <% rem="CONTRAINTES-R (répartitions) du segment #{@segment} mis à la fin de [~/init/contraintesR.txt]" if @execute=="stats"%>
         <% rem="LISTE des METACLASSES placées à la fin de [~/init/segments.txt]" if @execute=="metas"%>
         <% rem="TERMINAL: Liste des principales variables du programme gobit4.rb (debug)" if @execute=="debug"%>
         <% rem="TERMINAL: Affiche les répartitions des metas [en traitement](rouge+vert): SANS ENREGISTREMENT" if @execute=="repartir"%> 
         <% rem="ENREGISTRE dans #{@segment}.ceds les cédulables des metas en traitement(rouge+vert)" if @execute=="go"%>
         <% rem="ADDITIONNE dans #{@segment}.ceds les cédulables des metas en traitement(rouge+vert)" if @execute=="go_add"%>
-        <% rem="rem à faire" if @execute=="ceduler"%>
+        <% rem="FORMER: [op/sols/#{@niv}_sols.jjour]" if @execute=="ceduler"%>
         <% rem="rem à faire" if @execute=="cedul"%>
         <% rem="rem à faire" if @execute=="horaire"%>
         <% rem="rem à faire" if @execute=="horaire-a"%>
@@ -98,7 +98,7 @@
                 <%= "  ETAT FINAL: Les horaires du #{@niv} diagonalises sont fixes!           "%>
             </h4></font></bold>
             
-        <% when "init","stats","metas","debug"  %>  
+        <% when "init","stats","segMetas","debug"  %>  
             <% metas = save_MetaclassesEnTraitement  %>
             <% reste,metas = metas.split(":: ")  %>
             <h4> <%= "#{metas}"  %> </h4>
@@ -116,14 +116,15 @@
                 <% when "stats" %>
                     <% system "./executer.sh '#{@segment}' '-s' '' '' '#{metas}' 'segment' '#{rem}' "  %>
                 <% when "metas" %>
-                    <% system "./executer.sh '#{@segment}' '-m' '#{metas}' '' '' 'choix-m' '#{rem}' " %>
+                    <% system "./executer.sh '#{@segment}' '-m' '' '' '#{metas}' 'segMetas' '#{rem}' " %>
                 <% when "debug" %>
                     <% system "./executer.sh '#{@segment}' '-d' '' '' '#{metas}' 'segment' '#{rem}' " %>
                 <% else %>
                     <% rem= "Execute = [#{execute}] n'existe pas! "%>
             <% end %>
 
-        <% when "repartir","go","go_add","cedul","ceduler","horaire","horaire-a","effacer","reset_cedul"  %>  
+        <% when "repartir","go","go_add" %>    
+                        <%# "cedul","ceduler","horaire","horaire-a","effacer","reset_cedul"  %>  
             <%# unless @execute == "go_add" then %>
                 <% metas = save_MetaclassesEnTraitement  %>
                 <% reste,metas = metas.split(":: ")  %>
@@ -308,23 +309,35 @@
             <% rem += "ETAT FINAL: [confection/horaire.rb] aux repartitions du dernier cedulables        "%>
             
         <% when "ceduler" %>
-            <% puts "#{niv} #{jour}" ; exit %>
-            <% metaclasses = obtenirCedulablesHoraire                    %> 
+            <% metas = obtenirCedulablesHoraire %> 
             <% repFiliere,nbLignes,nomFiliere = filiere($dirCedulables)  %> 
-            <% $pid = fork do                                            %>
-                <% system "./ceduler.sh '#{metaclasses}' '#{niv}' '#{jour}' "%>
-            <% end %>
-            <h4><br><br><font color="red"><bold>
-            <%= " OPERATION [ #{@execute} ] en cours (pid: #{$pid}).............."  %>
-            <br><br><font color="blue">
-            <%= "BUT: "%><br>
-            <%= "FORMER: les filieres solutions  [ op/sols/S5_sols.jX ]"   %><br>
-            <%= "OBTENIR: les metaclasses selon 1re ligne de [#{nomFiliere}]"%><br>
-            <br><br><br>
-            <%= "ETAT FINAL: [op/sols/S5_sols.jX] des 8 jours du niveau        "%>
-            </h4></font></bold>
-            
-            
+            <%# $pid = fork do                                            %>
+                <%# system "./ceduler.sh '#{@segment}' '#{@niv}' '#{maxSols}' '#{jour}' '' '#{@execute}' '#{rem}' "%>
+            <%# end %>
+            <%# puts "1-segment= #{@segment} 2-niv= #{@niv} 3-maxSols=maxSols 4-jour= jour  5-=   6-choix=#{@execute} 7-rem= #{rem}" %>          
+            <%# exit %>
+            <form><h3>
+                ENREGISTRER:<br>
+                [/op/sols/]<br>
+                ___OUI <input type="radio" name="save" id="sauver" value="1"><br><br>
+                ___non <input type="radio" name="save" id="sauver" value="0"><br><br>
+            </form>
+            <div class="container">
+                <form>
+                    <div class="checkbox"><label><input type="checkbox" value="">A</label></div>
+                    <div class="checkbox"><label><input type="checkbox" value="">B</label></div>
+                    <div class="checkbox"><label><input type="checkbox" value="">C</label></div>
+                    <div class="checkbox"><label><input type="checkbox" value="">D</label></div>
+                    <div class="checkbox"><label><input type="checkbox" value="">E</label></div>
+                    <div class="checkbox"><label><input type="checkbox" value="">F</label></div>
+                    <div class="checkbox"><label><input type="checkbox" value="">G</label></div>
+                    <div class="checkbox"><label><input type="checkbox" value="">H</label></div>
+                    <input type="submit" value="Submit">
+                    </h3>
+                </form>
+            </div>
+
+
         <% when "viableCompact" %> 
             <h3> <%= "PROGRAMME EN CONSTRUCTION" %> </h3>
         <% when "flat?" %> 
