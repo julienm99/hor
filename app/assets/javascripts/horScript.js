@@ -23,7 +23,7 @@ function affiche() {
 
 
 function pageWeb() {
-  
+
   switch(arguments[0]) {
     case "4-en_traitement" :
     case "infoHoraire" :
@@ -37,6 +37,13 @@ function pageWeb() {
     case "EPS":
       var path = "/blocMetaclasses?blocMC="+arguments[0];
       window.location.replace(path);
+      break;
+    case "soumisCeduler":
+      //var sauve = document.getElementsByName("sauve")[0].checked;
+     var a = document.querySelector('[name="sauve"]:checked');
+     <% if a ? sauve = "oui" : sauve = "non"%>}
+      window.alert(a);
+      window.location.replace("/action?"+params);
       break;
     default:
       var path = "/blocMetaclasses?blocMC="+arguments[0];

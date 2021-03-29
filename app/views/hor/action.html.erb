@@ -14,7 +14,7 @@
         <% rem="TERMINAL: Affiche les répartitions des metas [en traitement](rouge+vert): SANS ENREGISTREMENT" if @execute=="repartir"%> 
         <% rem="ENREGISTRE dans #{@segment}.ceds les cédulables des metas en traitement(rouge+vert)" if @execute=="go"%>
         <% rem="ADDITIONNE dans #{@segment}.ceds les cédulables des metas en traitement(rouge+vert)" if @execute=="go_add"%>
-        <% rem="FORMER: [op/sols/#{@niv}_sols.jjour]" if @execute=="ceduler"%>
+        <% rem="FORMER: [op/sols/#{@niv}_sols.j{jour}]" if @execute=="ceduler"%>
         <% rem="rem à faire" if @execute=="cedul"%>
         <% rem="rem à faire" if @execute=="horaire"%>
         <% rem="rem à faire" if @execute=="horaire-a"%>
@@ -116,7 +116,7 @@
                 <% when "stats" %>
                     <% system "./executer.sh '#{@segment}' '-s' '' '' '#{metas}' 'segment' '#{rem}' "  %>
                 <% when "metas" %>
-                    <% system "./executer.sh '#{@segment}' '-m' '' '' '#{metas}' 'segMetas' '#{rem}' " %>
+                    <% system "./executer.sh '#{@segment}' '-m' '' '' '#{metas}' 'segment' '#{rem}' " %>
                 <% when "debug" %>
                     <% system "./executer.sh '#{@segment}' '-d' '' '' '#{metas}' 'segment' '#{rem}' " %>
                 <% else %>
@@ -310,34 +310,54 @@
             
         <% when "ceduler" %>
             <% metas = obtenirCedulablesHoraire %> 
-            <% repFiliere,nbLignes,nomFiliere = filiere($dirCedulables)  %> 
-            <%# $pid = fork do                                            %>
-                <%# system "./ceduler.sh '#{@segment}' '#{@niv}' '#{maxSols}' '#{jour}' '' '#{@execute}' '#{rem}' "%>
-            <%# end %>
-            <%# puts "1-segment= #{@segment} 2-niv= #{@niv} 3-maxSols=maxSols 4-jour= jour  5-=   6-choix=#{@execute} 7-rem= #{rem}" %>          
-            <%# exit %>
-            <form><h3>
-                ENREGISTRER:<br>
-                [/op/sols/]<br>
-                ___OUI <input type="radio" name="save" id="sauver" value="1"><br><br>
-                ___non <input type="radio" name="save" id="sauver" value="0"><br><br>
+            <% repFiliere,nbLignes,nomFiliere = filiere($dirCedulables)  %>
+            <% sauve = jour = maxSols = "" %> 
+
+            <%#= form_with  method: :get do |f| %>
+                <h3>ENREGISTREMENT dans [/op/sols/]<br>
+                    <label>___oui enregistrer <%#= f.radio_button :sauve, "-er" %></label>
+                    <label>___ne pas enregis. <%#= f.radio_button :sauve, ""  %></label><br>  
+                    <!-- <input type="radio" name="sauve" id="enregistrer" value="-er" checked>___oui enregistrer
+                    <input type="radio" name="sauve" id="pas_enregistrer" value="" >___ne pas enregis.-->
+
+
+            <form id="paramsCeduler" action="/action" method="get">
+                _____Oui : <input type="radio" name="sauve" value="oui" ><br>
+                _____Non : <input type="radio" name="sauve" value="non" checked ><br><br>
+                <input type="hidden" name="execute" value="soumisCeduler">
+                <input type="button" onclick=pageWeb("soumisCeduler") value="VALIDER">
             </form>
-            <div class="container">
-                <form>
-                    <div class="checkbox"><label><input type="checkbox" value="">A</label></div>
-                    <div class="checkbox"><label><input type="checkbox" value="">B</label></div>
-                    <div class="checkbox"><label><input type="checkbox" value="">C</label></div>
-                    <div class="checkbox"><label><input type="checkbox" value="">D</label></div>
-                    <div class="checkbox"><label><input type="checkbox" value="">E</label></div>
-                    <div class="checkbox"><label><input type="checkbox" value="">F</label></div>
-                    <div class="checkbox"><label><input type="checkbox" value="">G</label></div>
-                    <div class="checkbox"><label><input type="checkbox" value="">H</label></div>
-                    <input type="submit" value="Submit">
-                    </h3>
-                </form>
-            </div>
+                  
 
+                JOURS
+                    <%# %w[A B C D E F G H TOUS].each do  |jour| %>
+                        <%#= check_box("jours","jour", {:multiple => true} label = jour, checked_value = jour, unchecked_value = "0") %>  
+                        <!-- <label><%#="#{jour} "%><%#= f.check_box("#{jour}") %></label> -->  
+                    <%# end %><br> 
 
+                <!-- <label>Maximum de solutions <%#= f.number_field :maxSols, in: 1..10000, step:1  %></label><br> -->
+
+                <%#= f.hidden_field :executer, value: "soumisCeduler" %>
+                <%#= f.hidden_field :niv, value: "#{@niv}" %>
+                <%#= f.hidden_field :blocMC, value: "#{@blocMC}" %>
+
+                <%#= f.submit "VÉRIFIER" %>
+                <!-- <script> pageWeb("soumisCeduler") </script> -->
+            <%# end %>
+            <%#= link_to "CEDULER", action_path(:execute=>"soumisCeduler"), class:"btn btn-danger" %>
+            <%#= link_to "CEDULER", action_path(:execute=>"soumisCeduler",:sauve=>sauve,:niv=>@niv,:blocMC => @blocMC),class:"btn btn-danger" %>
+ 
+        <% when "soumisCeduler" %>
+            <% metas = obtenirCedulablesHoraire %> 
+            <% repFiliere,nbLignes,nomFiliere = filiere($dirCedulables)  %>
+            <% puts "@sauve = #{@sauve}"  ; exit %>  
+            <% puts "@sauve = #{@sauve}   jour = #{jour}  niv = #{niv}   nb_sols = #{maxSols}"  ; exit %>  
+
+            <% $pid = fork do                                            %>
+                <% system "./executer.sh 'cedul' '#{@niv}' '#{maxSols}' '#{jour}' '#{sauve}' 'ceduler' '#{rem}' " unless sauve %> 
+                <% system "./executer.sh 'ceduler' '#{@niv}' '#{maxSols}' '#{jour}' '#{sauve}' 'ceduler' '#{rem}' " if sauve == "-er" %> 
+            <% end %>
+                    
         <% when "viableCompact" %> 
             <h3> <%= "PROGRAMME EN CONSTRUCTION" %> </h3>
         <% when "flat?" %> 
@@ -358,15 +378,16 @@
     <% end %> 
   
     <!-- AFFICHAGE À L'ÉCRAN HORAIRE-JDLM: OPÉRATION - BUTS -->
-        <h2><font color="red"><bold><br><br>
-            <%= " OPERATION [ #{@execute} ] " %></h2>
-            <br><br><h4><font color="blue">
-            <%= "BUT: " %><br>
-            <%= "--->"+rem %>
-        </h4></font></bold>
+        <% if @executer != "ceduler" then %>
+            <h2><font color="red"><bold><br>
+                <%= " OPERATION [ #{@execute} ] " %></h2><br>
+            <h4><font color="blue">
+                <%= "BUT: " %><br>
+                <%= "---> #{rem}" %></h4></font></bold>
+        <% end %>
 
     <% @blocMC = "index" unless @blocMC  %><br>
     <% unless @execute == "matieresNiveau" then %>
-          <%= link_to "AFFICHER: "+@blocMC,blocMetaclasses_path(:execute => @execute, :blocMC => @blocMC),class:"btn btn-info"%>
+          <%= link_to "AFFICHER: #{@blocMC}",blocMetaclasses_path(:execute => @execute, :blocMC => @blocMC),class:"btn btn-info"%>
      <% end %>  
 </body>
