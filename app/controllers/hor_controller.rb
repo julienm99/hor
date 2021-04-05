@@ -89,8 +89,8 @@ class HorController < ApplicationController
     @transfert_PAS  = params[:transfert_PAS]  # PAS : site web "Planification Année Scolaire"
     @segment        = params[:segment]  
     @jour           = params[:jour]  
-    @nb_sols        = params[:nb_sols]  
-    @sauve          = params[:sauve] 
+    @maxSols        = params[:maxSols]  
+    @actif          = params[:actif] 
     @ceduler        = params[:ceduler]
   end
 

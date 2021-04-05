@@ -23,7 +23,6 @@ function affiche() {
 
 
 function pageWeb() {
-
   switch(arguments[0]) {
     case "4-en_traitement" :
     case "infoHoraire" :
@@ -39,11 +38,20 @@ function pageWeb() {
       window.location.replace(path);
       break;
     case "soumisCeduler":
-      //var sauve = document.getElementsByName("sauve")[0].checked;
-     var a = document.querySelector('[name="sauve"]:checked');
-     <% if a ? sauve = "oui" : sauve = "non"%>}
-      window.alert(a);
-      window.location.replace("/action?"+params);
+      // Params reçus de l'URL du document
+      const queryString = window.location.search;
+      const urlParams = new URLSearchParams (queryString);
+      const niv = urlParams.get('niv');
+      const blocMC = urlParams.get('blocMC');
+
+      // boutons radio enregistrement (sauve) + jour + nombre maximum de solutions
+        var actif = document.querySelector('input[name="actif"]:checked').value;
+        var jour = document.querySelector('input[name="jour"]:checked').value;
+        var maxSols = document.getElementById('maxSols').value;
+
+        var params = "execute=soumisCeduler&actif="+actif+"&blocMC="+blocMC+"&niv="+niv+"&jour="+jour+"&maxSols="+maxSols
+        //window.alert("params = "+params);
+        window.location.replace("/action?"+params);
       break;
     default:
       var path = "/blocMetaclasses?blocMC="+arguments[0];

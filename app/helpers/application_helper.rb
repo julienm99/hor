@@ -4,37 +4,37 @@ require 'fileutils'
 
   def dirHor13(repertoire)
     "/home/julienm/hor13/#{repertoire}"
-  end
+   end
 
 
   def listHor13(repertoire)
     dirHor13(repertoire)+"/*"
-  end
+   end
 
 
   def listHor13Alpha(repertoire)
     Dir[listHor13(repertoire)].sort {|a,b| a <=> b}
-  end
+   end
 
 
-  def derniereFiliereDuDir(repertoire)   #derni�re fili�re modifi�e
+  def derniereFiliereDuDir(repertoire)   #dernière filière modifiée
     Dir.glob(repertoire).sort {|a,b| File.mtime(a) <=> File.mtime(b)}.last
-  end
+   end
 
 
   def nbLignesDerniereFiliere(repertoire)
     nbLignesFiliere(derniereFiliereDuDir(listHor13(repertoire)))
-  end
+   end
 
 
   def nbLignesFiliere(filiere)
     File.readlines(filiere).size
-  end 
+   end 
 
 
   def valide
     nbLignesFiliere(derniereFiliereDuDir(listHor13($dirCedulables))) > 0
-  end
+   end
 
 
   def filiere(repertoire)
@@ -43,23 +43,23 @@ require 'fileutils'
     nomFiliere = repFiliere.split("/").last			# nom de la fili�re sans son chemin
     
     return repFiliere,nbLignes,nomFiliere
-  end
+   end
 
 
   def effacer_DerniereFiliere(repertoire)
     File.delete(derniereFiliereDuDir(listHor13(repertoire)))
-  end
+   end
 
 
   def changerMetaclasseEtat(mc,etat)
     $listeMetaclassesEtat[mc] = etat
-  end
+   end
 
 
   def deSelectionner    
     $listeMetaclassesEtat.each{|mc,etat|$listeMetaclassesEtat[mc] = "inactif" if etat == "4-en_traitement"}
-  end
-  
+   end
+
 
   def save_MetaclassesEnTraitement
     mcEnJeu = "4-en_traitement::"
@@ -68,7 +68,7 @@ require 'fileutils'
       file.puts mcEnJeu.strip
     file.close
     return mcEnJeu
-  end
+    end
 
 
   def obtenirMetaclassesEtat(etat)
@@ -82,12 +82,12 @@ require 'fileutils'
       end
     file.close
     return metaclasses
-  end
+   end
 
 
   def mettreMetaclassesEtat_inactif 
     $listeMetaclassesEtat.each{|mc, etat| $listeMetaclassesEtat[mc]= "inactif"}
-  end
+   end
 
 
   def statusMetaclasse(mc)
@@ -119,7 +119,7 @@ require 'fileutils'
     style += "border-radius:5px;"
     
     return style, status
-  end
+   end
 
 
   def styleMatiereEtat(etat)
@@ -140,57 +140,57 @@ require 'fileutils'
     style += "border-radius:5px;"
     
     return style
-  end
+   end
 
 
   def group_string(niv,i)
        i  > 9 ? ajout = "" : ajout = "0" # si condition ? vrai : faux
        niv == "S1" ? gr ="Gr#{niv[1,1] + ajout + i.to_s}" : gr ="Gr#{niv[1,1] + i.to_s}"
-  end
+   end
 
 
   def obtenirIntervalle(diviseur)
     nbLignes = nbLignesFiliere(derniereFiliereDuDir(listHor13($dirCedulables)))
     (nbLignes.to_i / diviseur).to_s
-  end
+   end
 
 
   def obtenirListeProfsFinTache
     profsFinTache = [] ; profsEnjeu = [] ; mcEnjeu = []
     
-      $listeMetaclassesEtat.each do |mc,etat|
+    $listeMetaclassesEtat.each do |mc,etat|
 	    mcEnjeu << mc if etat=="1-horaire_fixe" || etat=="3-cedulables"
 	  end
 	    
-      $listeMetaclassesEtat.each do |mc,etat|
+    $listeMetaclassesEtat.each do |mc,etat|
 	    profsEnjeu << $listeMetaclassesProfs[mc] if etat=="3-cedulables"
 	  end    
-      profsEnjeu.flatten!.uniq!
+    profsEnjeu.flatten!.uniq!
       
-      $listeProfsMetaclasses.each{|prof,mc| profsFinTache << prof.capitalize unless (mc-mcEnjeu).any?}
+    $listeProfsMetaclasses.each{|prof,mc| profsFinTache << prof.capitalize unless (mc-mcEnjeu).any?}
     
     return profsFinTache
-  end
+   end
 
 
   def filtrerMatiereChoisie(metaclasses, metaclassesChoisies = [], matiere)
       metaclasses.each{|mc| metaclassesChoisies << mc if mc[0,3] == matiere; puts mc }
-  end
+   end
 
 
   def matieresDesMetaclasses(metaclasses, matieres)
       metaclasses.each{|mc| matieres << mc[0,3] }
       matieres.uniq!
-  end
+   end
 
-   
+
   def obtenirMetaclasses(fname)
     file = File.open(fname, "r:iso8859-1")    
       line = file.gets       # prendre que la premi�re ligne
       variance, metaclasses = line.split("\t") unless line.strip == nil || line.strip =="nil"
     file.close  
     return metaclasses
-  end
+   end
 
 
   def updateMetaclassesEtat
@@ -199,44 +199,45 @@ require 'fileutils'
     updateEnTraitement
     updateCedulables      
     updateHoraires
-  end
+   end
+
 
   def updateEnTraitement
     save_MetaclassesEtat(mcEnTraitement,"4-en_traitement") unless mcEnTraitement == NilClass 
-  end
+   end
 
 
   def updateCedulables
     mcCedulables = infoDesCedulables
     save_MetaclassesEtat(mcCedulables, "3-cedulables") if mcCedulables[0] 
-  end
+   end
 
 
   def updateHoraires
     mcEnJeu = []    
     file = File.open(dirHor13("data/horaires.txt"), "r:iso8859-1")    
       while (line = file.gets)
-	type, reste = line.split("::")
-	if type.strip == "Horaire" then
-	  mcNom, horaire = reste.split("\t")
-	  mcNom.strip!
-	  mcEnJeu << mcNom unless mcEnJeu.include?(mcNom)
-	end
+	      type, reste = line.split("::")
+        if type.strip == "Horaire" then
+          mcNom, horaire = reste.split("\t")
+          mcNom.strip!
+          mcEnJeu << mcNom unless mcEnJeu.include?(mcNom)
+        end
       end
     file.close
     save_MetaclassesEtat(mcEnJeu, "1-horaire_fixe")  
-  end
+   end
 
-
+    
   def mcEnTraitement
     obtenirMetaclassesEtat("4-en_traitement")
-  end
+   end
 
 
   def infoDesCedulables
     fname = derniereFiliereDuDir(listHor13($dirCedulables)) 
     obtenirMetaclassesCedulables(fname)
-  end
+   end
 
 
   def obtenirMetaclassesCedulables(fname)
@@ -261,9 +262,9 @@ require 'fileutils'
       end
     file.close 
     return metaclasses
-  end
+   end
 
-
+   
   def obtenirCedulablesHoraire
     fname = derniereFiliereDuDir(listHor13($dirCedulables)) 
     
@@ -275,9 +276,9 @@ require 'fileutils'
     file.close 
     
     return metaclasses
-  end
-  
-  
+   end
+
+
   def obtenirFileLigne_1(fname)
     file = File.open(fname, "r:iso8859-1")    
       line = file.gets       # prendre que la premi�re ligne
@@ -286,21 +287,21 @@ require 'fileutils'
       end
     file.close 
     return metaclasses.strip
-  end
+   end
 
 
   def obtenir_OrdreSize(repertoire)
      Dir.glob(listHor13(repertoire)).sort{|a,b| File.size(a) <=> File.size(b)} 
-  end
- 
- 
+    end
+
+
   def obtenir_OrdreSizeNiv(niv,f_ordreSize)
     f_ordreSizeNiv = []
     f_ordreSize.each{|fname| f_ordreSizeNiv << fname if fname[fname.size-13,2] == niv}
     return f_ordreSizeNiv
-  end
- 
- 
+    end
+
+
   def ordonner_FileJoursDiagoSelonSize(f_ordreSizeNiv)
     ordreJoursDiago = []
     f_ordreSizeNiv.each{|fname| ordreJoursDiago << fname[fname.size-1,1]}
@@ -309,22 +310,22 @@ require 'fileutils'
     ordreJoursDiago = ordreJoursDiago.drop(1) 	# ordre des jours � diagonaliser
     
     return jourDepart, ordreJoursDiago
-  end
- 
- 
+    end
+
+
   def obtenirOrdreDesJours(niv)
     f_ordreSize    = obtenir_OrdreSize("op/compact")
     f_ordreSizeNiv = obtenir_OrdreSizeNiv(niv,f_ordreSize)
     jourDepart, ordreJoursDiago = ordonner_FileJoursDiagoSelonSize(f_ordreSizeNiv)
     
     return jourDepart, ordreJoursDiago
-  end
-  
+    end
+
 
   def obtenirCompact(niv,jour)
     fname = dirHor13("op/compact/#{niv}_compact.j#{jour}")         
     return obtenirFileLigne_1(fname)
-  end  
+    end  
 
 
   def obtenir_MatieresNiveau(niv)
@@ -334,26 +335,25 @@ require 'fileutils'
       (0..mc.size-1).each{|x| matieresNiv << mc[x][0,3] if x.even?} 
     end
     return matieresNiv.uniq! 
-  end  
+    end  
 
 
   def obtenir_matieresFiltre(matieresEtat)
     matieresFiltre = []
     matieresEtat.each {|m,etat| matieresFiltre << m if matieresEtat[m] == "actif" }
     return matieresFiltre.join(",") 
-  end  
+    end  
 
 
   def obtenirDiag(niv,jour)
     fname = dirHor13("op/diag/#{niv}_diag.j#{jour}")         
     return obtenirFileLigne_1(fname)
-  end  
+    end  
 
 
   def save_MetaclassesEtat(mcEnJeu, etat)
       mcEnJeu.each{|mc| $listeMetaclassesEtat[mc] = etat} if mcEnJeu[0]
-  end
-  
+   end
 
 
 end # Module ApplicationHelper

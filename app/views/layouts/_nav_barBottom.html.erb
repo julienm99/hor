@@ -76,7 +76,18 @@
 			  </div>
 		  			
 			<!-- VARIANCE -->
-				<%= link_to 'VARIANCE', action_path(:execute=>"variance",:blocMC=>@blocMC),class:"btn btn-info" %>
+				<div class="btn-group dropup">
+					<button type="button" class="btn btn-primary">VARIANCE</button>
+					<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu multi-level">
+						<label>_DERNIÈRE FILIÈRE_</br>Ordonner les répartions<br></label>
+						<li role="separator" class="divider"></li>
+						<li><%= link_to nomFiliere, action_path(:execute=>"variance",:blocMC=>@blocMC) %></li>
+					</ul>
+				</div>
+				
 			<!-- FIX-CEDS -->
 				<div class="btn-group dropup">
 					<button type="button" class="btn btn-primary">FIX-CEDS</button>
@@ -107,6 +118,24 @@
 					</ul>
 				</div>
 
+			<!-- COMPACT -->
+				<div class="btn-group dropup">
+					<button type="button" class="btn btn-primary">COMPACT</button>
+						<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<span class="caret"></span>
+							<span class="sr-only">Toggle Dropdown</span>
+						</button>
+						<ul class="dropdown-menu multi-level">
+							<label>___VIABILISER<br>___COMPACTER</label>
+							<li role="separator" class="divider"></li>
+							<li class="dropdown-submenu">
+								<% %w[S1 S2 S3 S4 S5].each do |niv| %>
+									<li><%= link_to niv, action_path(:execute=>"compact", :blocMC=>@blocMC, :niv => niv)%></li>
+								<% end %>
+							</li>
+						</ul>
+				</div>
+
 			<!-- DIAGO -->
 				<div class="btn-group dropup">
 					<button type="button" class="btn btn-primary">DIAGO</button>
@@ -115,11 +144,11 @@
 							<span class="sr-only">Toggle Dropdown</span>
 						</button>
 						<ul class="dropdown-menu multi-level">
-							<label>_CHOISIR un NIVEAU_</label>
+							<label>DIAGONALISATION<br>Choisir un NIVEAU</label>
 							<li role="separator" class="divider"></li>
 							<li class="dropdown-submenu">
 								<% %w[S1 S2 S3 S4 S5].each do |niv| %>
-									<li><%= link_to niv, action_path(:execute=>"matieresNiveau", :blocMC=>@blocMC, :niv => niv)%></li>
+									<li><%= link_to niv, action_path(:execute=>"diago", :blocMC=>@blocMC, :niv => niv)%></li>
 								<% end %>
 							</li>
 						</ul>
