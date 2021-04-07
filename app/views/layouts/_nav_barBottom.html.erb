@@ -21,6 +21,8 @@
 						<ul class="dropdown-menu multi-level">
 							<label>____INITIALISATION</label>
 							<li role="separator" class="divider"></li>
+							<li><%#= link_to "priorités à 1",action_path(:execute=>"priorites")%></li>
+							<li role="separator" class="divider"></li>
 							<li class="dropdown-submenu">
 								<% %w[S1 S2 S3 S4 S5].each do |niv| %>
 									<% seg = "#{niv[1,1]}00" %>

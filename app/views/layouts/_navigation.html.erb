@@ -39,7 +39,7 @@
         <% end %></b>
         ____
       <!-- BOUTON: MATIÈRES -->
-        <% matieresDesMetaclasses($listeMetaclasses, []).sort.each do |sujet| %>
+        <% matieresDesMetaclasses($listeMetas, []).sort.each do |sujet| %>
           <%=     link_to sujet,blocMetaclasses_path(:blocMC => sujet)  %>
         <% end %>
         </b>___ 
@@ -51,10 +51,9 @@
           <%=    (link_to fyr, blocMetaclasses_path(:blocMC => fyr )) unless fyr[0]=="P"%>
           <%     nivPrecedent = fyr[2]                                                  %>
         <% end %>
-        ___
 
       <!-- BOUTON: AFFICHER fileInfo -->
-          <%= link_to 'AFFICHIER_fileInfo', action_path(:execute => "info", :blocMC => @blocMC) %>
+      <%#= link_to 'AFFICHIER_fileInfo', action_path(:execute => "info", :blocMC => @blocMC) %>
     </div><!-- /.container-fluid -->
   </form>  
 </nav>

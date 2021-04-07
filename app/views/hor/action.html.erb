@@ -82,6 +82,14 @@
                 <% system "./run.sh '#{@niv}' 'profsFinTache' 'profsViables' '#{rem}'" %>
             <% end %>
 
+        <% when "priorites" %> 
+            <% profsFinTache = profsViables = "!"  %>
+            <%# profsFinTache,profsViables = obtenirProfsCompact(@niv) %>
+            <% puts "@execute = #{@execute} niv = #{@niv}  profsFinTache = #{profsFinTache} profsViables = #{profsViables}" ; exit%>    
+           <% $pid = fork do %>
+                <% system "./run.sh '#{@niv}' 'profsFinTache' 'profsViables' '#{rem}'" %>
+            <% end %>
+
         <% when "diago" %> 
             <% $pid = fork do %>
                 <% system "./executer.sh 'diago' '#{@niv}' '' '' '' 'diago' '#{rem}'" %>

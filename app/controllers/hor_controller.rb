@@ -1,79 +1,89 @@
 class HorController < ApplicationController
 
-  def index        # les listes sont des variables globales($): elles servent de base de donn�es
+  def index        # les listes sont des variables globales(): elles servent de base de données
 
     paramsAutorises
 
-    obtenirLesListes( fname = "/home/julienm/hor13/init/metaclasses.txt",
-		      $listeMetaclasses=[],  # listeXxxxx = array
-		      $listeActivites=[],
-		      $listeFoyers=[],
-		      $listeProfs=[],
-		      $listeChevauchent=[],
-		      $listeMetaclassesActivites={},# listeXxxxYyyy = hash{Xxxx = key, Yyyy = value}
-		      $listeActivitesDescription={},
-		      $listeMetaclassesEtat={},
-		      $listeMetaclassesFoyers={},
-		      $listeMetaclassesProfs={},
-		      $listeMetaclassesPeriodes={},
-		      $listeFoyersMetaclasses={},
-		      $listeNiveauxFoyers={},
-		      $listeProfsFoyers={},
-		      $listeProfsCycle={},
-		      $listeProfsPeriodes={},
-		      $listeProfsMetaclasses={}
-		    )
+    $path = ENV["GOBIT_DATA"]
 
-    $listeMetaclassesProfs.each{|mc,prof| $listeChevauchent -= prof if mc[0,3] == "EPS"}
+    fmetas  = "#{$path}/init/metas.txt"
+    fprofs  = "#{$path}/init/profs.txt"
+    ffoyers = "#{$path}/init/foyers.txt"
+    fsalles = "#{$path}/init/salles.txt"
 
+    $metasTxt,$listeMetas,$listeMetasEtat,$listeMetasPeriodes,
+    $listeProfs,$listeFoyers,$listeSalles,
+    $listeMetasFoyers,$listeMetasProfs,$listeFoyersMetas,
+    $listeNiveauxFoyers,$listeProfsFoyers,
+    $listeProfsCycle,$listeProfsPeriodes,$listeProfsMetas = obtenirLesListes(
+    fmetas,  $metasTxt={}, $listeMetas=[], $listeMetasEtat={}, $listeMetasPeriodes={},
+    fprofs,  $listeProfs=[],
+    ffoyers, $listeFoyers=[],
+    fsalles, $listeSalles=[], 
+    
+      $listeMetasFoyers={},
+      $listeMetasProfs={},
+      $listeFoyersMetas={},
+      $listeNiveauxFoyers={},
+      $listeProfsFoyers={},
+      $listeProfsCycle={},
+      $listeProfsPeriodes={},
+      $listeProfsMetas={}
+		  )
+     
+
+    #$listeMetasProfs.each{|mc,prof| $listeChevauchent -= prof if mc[0,3] == "EPS"}
+    # puts "$metasTxt(#{$metasTxt.class}) = #{$metasTxt}"
+    # puts "$listeMetas(#{$listeMetas.class}) = #{$listeMetas}"
+    # puts "$listeMetasEtat(#{$listeMetasEtat.class}) = #{$listeMetasEtat}"
+    # puts "$listeMetasPeriodes(#{$listeMetasPeriodes.class}) = #{$listeMetasPeriodes}"
     #~ puts "$listeProfsMetaclasses(#{$listeProfsMetaclasses.class}) = #{$listeProfsMetaclasses}"
-    #~ puts "$listeMetaclassesPeriodes(#{$listeMetaclassesPeriodes.class}) = #{$listeMetaclassesPeriodes}"
+    #~ puts "$listeMetasPeriodes(#{$listeMetasPeriodes.class}) = #{$listeMetasPeriodes}"
     #~ puts "$listeChevauchent(#{$listeChevauchent.class}) = #{$listeChevauchent}"
     #~ exit
 
-    @mc = $listeMetaclasses  # variables �quivalentes
+    @mc = $listeMetas  # variables �quivalentes
     @blocMC = "index"
     $annee = Time.now.to_s[0,4] 
     $dirCedulables = "op/cedulables" # dir = directory (r�pertoire)
     $dirDiag = "op/diag"
     $dirHoraire = "data"
-  end
-
+   end
 
   def deSelect
     @blocMC = params[:blocMC]
     @mc = @blocMC
-  end
+   end
 
 
   def parade
     @blocMC  = params[:blocMC]
     @execute = params[:execute]
-  end
+   end
 
 
   def changerEtatMetaclasse # interchanger "inactif" <--> "4-en_traitement"
     @mcTraitee = params[:mcTraitee]
-    mc = $listeMetaclassesEtat
+    mc = $listeMetasEtat
 
     mc[@mcTraitee]=="inactif" ? mc[@mcTraitee]="4-en_traitement" : mc[@mcTraitee]="inactif"
 
     blocMetaclasses
-  end
+   end
 
 
   def blocMetaclasses
     @blocMC = params[:blocMC]
     @execute = params[:execute]
     @mc = metaclasses(@blocMC)
-    @mc = $listeMetaclasses unless @blocMC
-  end
+    @mc = $listeMetas unless @blocMC
+   end
 
 
   def paramsAutorises
     params = ActionController::Parameters.new
     ActionController::Parameters.permit_all_parameters = true
-  end
+   end
 
 
   def action
@@ -92,16 +102,16 @@ class HorController < ApplicationController
     @maxSols        = params[:maxSols]  
     @actif          = params[:actif] 
     @ceduler        = params[:ceduler]
-  end
+   end
 
 
 
 
-#~ private
+ 
   def metaclasses(sujet)
 
     liste = []
-    $listeMetaclasses.each do |mc|
+    $listeMetas.each do |mc|
       case sujet
       when "backbone"
 	      liste << mc if %w[EPS ART OPT ANG CHI PHY FM5 MON].include?(mc[0,3])
@@ -109,149 +119,158 @@ class HorController < ApplicationController
 
       when /niveauS/
 	      $listeNiveauxFoyers[sujet[6,2]].each do |gr|
-	        liste << mc if $listeMetaclassesFoyers[mc].include?(gr)
+	        liste << mc if $listeMetasFoyers[mc].include?(gr)
 	      end
 	      liste.uniq!
 
       when /Gr/
-	      liste << mc if $listeMetaclassesFoyers[mc].include?(sujet)
+	      liste << mc if $listeMetasFoyers[mc].include?(sujet)
 
       when "MON"
 	      liste << mc unless /MON/.match(mc) == nil
 
+      when "ANG"
+	      liste << mc if %w[ANG ESL ELA EES].include?(mc[0,3])
+
+      when "HIS"
+	      liste << mc if %w[HIS HQC MON].include?(mc[0,3])
+
       when "4-en_traitement"
-	      liste << mc if $listeMetaclassesEtat[mc] == sujet
+	      liste << mc if $listeMetasEtat[mc] == sujet
 
       when "SCT"
 	      liste << mc if  %w[SCT CHI PHY TMS OPT].include?(mc[0,3])
 
       when "index"
 	      liste << mc
-
       else
 	      liste << mc if mc[0,3] == sujet
       end
     end
     return liste
-  end
+   end
 
 
-  def obtenirLesListes(	fname,
-			listeMetaclasses,
-			listeActivites,
-			listeFoyers,
-			listeProfs,
-			listeChevauchent,
-			listeMetaclassesActivites,
-			listeActivitesDescription,
-			listeMetaclassesEtat,
-			listeMetaclassesFoyers,
-			listeMetaclassesProfs,
-			listeMetaclassesPeriodes,
-			listeFoyersMetaclasses,
-			listeNiveauxFoyers,
-			listeProfsFoyers,
-			listeProfsCycle,
-			listeProfsPeriodes,
-			listeProfsMetaclasses
-		      )
+  def obtenirLesListes(	
+    fmetas,  metasTxt, listeMetas, listeMetasEtat, listeMetasPeriodes,
+    fprofs,  listeProfs,
+    ffoyers, listeFoyers,
+    fsalles, listeSalles,
 
-    file = File.open(fname, "r:iso8859-1")
+    listeMetasFoyers, listeMetasProfs,
+    listeFoyersMetas,
+    listeNiveauxFoyers,
+    listeProfsFoyers, listeProfsCycle, listeProfsPeriodes, listeProfsMetas
+    )
 
-      while (line = file.gets)
-	type, reste = line.split("::")
+    f = File.open(fmetas, "r:iso8859-1")
+      while (line = f.gets)
+	      mcNom,cycle,sem,periodes,reste = line.split(";")
+        metasTxt[mcNom] = line.strip.split(";")
+        listeMetas << mcNom
+        listeMetasEtat[mcNom] = "inactif" # au départ: toutes les metaclasses sont inactives
+        listeMetasPeriodes[mcNom] = periodes
+      end
+      f.close  
 
-	case type.strip
-	when "MetaClasse"
-      mcNom, activites = reste.split("\t")
-      listeMetaclasses << mcNom
-      listeMetaclassesActivites[mcNom] = activites[14,activites.length].strip
-      listeMetaclassesEtat[mcNom] = "inactif" # au d�part: toutes les metaclasses sont inactives
-      listeMetaclassesFoyers[mcNom] = []
-      listeMetaclassesProfs[mcNom] = []
-      listeMetaclassesPeriodes[mcNom] = []
+    f = File.open(fprofs, "r:iso8859-1")
+      while (line = f.gets)
+	      type,reste = line.split("::")
+        nom,rest = reste.split("\t")
+        listeProfs << nom
+      end
+      f.close  
 
-	when "Classe"
-	  nomActivite, description = reste.split("\t")
-	  cours,groupe,periodes,periodesTache,semestre,prof,salle,listFoyers = description.split(";")
+    f = File.open(ffoyers, "r:iso8859-1")
+      while (line = f.gets)
+	      type,reste = line.split("::")
+        foyer,rest = reste.split("\t")
+        listeFoyers << foyer
+      end
+      f.close  
 
-	  listeActivitesDescription[nomActivite] = description.strip
+      f = File.open(fsalles, "r:iso8859-1")
+      while (line = f.gets)
+	      type,reste = line.split("::")
+        salle,rest = reste.split("\t")
+        listeSalles << salle
+      end
+      f.close 
 
-	  listeActivites << nomActivite
-	  listeProfs << prof
+      metasTxt.each do |mcNom,value|
+        listeMetasFoyers[mcNom] = listeMetasProfs[mcNom]= []
 
-	  listeFoyers << listFoyers.strip.split(",")
+        listeFoyers.each{|foyer| (listeMetasFoyers[mcNom] << foyer) if value.include?(foyer)}
+        listeMetasFoyers[mcNom].uniq! if listeMetasFoyers[mcNom]
 
-	  listeMetaclassesFoyers[mcNom] << listFoyers.strip.split(",")
-	  listeMetaclassesFoyers[mcNom].flatten!.uniq!
+        listeProfs.each{|prof| (listeMetasProfs[mcNom] << prof) if value.include?(prof)} 
+        listeMetasProfs[mcNom].uniq!
 
-	  listeMetaclassesProfs[mcNom] << prof.strip
-	  listeMetaclassesProfs[mcNom].uniq!
+        listeProfs.each do |prof| 
+          listeProfsFoyers[prof] = []
+          listeFoyers.each {|foyer| (listeProfsFoyers[prof] << foyer) if (value.include?(foyer) && value.include?(prof))} 
+          listeProfsFoyers[prof].uniq!
+        end              
+      end 
 
-
-	  listeProfsFoyers[prof] = [] if listeProfsFoyers[prof] == nil
-	  listeProfsFoyers[prof] << listFoyers.strip.split(",")
-	  listeProfsFoyers[prof].flatten!.uniq!
-
-	  listeProfsPeriodes[prof] = 0 unless listeProfsPeriodes[prof]
-	  listeProfsPeriodes[prof] += periodes.to_i
-
-	  listeProfsMetaclasses[prof] = [] unless listeProfsMetaclasses[prof]
-	  listeProfsMetaclasses[prof] << mcNom
-	  listeProfsMetaclasses[prof].uniq!
-
-	  listeMetaclassesPeriodes[mcNom] = periodes.to_i
-
-	else
-	end
-
+      listeProfs.each do |prof|
+        listeProfsMetas[prof] = []
+        metasTxt.each {|mcNom,value| listeProfsMetas[prof] << mcNom if value.include?(prof)}
+        listeProfsMetas[prof].uniq!
       end
 
-    file.close
-#~ ------------------------------------------------
+      %w[S1 S2 S3 S4 S5].each do |niv|
+        listeNiveauxFoyers[niv] = []
+        listeFoyers.each {|foyer| listeNiveauxFoyers[niv] << foyer if (foyer[2,1] == niv[1,1])}
+      end
+
+        
+          
+
+
+   #~ ------------------------------------------------
         #~ puts "$listeProfsFoyers(#{$listeProfsFoyers.class}) = #{$listeProfsFoyers.class}"
     #~ exit
-#~ ---------------------------------------------
-    listeFoyers.flatten!.uniq!.sort!
-    listeProfsFoyers.each do |prof,foyers|
-	cycle = []
-	foyers.each do |gr|
-	   cycle << "1" if  gr[2]=="1" || gr[2]=="2"
-	   cycle << "2" if  gr[2]=="3" || gr[2]=="4" || gr[2]=="5"
-	 end
-	 cycle.uniq!
-	 listeProfsCycle[prof]= "1" if cycle[0] == "1"
-	 listeProfsCycle[prof]= "2" if cycle[0] == "2"
-	 listeProfsCycle[prof]= "0" if cycle.size == 2
-       end
-#~ ---------------------------------------------
+   #~ ---------------------------------------------
+    #listeFoyers.flatten!.uniq!.sort!
+    #listeProfsFoyers.each do |prof,foyers|
+	  #  cycle = []
+	  #  foyers.each do |gr|
+	  #  cycle << "1" if  gr[2]=="1" || gr[2]=="2"
+	  #  cycle << "2" if  gr[2]=="3" || gr[2]=="4" || gr[2]=="5"
+	  #end
+	 #cycle.uniq!
+	 #listeProfsCycle[prof]= "1" if cycle[0] == "1"
+	 #listeProfsCycle[prof]= "2" if cycle[0] == "2"
+	 #listeProfsCycle[prof]= "0" if cycle.size == 2
+    #   end
+    #~ ---------------------------------------------
     #~ liste_PROFS_QUI_CHEVAUCHENT sans[EPS] ProfsCycle = "0" (0 prof qui enseigne aux 2 cycles) - EPS
-    listeProfs.uniq!.sort!
-    listeProfs.each{|prof| listeChevauchent << prof if listeProfsCycle[prof] == "0"}
+    #listeProfs.uniq!.sort!
+    #listeProfs.each{|prof| listeChevauchent << prof if listeProfsCycle[prof] == "0"}
 
-    %w[1 2 3 4 5].each{|niv|listeNiveauxFoyers["S"+niv]=[]} # d�finir les �l�ments du hash comme array []
-    listeFoyers.each{|gr|listeNiveauxFoyers["S"+gr[2]]<< gr unless gr[0]=="P"}   # exemple: dans Gr14 le 1( 3e lettre)signifie @niveauS1
+    #%w[1 2 3 4 5].each{|niv|listeNiveauxFoyers["S"+niv]=[]} # d�finir les �l�ments du hash comme array []
+    #listeFoyers.each{|gr|listeNiveauxFoyers["S"+gr[2]]<< gr unless gr[0]=="P"}   # exemple: dans Gr14 le 1( 3e lettre)signifie @niveauS1
 
-    listeMetaclassesFoyers.each do|mc,foyers|
-      foyers.each do |gr|
-	listeFoyersMetaclasses[gr]  = [] if listeFoyersMetaclasses[gr] == nil
-	listeFoyersMetaclasses[gr] << mc
-      end
-    end
+    #listeMetaclassesFoyers.each do|mc,foyers|
+    #  foyers.each do |gr|
+	 #listeFoyersMetaclasses[gr]  = [] if listeFoyersMetaclasses[gr] == nil
+	 #listeFoyersMetaclasses[gr] << mc
+   #   end
+    #end
 
-    listeMetaclasses.sort!
-    listeActivites.sort!
-    listeMetaclassesEtat.sort_by{|_key,value| _key} # class� par ordre aphab�tique de metaclasses
-    listeMetaclassesActivites.sort_by{|_key,value| _key} # class� par ordre aphab�tique de metaclasses
-    listeActivitesDescription.sort_by{|_key,value| _key} # class� par ordre aphab�tique d'activit�
-    listeMetaclassesFoyers.sort_by{|_key,value| _key} # class� par ordre aphab�tique metaclasses
-    listeMetaclassesProfs.sort_by{|_key,value| _key} # class� par ordre aphab�tique metaclasses
-    listeMetaclassesPeriodes.sort_by{|_key,value| _key} # class� par ordre aphab�tique metaclasses
-    listeFoyersMetaclasses.sort_by{|_key,value| _key} # class� par ordre de foyers
-    listeProfsFoyers.sort_by{|_key,value| _key} # class� par ordre de foyers
-    listeProfsPeriodes.sort_by{|_key,value| _key} # class� par ordre de profs
+    listeMetas.sort!
+    listeMetasEtat.sort_by{|_key,value| _key} # classé par ordre aphabétique de metaclasses
+    listeMetasFoyers.sort_by{|_key,value| _key} 
+    listeMetasProfs.sort_by{|_key,value| _key} 
+    listeMetasPeriodes.sort_by{|_key,value| _key} 
+    listeFoyersMetas.sort_by{|_key,value| _key} 
+    listeProfsFoyers.sort_by{|_key,value| _key} 
+    listeProfsMetas.sort_by{|_key,value| _key} 
+
+    return  metasTxt,listeMetas,listeMetasEtat,listeMetasPeriodes,listeProfs,listeFoyers,listeSalles,
+            listeMetasFoyers,listeMetasProfs,listeFoyersMetas,listeNiveauxFoyers,listeProfsFoyers,
+            listeProfsCycle,listeProfsPeriodes,listeProfsMetas
   end
-
-
 
 end #class

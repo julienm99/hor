@@ -10,18 +10,18 @@ function transfert {
     }
     
 
-echo " Procedure de mise a jour de la BASE DE DONNEES"
-echo
-echo "----------------------"
-echo "Repertoire hor13/"
+  echo " Procedure de mise a jour de la BASE DE DONNEES"
+  echo
 cd
 cd hor13
-echo "----------------------"
-echo "svn update"
+  echo "----------------------"
+  echo "RÉPERTOIRE -> "$(pwd)
+  echo "----------------------"
+  echo "svn update"
 svn update
-echo "----------------------"
-echo "Repertoire [hor13/init/]"
 cd init
+  echo "----------------------"
+  echo "RÉPERTOIRE -> "$(pwd)
 
 
 echo "----------------------"
@@ -31,24 +31,32 @@ dir="hor13_exporter_"
   source="salle.txt"     ; destination="salles.txt"     ; transfert
   source="enseignant.txt"; destination="profs.txt"      ; transfert
   source="metaclasse.txt"; destination="metaclasses.txt"; transfert
-echo "----------------------"
+  echo "----------------------"
 dir="exporter_rb_" 
   source="foyers.txt"     ; destination="foyers.rb"     ; transfert
   source="salles.txt"     ; destination="salles.rb"     ; transfert
   source="profs.txt"      ; destination="profs.rb"      ; transfert
   source="metaclasses.txt"; destination="metaclasses.rb"; transfert
-echo "----------------------"
+  echo "----------------------"
 pas="https://murmuring-brook-31271-fork1.herokuapp.com/"
 dir="communications/" 
   source="go_ressources"  ; destination="metas.txt"     ; transfert
-echo "----------------------"
+  echo "----------------------"
 
-echo "Repertoire [hor13/] et svn commit"
 cd ..
+  echo "RÉPERTOIRE -> "$(pwd)
+
 svn commit -m"BASE DE DONNEES ---> MISE A JOUR"
 svn update
-echo "----------------------"
-echo "Repertoire: [rails_projects/hor]"
+  echo "----------------------"
+cd
+cd go/src/github.com/myrer/gobit
+  echo "BASE DE DONNEES [gobit] ---> MISE A JOUR"
+  echo "RÉPERTOIRE -> "$(pwd)
+  ruby rbf/gobit.rb --refresh
+  
 cd
 cd rails_projects/hor
-echo "----------------------"
+  echo "----------------------"
+  echo "RÉPERTOIRE -> "$(pwd)
+  echo "----------------------"

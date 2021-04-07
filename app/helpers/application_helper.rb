@@ -52,18 +52,18 @@ require 'fileutils'
 
 
   def changerMetaclasseEtat(mc,etat)
-    $listeMetaclassesEtat[mc] = etat
+    $listeMetasEtat[mc] = etat
    end
 
 
   def deSelectionner    
-    $listeMetaclassesEtat.each{|mc,etat|$listeMetaclassesEtat[mc] = "inactif" if etat == "4-en_traitement"}
+    $listeMetasEtat.each{|mc,etat|$listeMetasEtat[mc] = "inactif" if etat == "4-en_traitement"}
    end
 
 
   def save_MetaclassesEnTraitement
     mcEnJeu = "4-en_traitement::"
-    $listeMetaclassesEtat.each{|mc,etat| (mcEnJeu +=  " " + mc) if etat == "4-en_traitement" }
+    $listeMetasEtat.each{|mc,etat| (mcEnJeu +=  " " + mc) if etat == "4-en_traitement" }
     file = File.open("public/4-en_traitement.txt", "w")
       file.puts mcEnJeu.strip
     file.close
@@ -86,12 +86,12 @@ require 'fileutils'
 
 
   def mettreMetaclassesEtat_inactif 
-    $listeMetaclassesEtat.each{|mc, etat| $listeMetaclassesEtat[mc]= "inactif"}
+    $listeMetasEtat.each{|mc, etat| $listeMetasEtat[mc]= "inactif"}
    end
 
 
   def statusMetaclasse(mc)
-    case $listeMetaclassesEtat[mc]
+    case $listeMetasEtat[mc]
     when "1-horaire_fixe"
       color = "blue"; bold="bold"; italic="italic"; back = "yellow"
       status = " checked disabled"
@@ -158,12 +158,12 @@ require 'fileutils'
   def obtenirListeProfsFinTache
     profsFinTache = [] ; profsEnjeu = [] ; mcEnjeu = []
     
-    $listeMetaclassesEtat.each do |mc,etat|
+    $listeMetasEtat.each do |mc,etat|
 	    mcEnjeu << mc if etat=="1-horaire_fixe" || etat=="3-cedulables"
 	  end
 	    
-    $listeMetaclassesEtat.each do |mc,etat|
-	    profsEnjeu << $listeMetaclassesProfs[mc] if etat=="3-cedulables"
+    $listeMetasEtat.each do |mc,etat|
+	    profsEnjeu << $listeMetasProfs[mc] if etat=="3-cedulables"
 	  end    
     profsEnjeu.flatten!.uniq!
       
@@ -352,7 +352,7 @@ require 'fileutils'
 
 
   def save_MetaclassesEtat(mcEnJeu, etat)
-      mcEnJeu.each{|mc| $listeMetaclassesEtat[mc] = etat} if mcEnJeu[0]
+      mcEnJeu.each{|mc| $listeMetasEtat[mc] = etat} if mcEnJeu[0]
    end
 
 
