@@ -2,18 +2,19 @@ module ApplicationHelper
 
 require 'fileutils'
 
-  def dirHor13(repertoire)
-    "/home/julienm/hor13/#{repertoire}"
+  def dirGobit(repertoire)
+    $path = ENV["GOBIT_DATA"]  # GOBIT_DATA : défini dans [home/.profile] (s'adapte à l'année de planification scolaire)
+    "#{$path}/#{repertoire}"
    end
 
 
-  def listHor13(repertoire)
-    dirHor13(repertoire)+"/*"
+  def listGobit(repertoire)
+    dirGobit(repertoire)+"/*"
    end
 
 
-  def listHor13Alpha(repertoire)
-    Dir[listHor13(repertoire)].sort {|a,b| a <=> b}
+  def listGobitAlpha(repertoire)
+    Dir[listGobit(repertoire)].sort {|a,b| a <=> b}
    end
 
 
@@ -23,7 +24,7 @@ require 'fileutils'
 
 
   def nbLignesDerniereFiliere(repertoire)
-    nbLignesFiliere(derniereFiliereDuDir(listHor13(repertoire)))
+    nbLignesFiliere(derniereFiliereDuDir(listGobit(repertoire)))
    end
 
 
@@ -33,12 +34,12 @@ require 'fileutils'
 
 
   def valide
-    nbLignesFiliere(derniereFiliereDuDir(listHor13($dirCedulables))) > 0
+    nbLignesFiliere(derniereFiliereDuDir(listGobit($dirCedulables))) > 0
    end
 
 
   def filiere(repertoire)
-    repFiliere = derniereFiliereDuDir(listHor13(repertoire)) 	# chemin complet de la fili�re
+    repFiliere = derniereFiliereDuDir(listGobit(repertoire)) 	# chemin complet de la fili�re
     nbLignes = nbLignesFiliere(repFiliere)			# nombre de lignes de la fili�re
     nomFiliere = repFiliere.split("/").last			# nom de la fili�re sans son chemin
     
@@ -47,7 +48,7 @@ require 'fileutils'
 
 
   def effacer_DerniereFiliere(repertoire)
-    File.delete(derniereFiliereDuDir(listHor13(repertoire)))
+    File.delete(derniereFiliereDuDir(listGobit(repertoire)))
    end
 
 
@@ -150,7 +151,7 @@ require 'fileutils'
 
 
   def obtenirIntervalle(diviseur)
-    nbLignes = nbLignesFiliere(derniereFiliereDuDir(listHor13($dirCedulables)))
+    nbLignes = nbLignesFiliere(derniereFiliereDuDir(listGobit($dirCedulables)))
     (nbLignes.to_i / diviseur).to_s
    end
 
@@ -215,7 +216,7 @@ require 'fileutils'
 
   def updateHoraires
     mcEnJeu = []    
-    file = File.open(dirHor13("data/horaires.txt"), "r:iso8859-1")    
+    file = File.open(dirGobit("data/horaires.txt"), "r:iso8859-1")    
       while (line = file.gets)
 	      type, reste = line.split("::")
         if type.strip == "Horaire" then
@@ -235,7 +236,7 @@ require 'fileutils'
 
 
   def infoDesCedulables
-    fname = derniereFiliereDuDir(listHor13($dirCedulables)) 
+    fname = derniereFiliereDuDir(listGobit($dirCedulables)) 
     obtenirMetaclassesCedulables(fname)
    end
 
@@ -266,7 +267,7 @@ require 'fileutils'
 
    
   def obtenirCedulablesHoraire
-    fname = derniereFiliereDuDir(listHor13($dirCedulables)) 
+    fname = derniereFiliereDuDir(listGobit($dirCedulables)) 
     
     file = File.open(fname, "r:iso8859-1")    
       line = file.gets       # prendre que la premi�re ligne
@@ -291,7 +292,7 @@ require 'fileutils'
 
 
   def obtenir_OrdreSize(repertoire)
-     Dir.glob(listHor13(repertoire)).sort{|a,b| File.size(a) <=> File.size(b)} 
+     Dir.glob(listGobit(repertoire)).sort{|a,b| File.size(a) <=> File.size(b)} 
     end
 
 
@@ -323,7 +324,7 @@ require 'fileutils'
 
 
   def obtenirCompact(niv,jour)
-    fname = dirHor13("op/compact/#{niv}_compact.j#{jour}")         
+    fname = dirGobit("op/compact/#{niv}_compact.j#{jour}")         
     return obtenirFileLigne_1(fname)
     end  
 
@@ -346,7 +347,7 @@ require 'fileutils'
 
 
   def obtenirDiag(niv,jour)
-    fname = dirHor13("op/diag/#{niv}_diag.j#{jour}")         
+    fname = dirGobit("op/diag/#{niv}_diag.j#{jour}")         
     return obtenirFileLigne_1(fname)
     end  
 

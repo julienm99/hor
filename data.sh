@@ -4,10 +4,9 @@
 #~ 	telechargees dans le repertoire [hor13/init/]
 
 function transfert {
-          echo "Transfert: "$pas$dir$source" > "$destination
-	  
-          curl $pas$dir$source > $destination
-    }
+      echo "Transfert: "$pas$dir$source" > "$destination
+    curl $pas$dir$source > $destination
+ }
     
 
   echo " Procedure de mise a jour de la BASE DE DONNEES"
@@ -51,9 +50,10 @@ svn update
   echo "----------------------"
 cd
 cd go/src/github.com/myrer/gobit
-  echo "BASE DE DONNEES [gobit] ---> MISE A JOUR"
+  echo "BASE DE DONNEES [gobit] ---> MISE À JOUR"
   echo "RÉPERTOIRE -> "$(pwd)
-  ruby rbf/gobit.rb --refresh
+  echo "ruby rbf/gobit.rb --refresh"
+ruby rbf/gobit.rb --refresh
   
 cd
 cd rails_projects/hor

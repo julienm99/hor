@@ -33,7 +33,7 @@ class HorController < ApplicationController
      
 
     #$listeMetasProfs.each{|mc,prof| $listeChevauchent -= prof if mc[0,3] == "EPS"}
-    # puts "$metasTxt(#{$metasTxt.class}) = #{$metasTxt}"
+    #puts "$metasTxt(#{$metasTxt.class}) = #{$metasTxt}"
     # puts "$listeMetas(#{$listeMetas.class}) = #{$listeMetas}"
     # puts "$listeMetasEtat(#{$listeMetasEtat.class}) = #{$listeMetasEtat}"
     # puts "$listeMetasPeriodes(#{$listeMetasPeriodes.class}) = #{$listeMetasPeriodes}"
@@ -164,37 +164,44 @@ class HorController < ApplicationController
     )
 
     f = File.open(fmetas, "r:iso8859-1")
-      while (line = f.gets)
-	      mcNom,cycle,sem,periodes,reste = line.split(";")
-        metasTxt[mcNom] = line.strip.split(";")
-        listeMetas << mcNom
-        listeMetasEtat[mcNom] = "inactif" # au départ: toutes les metaclasses sont inactives
-        listeMetasPeriodes[mcNom] = periodes
+      while line = f.gets
+          mcNom,cycle,sem,periodes,reste = line.split(";")
+          metasTxt[mcNom] = line.strip.split(";")
+          listeMetas << mcNom
+          listeMetasEtat[mcNom] = "inactif" # au départ: toutes les metaclasses sont inactives
+          listeMetasPeriodes[mcNom] = periodes 
       end
-      f.close  
+    f.close  
 
     f = File.open(fprofs, "r:iso8859-1")
-      while (line = f.gets)
-	      type,reste = line.split("::")
-        nom,rest = reste.split("\t")
-        listeProfs << nom
+      while line = f.gets
+        if line.size > 1 then
+          type,reste = line.split("::")
+          nom,rest = reste.split("\t")
+          listeProfs << nom
+        end
       end
-      f.close  
+    f.close  
 
     f = File.open(ffoyers, "r:iso8859-1")
-      while (line = f.gets)
-	      type,reste = line.split("::")
-        foyer,rest = reste.split("\t")
-        listeFoyers << foyer
+      while line = f.gets
+        if line.size > 1 then 
+          type,reste = line.split("::")
+          foyer,rest = reste.split("\t")
+          listeFoyers << foyer
+          puts "foyer = #{foyer}"
+        end
       end
-      f.close  
+    f.close  
 
       f = File.open(fsalles, "r:iso8859-1")
-      while (line = f.gets)
-	      type,reste = line.split("::")
-        salle,rest = reste.split("\t")
-        listeSalles << salle
-      end
+        while line = f.gets
+          if line.size > 1 then 
+            type,reste = line.split("::")
+            salle,rest = reste.split("\t")
+            listeSalles << salle
+          end
+        end
       f.close 
 
       metasTxt.each do |mcNom,value|
@@ -223,10 +230,6 @@ class HorController < ApplicationController
         listeNiveauxFoyers[niv] = []
         listeFoyers.each {|foyer| listeNiveauxFoyers[niv] << foyer if (foyer[2,1] == niv[1,1])}
       end
-
-        
-          
-
 
    #~ ------------------------------------------------
    #~ puts "$listeProfsFoyers(#{$listeProfsFoyers.class}) = #{$listeProfsFoyers.class}"
@@ -268,8 +271,10 @@ class HorController < ApplicationController
     listeProfsFoyers.sort_by{|_key,value| _key} 
     listeProfsMetas.sort_by{|_key,value| _key} 
 
-    return  metasTxt,listeMetas,listeMetasEtat,listeMetasPeriodes,listeProfs,listeFoyers,listeSalles,
-            listeMetasFoyers,listeMetasProfs,listeFoyersMetas,listeNiveauxFoyers,listeProfsFoyers,
+    return  metasTxt,listeMetas,listeMetasEtat,listeMetasPeriodes,
+            listeProfs,listeFoyers,listeSalles,
+            listeMetasFoyers,listeMetasProfs,listeFoyersMetas,
+            listeNiveauxFoyers,listeProfsFoyers,
             listeProfsCycle,listeProfsPeriodes,listeProfsMetas
   end
 

@@ -128,10 +128,15 @@
 							<span class="sr-only">Toggle Dropdown</span>
 						</button>
 						<ul class="dropdown-menu multi-level">
-							<label>___VIABILISER<br>___COMPACTER</label>
+							<label>___COMPACTER</label>
 							<li role="separator" class="divider"></li>
 							<li class="dropdown-submenu">
 								<% %w[S1 S2 S3 S4 S5].each do |niv| %>
+									<% if niv == "S3" %>
+										<li role="separator" class="divider"></li>
+										<label>___VIABILISER +<br>___COMPACTER</label>
+										<li role="separator" class="divider"></li>
+									<% end%>
 									<li><%= link_to niv, action_path(:execute=>"compact", :blocMC=>@blocMC, :niv => niv)%></li>
 								<% end %>
 							</li>
