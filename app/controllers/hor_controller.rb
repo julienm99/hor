@@ -229,7 +229,7 @@ class HorController < ApplicationController
 
 
    #~ ------------------------------------------------
-        #~ puts "$listeProfsFoyers(#{$listeProfsFoyers.class}) = #{$listeProfsFoyers.class}"
+   #~ puts "$listeProfsFoyers(#{$listeProfsFoyers.class}) = #{$listeProfsFoyers.class}"
     #~ exit
    #~ ---------------------------------------------
     #listeFoyers.flatten!.uniq!.sort!
