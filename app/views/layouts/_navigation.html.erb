@@ -21,6 +21,8 @@
               <li>---------------------------</li>
               <li><%= link_to 'MISE A JOUR: filieres INFO des HORAIRES fixes',action_path(:execute=>"infoHor", :blocMC=>@blocMC,:transfert_PAS=>"non")%></li>
               <li><%= link_to 'MISE A JOUR: filieres INFO des CEDULABLES',action_path(:execute=>"infoCeds",:blocMC=>@blocMC,:transfert_PAS=>"non")%></li>
+              <li><%= link_to 'Filiere info_HORAIRES_objets',action_path(:execute=>"infoHorTous",:blocMC=>@blocMC,:transfert_PAS=>"non",:objets=>'Pisc')%></li>
+              <li><%= link_to 'Filiere info_RÉPARTITIONS_objets',action_path(:execute=>"infoRepsTous",:blocMC=>@blocMC,:transfert_PAS=>"non",:objets=>'Pisc')%></li>
               <li>---------------------------</li>
               <li><%= link_to 'MISE A JOUR + TRANSFERT: horaires fixes  ---> www.PAS',action_path(:execute=>"infoHor", :blocMC=>@blocMC,:transfert_PAS=>"oui")%></li>
               <li><%= link_to 'MISE A JOUR + TRANSFERT: cedulables  ---> www.PAS',action_path(:execute=>"infoCeds",:blocMC=>@blocMC,:transfert_PAS=>"oui")%></li>

@@ -45,13 +45,15 @@
 						<li class="dropdown-submenu">
 							<li><%= link_to "[-d] debug gobit4.rb", action_path(:execute=>"debug",:segment=>@segment,:blocMC=>@blocMC) %></li>
 							<li>-------------</li>
-							<li><%= link_to "[-m] former---> segment #{@segment}", action_path(:execute=>"segMetas",:segment=>@segment,:blocMC=>@blocMC) %></li>
-							<li><%= link_to "[-s] contraintesR segment:#{@segment}", action_path(:execute=>"stats",:segment=>@segment,:blocMC=>@blocMC) %></li>
-							<li><%= link_to "[-x] répartir--> segment #{@segment}", action_path(:execute=>"repartir",:segment=>@segment,:blocMC=>@blocMC) %></li>
+							<li><%= link_to "[-m] SEGMENT.txt ---> segment #{@segment}", action_path(:execute=>"segMetas",:segment=>@segment,:blocMC=>@blocMC) %></li>
+							<li><%= link_to "[-s] CONTRAINTES_R segment #{@segment}", action_path(:execute=>"stats",:segment=>@segment,:blocMC=>@blocMC) %></li>
+							<li><%= link_to "[-p] PRIORITÉS ------> segment #{@segment}", action_path(:execute=>"priorites",:segment=>@segment,:blocMC=>@blocMC) %></li>
+							<li><%= link_to "[-x] RÉPARTIR -------> segment #{@segment}", action_path(:execute=>"repartir",:segment=>@segment,:blocMC=>@blocMC) %></li>
 							<li>-------------</li>
-							<li><%= link_to "[-m] former---> segment #{next_segment}", action_path(:execute=>"segMetas",:segment=>next_segment,:blocMC=>@blocMC) %></li>
-							<li><%= link_to "[-s] contraintesR segment:#{next_segment}", action_path(:execute=>"stats",:segment=>next_segment,:blocMC=>@blocMC) %></li>
-							<li><%= link_to "[-x] répartir--> segment #{next_segment}", action_path(:execute=>"repartir",:segment=>next_segment,:blocMC=>@blocMC) %></li>
+							<li><%= link_to "[-m] SEGMENT.txt --> segment #{next_segment}", action_path(:execute=>"segMetas",:segment=>next_segment,:blocMC=>@blocMC) %></li>
+							<li><%= link_to "[-s] CONTRAINTES_R segment#{next_segment}", action_path(:execute=>"stats",:segment=>next_segment,:blocMC=>@blocMC) %></li>
+							<li><%= link_to "[-p] PRIORITÉS ------> segment #{next_segment}", action_path(:execute=>"priorites",:segment=>next_segment,:blocMC=>@blocMC) %></li>
+							<li><%= link_to "[-x] RÉPARTIR -------> segment #{next_segment}", action_path(:execute=>"repartir",:segment=>next_segment,:blocMC=>@blocMC) %></li>
 							<li>-------------</li>
 						</li>
 					</ul>
@@ -154,7 +156,9 @@
 							<label>DIAGONALISATION<br>Choisir un NIVEAU</label>
 							<li role="separator" class="divider"></li>
 							<li class="dropdown-submenu">
-								<% %w[S1 S2 S3 S4 S5].each do |niv| %>
+								<li><%= link_to "FIX_DIAGO", action_path(:execute=>"fix_diago", :blocMC=>@blocMC, :niv => @niv)%></li>
+								<li role="separator" class="divider"></li>
+								<% %w[S1 S2 S3 S4 S5 ].each do |niv| %>
 									<li><%= link_to niv, action_path(:execute=>"diago", :blocMC=>@blocMC, :niv => niv)%></li>
 								<% end %>
 							</li>

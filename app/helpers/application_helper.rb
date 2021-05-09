@@ -52,6 +52,31 @@ require 'fileutils'
    end
 
 
+  def init_PrioritesSegment(segment)
+	  path = ENV["GOBIT_DATA"]+"/init/"
+    ff = File.open(path+"priorities.txt", "a+")
+      	f = File.open(path+"segments.txt", "r:iso8859-1")
+			metas = Array.new
+			metas << "#=== #{segment}"
+			while ligne = f.gets
+				if ligne.size > 1  then #Do this to avoid problems when input file has trailing newline characters at eof
+					if ligne.include?("segment #{segment}")
+						while !(ligne.include?("end"))
+							ligne = f.gets
+							unless (ligne.include?("#") || ligne == nil)
+								mcArray = ligne.strip.split(" ") 
+								mcArray.each{|mc| metas << ("\t" + mc + ";1;")}
+							end
+						end
+						metas.delete_at(metas.size-1)   # enlever le "end" final
+						ff.puts metas
+					end
+				end
+			end
+       f.close
+    ff.close
+
+   end
   def changerMetaclasseEtat(mc,etat)
     $listeMetasEtat[mc] = etat
    end
@@ -156,23 +181,60 @@ require 'fileutils'
    end
 
 
-  def obtenirListeProfsFinTache
-    profsFinTache = [] ; profsEnjeu = [] ; mcEnjeu = []
-    
-    $listeMetasEtat.each do |mc,etat|
-	    mcEnjeu << mc if etat=="1-horaire_fixe" || etat=="3-cedulables"
-	  end
-	    
-    $listeMetasEtat.each do |mc,etat|
-	    profsEnjeu << $listeMetasProfs[mc] if etat=="3-cedulables"
-	  end    
-    profsEnjeu.flatten!.uniq!
-      
-    $listeProfsMetaclasses.each{|prof,mc| profsFinTache << prof.capitalize unless (mc-mcEnjeu).any?}
-    
-    return profsFinTache
+  def obtenirListeProfsFinTache_ProfsViables(niv)
+    profsFinTache = [] ; profsViables = [] ; niv = niv[1,1] 
+    f = File.open("#{ENV["GOBIT_DATA"]}/init/contraintesR.txt", "r:iso8859-1")
+		seg = false
+        while ligne = f.gets
+			seg = true if ligne.include?("segment:#{niv}")
+			while seg
+				ligne = f.gets
+				if f.eof? then 
+					seg = false 
+				else
+					if ligne.include?("Done")
+						prof,rest = ligne.strip.split(";")
+						profsFinTache << prof 
+					end
+					if ligne.include?("Chevauche")
+						prof,rest = ligne.strip.split(";")
+						profsViables << prof 
+					end
+					if ligne.include?("segment:") then 
+						ligne.include?("segment:#{niv}") ? (seg = true) : (seg = false)
+					end
+				end
+			end
+        end
+    f.close
+    return profsFinTache.uniq.sort, profsViables.uniq.sort
    end
 
+  def obtenirListeProfs(matieres)
+    listeProfs = [] ; listeProfsMatieres = []
+    f = File.open("#{ENV["GOBIT_DATA"]}/init/profs.txt", "r:iso8859-1")
+      while ligne = f.gets
+        if ligne.size > 1
+          termes,reste = ligne.strip.split("\t")
+          type,prof = termes.strip.split("::")
+          listeProfs << prof
+        end
+      end
+    f.close
+
+    f = File.open("#{ENV["GOBIT_DATA"]}/init/metas.txt", "r:iso8859-1")
+      while ligne = f.gets
+        if ligne.size > 1
+          elements = ligne.strip.split(";")
+          if matieres.any?{|mc| ligne.include?(mc)}
+            elements.each{|prof| listeProfsMatieres << prof if listeProfs.include?(prof)}
+          end
+        end
+      end
+    f.close
+
+    return listeProfsMatieres.uniq
+   end
 
   def filtrerMatiereChoisie(metaclasses, metaclassesChoisies = [], matiere)
       metaclasses.each{|mc| metaclassesChoisies << mc if mc[0,3] == matiere; puts mc }

@@ -97,6 +97,7 @@ class HorController < ApplicationController
     @etat 	        = params[:etat]
     @sizeFile 	    = params[:sizeFile]
     @transfert_PAS  = params[:transfert_PAS]  # PAS : site web "Planification Année Scolaire"
+    @objets         = params[:objets]         # [objets::Foyer,Prof,Salle] ex.[objets::Gr103,Angm,Pisc]
     @segment        = params[:segment]  
     @jour           = params[:jour]  
     @maxSols        = params[:maxSols]  
@@ -114,8 +115,8 @@ class HorController < ApplicationController
     $listeMetas.each do |mc|
       case sujet
       when "backbone"
-	      liste << mc if %w[EPS ART OPT ANG CHI PHY FM5 MON].include?(mc[0,3])
-	      liste << mc if %w[MAT5 FRA5].include?(mc[0,4])
+	      liste << mc if %w[EPS ART DRA OPT ANG CHI PHY FM5 MON ELA EES ESL].include?(mc[0,3])
+	      liste << mc if %w[MAT5 FRA5 ECR4 ECR5].include?(mc[0,4])
 
       when /niveauS/
 	      $listeNiveauxFoyers[sujet[6,2]].each do |gr|
@@ -131,6 +132,9 @@ class HorController < ApplicationController
 
       when "ANG"
 	      liste << mc if %w[ANG ESL ELA EES].include?(mc[0,3])
+
+      when "ART"
+	      liste << mc if %w[ART DRA].include?(mc[0,3])
 
       when "HIS"
 	      liste << mc if %w[HIS HQC MON].include?(mc[0,3])
@@ -189,7 +193,6 @@ class HorController < ApplicationController
           type,reste = line.split("::")
           foyer,rest = reste.split("\t")
           listeFoyers << foyer
-          puts "foyer = #{foyer}"
         end
       end
     f.close  
