@@ -11,13 +11,14 @@ echo "-----------------------------------------------------------------------"
 echo "     BUT: FORMER LES FILIERES [hor13/info/...] des horaires officiels."
 echo "            TRANSFERT dans le PAS : "$transfert_PAS"!"
 echo "-----------------------------------------------------------------------"
-      cd ; cd hor13
+      cd $HOR13
       echo "RÉPERTOIRE -> "$(pwd)
       echo "----------------------"
 echo "SAUVEGARDER par prudencce [data/horaires.txt] dans [data/horairesTemp.txt]"
       cp data/horaires.txt data/horairesTemp.txt
-if [ $transfert_PAS = "oui" ] ; then echo "TANSFERT au PAS" ; ruby mapred/http.rb ; fi
+if [ $transfert_PAS = "oui" ] ; then echo "TANSFERT au PAS" ; ruby $GOBIT/rbf/push_horaires.rb ; fi
 echo "FORMER: Les filieres [hor13/info/...] selon [data/horaires.txt] officiel"
+      cd $HOR13
       ./info.sh 
       cp data/horairesTemp.txt data/horaires.txt
 echo "----------------------"

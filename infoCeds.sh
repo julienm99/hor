@@ -22,7 +22,7 @@
       #echo "      TEMPORAIREMENT LA PREMIERE SOLUTION"
       #echo "-----------------------------------------------------"
       #echo
-cd ; cd hor13
+cd $HOR13
 
 transfert_PAS=$1
 metas=$2
@@ -30,7 +30,8 @@ objets=$3
 count=$4
 execute=$5    
 derniere=$(ls $GOBIT_DATA/op/cedulables -rt | tail -n1)
-      #echo "La derniere filiere de cedulables traitee est:---> ["$derniere"]"
+      echo "La derniere filiere de cedulables traitee est:---> ["$derniere"]"
+      #echo $metas 
       #echo "----------------------"
 cp data/horaires.txt data/horairesTemp.txt 
 if [ $execute = "infoCeds" ] ; then ruby script/format_horaire_TACHES.rb $metas >> data/horaires.txt ; fi
@@ -38,11 +39,7 @@ if [ $execute = "infoCeds" ] ; then ./info.sh ; fi
 if [ $execute = "infoHorTous" ] ; then ./info.sh $objets $count $execute $derniere ; fi
 
 cp data/horaires.txt data/horairesCeds2pas.txt
-if [ transfert_PAS = "oui" ]
- then
-      #echo "TRANSFERER l'horaire des cedulables dans le PAS (Planification Annee Scolaire [web])"
-      ruby mapred/http.rb
- fi
+if [ $transfert_PAS = "oui" ] ; then echo "TANSFERT au PAS" ; ruby $GOBIT/rbf/push_horaires.rb ; fi
 
 
       #echo "FORMER: les filieres [INFO_***.txt] selon la 1re ligne de la filiere ["$derniere"]"
@@ -51,14 +48,15 @@ cp data/horairesTemp.txt data/horaires.txt
 
 #echo "AFFICHER: l'horaire (temporaire) des Foyers (Groupes) à titre d'exemple"
       if [ -z "$objets" ] ; then
+      
             #cat info/info_HORAIRE_Piscine.txt
 
             #cat info/info_HORAIRE_S5.txt
             #cat info/info_HORAIRE_S4.txt
             #cat info/info_HORAIRE_S3.txt
-            cat info/info_HORAIRE_S2.txt
+            #cat info/info_HORAIRE_S2.txt
             #cat info/info_HORAIRE_S1.txt
-
+            cat info/info_REPARTITION_Gr.txt
             cd ; cd rails_projects/hor
       fi
 

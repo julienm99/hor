@@ -8,33 +8,34 @@
         <% f_hor13 = "#{ENV["HOR13"]}" %>
         <% f_hor21 = "#{ENV["GOBIT_DATA"]}"%>
         <% derniere = derniereFiliereDuDir(listGobit($dirCedulables)) %>
+        <% rem = [] %>
 
 
 
     <%# REMARQUES: BUTS DES OPÉRATIONS %>
-        <% rem="INITIALISATION de la filière #{@fname} dans le répertoire [~/op/cedulables]" if @execute=="init" %>
-        <% rem="CONTRAINTES-R (répartitions) du segment #{@segment} mis à la fin de [~/init/contraintesR.txt]" if @execute=="stats"%>
-        <% rem="LISTE des METACLASSES placées à la fin de [~/init/segments.txt]" if @execute=="metas"%>
-        <% rem="TERMINAL: Liste des principales variables du programme gobit4.rb (debug)" if @execute=="debug"%>
-        <% rem="TERMINAL: Affiche les répartitions des metas [en traitement](rouge+vert): SANS ENREGISTREMENT" if @execute=="repartir"%> 
-        <% rem="ENREGISTRE dans #{@segment}.ceds les cédulables des metas en traitement(rouge+vert)" if @execute=="go"%>
-        <% rem="ADDITIONNE dans #{@segment}.ceds les cédulables des metas en traitement(rouge+vert)" if @execute=="go_add"%>
-        <% rem="FORMER: [#{@niv}-2.cedul] " if @execute=="ceduler"%>
-        <% rem="TROUVER les profs des segments: #{@niv[1,1]}00 " if @execute=="compact"%>
-        <% rem="DIAGONALISATION par méthode génétique (meilleur chromosome = meilleur horaire)" if @execute=="diago"%>
-        <% rem="TRIER la filière selon la variance (meilleure variance = plus petit nombre)" if @execute=="variance"%>
-        <% rem="rem à faire" if @execute=="data"%>
-        <% rem="rem à faire" if @execute=="horaire-a"%>
-        <% rem="rem à faire" if @execute=="effacer"%>
-        <% rem="rem à faire" if @execute=="reset_cedul"%>
+        <% rem<<"INITIALISATION de la filière #{@fname} dans le répertoire [~/op/cedulables]" if @execute=="init" %>
+        <% rem<<"CONTRAINTES-R (répartitions) du segment #{@segment} mis à la fin de [~/init/contraintesR.txt]" if @execute=="stats"%>
+        <% rem<<"LISTE des METACLASSES placées à la fin de [~/init/segments.txt]" if @execute=="metas"%>
+        <% rem<<"TERMINAL: Liste des principales variables du programme gobit4.rb (debug)" if @execute=="debug"%>
+        <% rem<<"TERMINAL: Affiche les répartitions des metas [en traitement](rouge+vert): SANS ENREGISTREMENT" if @execute=="repartir"%> 
+        <% rem<<"ENREGISTRE dans #{@segment}.ceds les cédulables des metas en traitement(rouge+vert)" if @execute=="go"%>
+        <% rem<<"ADDITIONNE dans #{@segment}.ceds les cédulables des metas en traitement(rouge+vert)" if @execute=="go_add"%>
+        <% rem<<"FORMER: [#{@niv}-2.cedul] " if @execute=="ceduler"%>
+        <% rem<<"TROUVER les profs des segments: #{@niv[1,1]}00 " if @execute=="compact"%>
+        <% rem<<"DIAGONALISATION par méthode génétique (meilleur chromosome = meilleur horaire)" if @execute=="diago"%>
+        <% rem<<"TRIER la filière selon la variance (meilleure variance = plus petit nombre)" if @execute=="variance"%>
+        <% rem<<"rem à faire" if @execute=="data"%>
+        <% rem<<"rem à faire" if @execute=="horaire-a"%>
+        <% rem<<"rem à faire" if @execute=="effacer"%>
+        <% rem<<"rem à faire" if @execute=="reset_cedul"%>
     
 
     <% case @execute %>   
         <% when "vide" %> 
-            <% rem = "Opération vide !" %> 
+            <% rem << "Opération vide !" %> 
         <% when "parade" %> 
             <%= link_to parade, parade_path  %><br>
-            <% rem = "Opération PARADE n'est pas fontionnelle !" %> 
+            <% rem << "Opération PARADE n'est pas fontionnelle !" %> 
             
         <% when "documents" %> 
             <%  $pid = fork do           %>
@@ -86,9 +87,9 @@
             <% end %>
                         
         <% when "fix_diago" %> 
-            <% rem = "Fixer l'horaire de #{$niv} \n" %>
-            <% rem += "COPIER l'horaire officiel dans hor13 \n" %>
-            <% rem += "MISE À JOUR  des info \n" %>
+            <% rem <<"--- Fixer l'horaire de #{$niv} dans [horaires.txt]\n" %>
+            <% rem <<"--- COPIER l'horaire officiel dans hor13 \n" %>
+            <% rem <<"--- MISE À JOUR  des info \n" %>
             <% niv = "S#{derniere[-8,1]}" %>
 
             <% system "./executer.sh 'fix_diago' '#{niv}' '' '' '' 'fix_diago' '#{rem}'" %>
@@ -114,7 +115,7 @@
                     <% system "./executer.sh '#{@segment}' '-m' '#{metas}' '' '' 'segMetas' '#{rem}' " %>
                 <% when "priorites" %>
                     <% init_PrioritesSegment(@segment) %>
-                    <% rem = "Les metas du segment #{@segment} ont initialisé leurs priorités." %>
+                    <% rem <<"Les metas du segment #{@segment} ont initialisé leurs priorités." %>
                 <% when "debug" %>
                     <% system "./executer.sh '#{@segment}' '-d' '' '' '#{metas}' 'segment' '#{rem}' " %>
                 <% else %>
@@ -149,61 +150,6 @@
                     <% system "./executer.sh '' 'reset_cedul' '#{niveau}' '' '' 'action' '#{rem}' " if @execute == "reset_cedul" %>
             <% end %>
 
-        <% when "valider" %> 
-            <% repFiliere,nbLignes,nomFiliere = filiere($dirCedulables) %> 
-            <% mc_A_valider = save_MetaclassesEnTraitement %>
-            <h4> <%= mc_A_valider %></h4> 
-            <%  $pid = fork do %>
-                <% Signal.trap("HUP"){puts "Ouch!" ; exit}                       %>
-                <% executionSansErreur = system "./valider.sh '#{mc_A_valider}'" %>
-            <% end %>
-            <%  sleep 3  %>
-            <h4><br><br><font color="red"><bold>
-            <%= " OPERATION [ #{@execute} ] en cours (pid: #{$pid}).............." %>
-            <br><br><font color="blue"><bold>
-            <%= "BUT: "%><br>
-            <%= "TROUVER des cedulables a partir [op/cedulables/#{nomFiliere}]"%>
-            <br><br>
-            <%= "SOURCE:    [ #{nomFiliere} ]" %><br>
-            <%  repFiliere,nbLignes,nomFiliere = filiere($dirCedulables)%> 
-            <%= "->DESTIN:    [ #{nomFiliere} ]" %>
-            <br><br><br>
-            <%= "P.S. Rafraichir [ #{nomFiliere} ]---> Editeur de fichiers CTRL-R "%>
-            </h4></font></bold>
-
-        <% when "invalider" %> 
-            <% repFiliere,nbLignes,nomFiliere = filiere($dirCedulables) %> 
-            <% executionSansErreur = system "./invalider.sh"  %>
-            <% if executionSansErreur then %>
-                <h4><br><br><font color="red"><bold>
-                <%= " OPERATION [ #{@execute} ] en cours (pid: #{$pid}).............." %>
-                <br>
-                <%= "--> BUT: EFFACER la filiere [ #{nomFiliere} ]" %>
-                <br>
-                <%  repFiliere,nbLignes,nomFiliere = filiere($dirCedulables) %> 
-                <%= "--> La derniere filiere de CEDULABLES est [ #{nomFiliere} ]" %>
-            <% end %>
-            </h4></font></bold>
-
-
-        <% when "filtrer" %> 
-            <% intervalle = obtenirIntervalle(diviseur = @sizeFile.to_i) %> 
-            <% repFiliere,nbLignes,nomFiliere = filiere($dirCedulables) %> 
-
-            <% system "./filtrer.sh '#{intervalle}'" %>
-
-            <h4><br><br><font color="red"><bold>
-            <%= " OPERATION [ #{@execute} ] en cours (pid: #{$pid}).............." %>
-            <br><br><font color="blue">
-            <%= "BUT"%><br>
-            <%= "ARCHIVER: #{nomFiliere} devient [ 0_#{nomFiliere} ] "%><br>
-            <%= "ECHANTILLONNER (filtrer) a #{intervalle} lignes d'intervalle [ 0_#{nomFiliere} ]"%><br>
-            <%= "CREER une filiere filtree: #{nomFiliere}] contenant les echantillons"  %><br>
-            <%= "CREER une filiere identique au repertoire: [op/cedulables_back/#{nomFiliere}] "%><br>
-            <%= "        pour utilisation en parallele avec un setup: [./run.sh] "%>
-            </h4></font></bold>
-
-
         <% when "variance" %> 
             <% repFiliere,nbLignes,nomFiliere = filiere($dirCedulables)  %> 
             <% $pid = fork do %>
@@ -217,14 +163,11 @@
             <%       system "./fix-hor.sh #{horaireTemp}"              %>
             <%     end                                                 %>
             <h4><br><br><font color="red"><bold>
-            <%= " OPERATION [ #{@execute} ] en cours (pid: #{$pid})..............   "%>
             <br><br><font color="blue">
-            <%= "BUT:" %><br>
-            <%= "FIXER: les CEDULABLES selon la 1re ligne de [#{nomFiliere}]        "%><br>
-            <%= "OBTENIR: [hor13/info/] selon 1re ligne de [#{nomFiliere}]           "%><br>
-            <%= "TRANSFERER: ces horaires au PAS (Planification Annee Scolaire [web])"%>
-            <br><br><br>
-            <%= "ETAT FINAL: [data/horaires.txt] selon 1re ligne [#{nomFiliere}]     "%>
+            <%= rem << "--- FIXER: les CEDULABLES selon la 1re ligne de [#{nomFiliere}]        "%><br>
+            <%= rem << "--- OBTENIR: [hor13/info/] selon 1re ligne de [#{nomFiliere}]           "%><br>
+            <%= rem << "--- TRANSFERER: ces horaires au PAS (Planification Annee Scolaire [web])"%>
+            <%= rem << "--- ETAT FINAL: [data/horaires.txt] selon 1re ligne [#{nomFiliere}]     "%>
             </h4></font></bold>
         
         
@@ -241,8 +184,8 @@
             <% $pid = fork do  %>
                 <% system "./infoHor.sh #{@transfert_PAS}"   %>
             <%end%>
-            <% rem = "METTRE A JOUR LES INFO: [hor13/info/...] avec l'horaire fixe \n" %><br>
-            <% rem +="TRANSFERER ces horaires dans le www.PAS (Planif. Annee Scolaire)" if @transfert_PAS %>
+            <% rem << "--- METTRE A JOUR LES INFO: [hor13/info/...] avec l'horaire fixe \n" %><br>
+            <% rem << "--- TRANSFERER ces horaires dans le www.PAS (Planif. Annee Scolaire)" if @transfert_PAS %>
 
 
         <% when "infoCeds" %> 
@@ -251,8 +194,8 @@
                 <% $pid = fork do  %>
                     <% system "./infoCeds.sh #{@transfert_PAS} '#{metas}' '' '' '#{@execute}' "  %>
                 <% end %>
-            <%= rem = "OBTENIR: les INFO [~/info/...] selon la 1re ligne de [#{nomFiliere}] \n" %>
-            <%= rem += "ETAT FINAL: la filiere [data/horaires.txt] est remise au statut précédent (sans les cedulables)"%>
+            <%= rem << "--- OBTENIR: les INFO [~/info/...] selon la 1re ligne de [#{nomFiliere}] \n" %>
+            <%= rem << "--- ETAT FINAL: la filiere [data/horaires.txt] est remise au statut précédent (sans les cedulables)"%>
 
         <% when "infoHorTous" %> 
             <% repFiliere,nbLignes,nomFiliere = filiere($dirCedulables) %>
@@ -274,8 +217,8 @@
                 <% f.close %>
             <% FileUtils.cp(f_info13, f_info21) %>
 
-            <%= rem = "OBTENIR: les horaires possibles de (#{@objets}) à partir des cédulables: [#{derniere}] \n" %>
-            <%= rem += "ETAT FINAL: la filiere [data/horaires.txt] est remise au statut précédent (sans les cedulables)"%>
+            <%= rem << "--- OBTENIR: les horaires possibles de (#{@objets}) à partir des cédulables: [#{derniere}] \n" %>
+            <%= rem << "--- ETAT FINAL: la filiere [data/horaires.txt] est remise au statut précédent (sans les cedulables)"%>
 
         
         <% when "infoRepsTous" %> 
@@ -290,19 +233,19 @@
                 <% system "cd; cd hor13; cat #{derniere} | ruby #{f_hor13}/mapred/affiche_objet.rb #{@objets} > #{f_info13}"  %>
 
             <% FileUtils.cp(f_info13, f_info21) %>
-            <%= rem = "OBTENIR: les RÉPARTITIONS possibles de (#{@objets}) à partir des cédulables: [#{derniere.last(8)}] \n" %>
-            <%= rem += "ETAT FINAL: La filiere [data/horaires.txt] est remise au statut précédent (sans les cedulables)"%>
-            <%= rem += "            la filiere [info_REPARTITIONS_objets.txt] est copiée dans [gobit/hor21/info/]"%>
+            <%= rem << "--- OBTENIR: les RÉPARTITIONS possibles de (#{@objets}) à partir des cédulables: [#{derniere.last(8)}] \n" %>
+            <%= rem << "--- ETAT FINAL: La filiere [data/horaires.txt] est remise au statut précédent (sans les cedulables)"%>
+            <%= rem << "----------------la filiere [info_REPARTITIONS_objets.txt] est copiée dans [gobit/hor21/info/]"%>
 
         
         <% when "data" %>
             <% $pid = fork do            %>
-            <%       system "./data.sh"  %>
-            <%     end                   %>
+                <% system "./data.sh"  %>
+            <% end %>
 
-            <% rem += "--> SOURCE: PAS (Planification Annee Scolaire) sur le Web \n"%>
-            <% rem += "--> DESTINATION: [hor13/init/] (metaclasses, classes, metas, profs, locaux) \n\n"%>
-            <% rem += "REMARQUE: VOIR le transfert directement a l'ecran du terminal rails"        %>
+            <% rem << "--- SOURCE: PAS (Planification Annee Scolaire) sur le Web \n"%>
+            <% rem << "--- DESTINATION: [hor13/init/] (metaclasses, classes, metas, profs, locaux) \n\n"%>
+            <% rem << "--- REMARQUE: VOIR le transfert directement a l'ecran du terminal rails"        %>
 
 
         <% when "deselect" #ne fonctionne pas avec action.html.erb mais deSelect.html.erb %> 
@@ -312,9 +255,9 @@
 
             <% system "./fixCeds.sh '#{horaireTemp}' '#{nomFiliere}' '#{@niv}'"  %>
 
-            <% rem  = "FORMER: la filiere  [confection/horaire.rb]\n" %>
-            <% rem += "OBTENIR: les metaclasses selon 1re ligne de [#{nomFiliere}]\n\n" %>
-            <% rem += "ETAT FINAL: [confection/horaire.rb] aux repartitions du dernier cedulables        "%>
+            <% rem << "--- FORMER: la filiere  [confection/horaire.rb]\n" %>
+            <% rem << "--- OBTENIR: les metaclasses selon 1re ligne de [#{nomFiliere}]\n\n" %>
+            <% rem << "--- ETAT FINAL: [confection/horaire.rb] aux repartitions du dernier cedulables        "%>
             
         <% when "ceduler" %>
             <form id="paramsCeduler"  method="get">
@@ -345,8 +288,11 @@
             <h3> <%= "PROGRAMME EN CONSTRUCTION" %> </h3>
         <% when "compact" %> 
             <% profsFinTache, profsViables = obtenirListeProfsFinTache_ProfsViables(@niv)  %>
+            <%# profsFinTache3, profsViables3 = obtenirListeProfsFinTache_ProfsViables("S3")  %>
+            <%# profsFinTache2, profsViables2 = obtenirListeProfsFinTache_ProfsViables("S2")  %>
             <% profsEPS = obtenirListeProfs(matieres = %w[EPS]) %>
-            <% profsFinTache = profsFinTache. - profsEPS %>
+            <% profsFinTache = profsFinTache.uniq - profsEPS %>
+            <%# profsViables = (profsViables3 + profsViables2).uniq%>
 
             <% profsFinTache = "\"#{profsFinTache.join(" ").split.map(&:capitalize)}\"".gsub("\",","").gsub(" \""," ").gsub("\"[","").gsub("\"]","") %>   
             <% profsViables = "\"#{profsViables.join(", ").split.map(&:capitalize)} \"".gsub("\",",",").gsub(" \""," ").gsub("\"[","").gsub("\"]","")+"\"" %>    
@@ -358,17 +304,27 @@
                 <% system "cd ; cd hor13 ; run.sh '#{@niv}' '#{profsFinTache.strip}' '#{profsViables}' '#{rem}'" %>
             <%# end %>
 
+        <% when "modifier_niv" %>
+
+            <%# system "cat $GOBIT_DATA/data/hor_#{@niv}.txt | ruby $GOBIT/rbf/format_hor2reps.rb > $GOBIT_DATA/echange/#{@niv}-1.choix" %>
+            <%# system "rm $GOBIT_DATA/echange/#{@niv}-2.cedul"  %>
+
+            <% rem << "Mettre la répartition de l'horaire du niveau: #{@niv}" %>
+            <% rem << "---dans la filière:    [#{@niv}-1.choix]" %>
+            <% rem << "---effacer la filière: [#{@niv}-2.cedul]"%>
+            <% rem << "---P.S. Le niveau #{@niv} est prêt à être cédulé, compacté et diagonalisé"%>
+            
         <% when "stop" %>
             <%= "Process.kill('HUP', $pid)" %>
             <% Process.kill("HUP", $pid) %>
             <h4><br><br><font color="red"><bold>
             <%= " OPERATION [ #{@execute} ] en cours (pid: #{$pid}).............." %>
             <br>
-                <%= "--> BUT: STOPPER le processus (pid: #{$pid}) "%>
+                <% rem << "--- STOPPER le processus (pid: #{$pid}) "%>
             <br>
             </h4></font></bold>
         <% else  %> 
-            <h3> <%= "Aucune des actions programmees ne correpond a votre demande" %> </h3>
+            <h3> <% rem << "Aucune des actions programmees ne correpond a votre demande" %> </h3>
     <% end %> 
   
     <!-- AFFICHAGE À L'ÉCRAN HORAIRE-JDLM: OPÉRATION - BUTS -->
@@ -376,8 +332,11 @@
             <h2><font color="red"><bold><br>
                 <%= " OPERATION [ #{@execute} ] " %></h2><br>
             <h4><font color="blue">
-                <%= "BUT: " %><br>
-                <%= "---> #{rem}" %></h4></font></bold>
+                <%= "BUT: " %><br><br>
+                <% rem.each do |remarque| %>
+                    <%= "----#{remarque}" %><br>
+                <% end %>
+            </h4></font></bold>
         <% end %>
 
     <% @blocMC = "index" unless @blocMC  %><br>

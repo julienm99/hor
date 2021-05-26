@@ -164,6 +164,29 @@
 							</li>
 						</ul>
 				</div>
+				<!-- MODIFIER -->
+				<div class="btn-group dropup">
+					<button type="button" class="btn btn-primary">MODIFIER</button>
+						<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<span class="caret"></span>
+							<span class="sr-only">Toggle Dropdown</span>
+						</button>
+						<ul class="dropdown-menu multi-level">
+							<li class="dropdown-submenu">
+								<label>__FIXER HORAIRES<br>____modifiés</label>
+								<li role="separator" class="divider"></li>
+								<li><%= link_to "FIX_HORAIRES", action_path(:execute=>"fix_horaires", :blocMC=>@blocMC, :niv => @niv)%></li>
+								<li role="separator" class="divider"></li>
+								<label>__MODIFICATION__<br>_Choisir un NIVEAU</label>
+								<li role="separator" class="divider"></li>
+									<% %w[S1 S2 S3 S4 S5 ].each do |niv| %>
+									<li><%= link_to "modifier -> #{niv}", action_path(:execute=>"modifier_niv", :blocMC=>@blocMC, :niv => niv)%></li>
+								<% end %>
+								<li role="separator" class="divider"></li>
+								<li><%= link_to "ORDONNER HORAIRES", action_path(:execute=>"ordonner_horaires", :blocMC=>@blocMC, :niv => @niv)%></li>
+							</li>
+						</ul>
+				</div>
 
 			<!-- DATA -->
 				<%= link_to 'DATA', action_path(:execute=>"data",:blocMC => @blocMC),class:"btn btn-danger" %>

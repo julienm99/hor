@@ -19,7 +19,7 @@
      echo $rem
      echo "DES METACLASSES SÉLECTIONNÉES: HORAIRE-JDLM "$(date +%Y)
      if [ $choix = "diago" ] ; then
-          "À PARTIR DE :"$GOBIT_DATA"/echange/"$niv"-4.compac"
+          "À PARTIR DE :"$GOBIT_DATA"/echange/"$niv"-3.compac"
       else
           echo "À PARTIR DE LA DERNIÈRE FILIÈRE DU RÉPERTOIRE:"
           echo "["$SOURCE"]"
@@ -99,11 +99,13 @@
 
           fix_diago)
                echo "EXÉCUTION: FIXER l'horaire de "$niv
-               cat $GOBIT_DATA/echange/$niv-4best.hor >> $GOBIT_DATA/data/horaires.txt
+                    cat $GOBIT_DATA/echange/$niv-4best.hor >> $GOBIT_DATA/data/horaires.txt
                echo "           COPIER l'horaire officiel dans hor13"
-               cp $GOBIT_DATA/data/horaires.txt $HOR13/data/horaires.txt
+                    cp $GOBIT_DATA/data/horaires.txt $HOR13/data/horaires.txt
+               echo "           VIDER LA FILIERE [confection/horaire.rb]"
+                    echo "" > $HOR13/confection/horaire.rb
                echo "           MISE À JOUR  des info"
-               $HOR13/info.sh ;;
+                    $HOR13/info.sh ;;
 
           *)
                echo "EXÉCUTION --> "$GOBIT"/ruby rbf/gobit4.rb "$1" "$2" "$3" "$4

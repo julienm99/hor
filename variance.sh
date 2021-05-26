@@ -5,12 +5,11 @@
      echo "RAPPEL: Plus petite est la variance meilleur elle est."
      echo "        [hor13/op/cedulables/?.ceds]"
      echo "-----------------------------------------------------"
-cd
-cd hor13
+cd ; cd hor13
      echo "RÉPERTOIRE ACTUEL --> "$(pwd)
      echo "-----------------------------------------------------"
-derniere=$(ls op/cedulables -rt | tail -n1)
-dirCeds="op/cedulables/"
+derniere=$(ls $GOBIT_DATA/op/cedulables -rt | tail -n1)
+dirCeds="$GOBIT_DATA/op/cedulables/"
 
 SOURCE=$dirCeds$derniere
 DESTINATION=$SOURCE
@@ -21,7 +20,7 @@ TEMPORAIRE=$dirCeds"TEMPORAIRE.ceds"
      echo "DESTINATION: "$DESTINATION" ---> filiere resultante ordonnee"
 
      echo "---------------------------------"
-     echo "COPIER: "$SOURCE" dans la filiere "$TEMPORAIRE401 
+     echo "COPIER: "$SOURCE" dans la filiere "$TEMPORAIRE
 cp $SOURCE $TEMPORAIRE
      echo "---------------------------------"
      echo "1- CALCULER: LA VARIANCE de la filiere "$TEMPORAIRE
@@ -32,8 +31,7 @@ cat $TEMPORAIRE | ruby mapred/variance.rb  | sort > $DESTINATION
      echo "EFFACER : la filiere "$TEMPORAIRE
 rm $TEMPORAIRE
 
-cd
-cd rails_projects/hor
+cd ; cd rails_projects/hor
      echo "-----------------------------------------------------"
      echo "RÉPERTOIRE ACTUEL --> "$(pwd)
      echo "EXÉCUTION  --> retour à HORAIRE-JDLM (web)"
