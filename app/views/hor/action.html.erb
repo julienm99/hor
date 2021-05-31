@@ -309,10 +309,9 @@
             <%# system "cat $GOBIT_DATA/data/hor_#{@niv}.txt | ruby $GOBIT/rbf/format_hor2reps.rb > $GOBIT_DATA/echange/#{@niv}-1.choix" %>
             <%# system "rm $GOBIT_DATA/echange/#{@niv}-2.cedul"  %>
 
-            <% rem << "Mettre la répartition de l'horaire du niveau: #{@niv}" %>
-            <% rem << "---dans la filière:    [#{@niv}-1.choix]" %>
-            <% rem << "---effacer la filière: [#{@niv}-2.cedul]"%>
-            <% rem << "---P.S. Le niveau #{@niv} est prêt à être cédulé, compacté et diagonalisé"%>
+            <% rem << "--- INSÉRER la répartition de l'horaire du niveau: #{@niv} dans la filière: [#{@niv}-1.choix]" %>
+            <% rem << "--- EFFACER la filière: [#{@niv}-2.cedul]"%>
+            <% rem << "--- P.S. Le niveau #{@niv} est prêt à être cédulé, compacté et diagonalisé: MANUELLEMENT! (pour l'instant)"%>
             
         <% when "stop" %>
             <%= "Process.kill('HUP', $pid)" %>
@@ -331,12 +330,12 @@
         <% unless @execute == "ceduler" then %>
             <h2><font color="red"><bold><br>
                 <%= " OPERATION [ #{@execute} ] " %></h2><br>
-            <h4><font color="blue">
+            <h3><font color="blue">
                 <%= "BUT: " %><br><br>
                 <% rem.each do |remarque| %>
                     <%= "----#{remarque}" %><br>
                 <% end %>
-            </h4></font></bold>
+            </h3></font></bold>
         <% end %>
 
     <% @blocMC = "index" unless @blocMC  %><br>

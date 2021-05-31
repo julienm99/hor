@@ -153,18 +153,22 @@
 							<span class="sr-only">Toggle Dropdown</span>
 						</button>
 						<ul class="dropdown-menu multi-level">
-							<label>DIAGONALISATION<br>Choisir un NIVEAU</label>
-							<li role="separator" class="divider"></li>
 							<li class="dropdown-submenu">
-								<li><%= link_to "FIX_DIAGO", action_path(:execute=>"fix_diago", :blocMC=>@blocMC, :niv => @niv)%></li>
-								<li role="separator" class="divider"></li>
-								<% %w[S1 S2 S3 S4 S5 ].each do |niv| %>
-									<li><%= link_to niv, action_path(:execute=>"diago", :blocMC=>@blocMC, :niv => niv)%></li>
-								<% end %>
+								<label>__2- FIXER LA DIAGO. </label>
+									<li role="separator" class="divider"></li>
+									<% %w[S1 S2 S3 S4 S5 ].each do |niv| %>
+										<li><%= link_to "fixe_diago -> #{niv}", action_path(:execute=>"fix_diago", :blocMC=>@blocMC, :niv => niv)%></li>
+									<% end %>
+									<li role="separator" class="divider"></li>
+								<label>_1- DIAGONALISATION</label>
+									<li role="separator" class="divider"></li>
+									<% %w[S1 S2 S3 S4 S5 ].each do |niv| %>
+										<li><%= link_to "diago -> #{niv}", action_path(:execute=>"diago", :blocMC=>@blocMC, :niv => niv)%></li>
+									<% end %>
 							</li>
 						</ul>
 				</div>
-				<!-- MODIFIER -->
+			<!-- MODIFIER -->
 				<div class="btn-group dropup">
 					<button type="button" class="btn btn-primary">MODIFIER</button>
 						<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -173,17 +177,15 @@
 						</button>
 						<ul class="dropdown-menu multi-level">
 							<li class="dropdown-submenu">
-								<label>__FIXER HORAIRES<br>____modifiés</label>
-								<li role="separator" class="divider"></li>
-								<li><%= link_to "FIX_HORAIRES", action_path(:execute=>"fix_horaires", :blocMC=>@blocMC, :niv => @niv)%></li>
-								<li role="separator" class="divider"></li>
-								<label>__MODIFICATION__<br>_Choisir un NIVEAU</label>
-								<li role="separator" class="divider"></li>
-									<% %w[S1 S2 S3 S4 S5 ].each do |niv| %>
-									<li><%= link_to "modifier -> #{niv}", action_path(:execute=>"modifier_niv", :blocMC=>@blocMC, :niv => niv)%></li>
-								<% end %>
-								<li role="separator" class="divider"></li>
-								<li><%= link_to "ORDONNER HORAIRES", action_path(:execute=>"ordonner_horaires", :blocMC=>@blocMC, :niv => @niv)%></li>
+								<label>_3- RETOUR À COMPACT</label>
+									<li role="separator" class="divider"></li>
+								<label>_2- MODIFICATION </label>
+									<li role="separator" class="divider"></li>
+										<% %w[S1 S2 S3 S4 S5 ].each do |niv| %>
+										<li><%= link_to "modifier -> #{niv}", action_path(:execute=>"modifier_niv", :blocMC=>@blocMC, :niv => niv)%></li>
+									<% end %>
+									<li role="separator" class="divider"></li>
+								<li><%= link_to "1- ORDONNER horaires.txt", action_path(:execute=>"ordonner_horaires", :blocMC=>@blocMC, :niv => @niv)%></li>
 							</li>
 						</ul>
 				</div>
